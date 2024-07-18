@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Peyvand</string>
+    <string name="profile">Profile</string>
+    <string name="connect">Connect</string>
+    <string name="contacts">Contacts</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="connect_title">Scan Code</string>
+    <string name="connect_description">Scan this code to share your contact information with your friends. Or Scan your friends QRCode with scan button. </string>
 </resources>
