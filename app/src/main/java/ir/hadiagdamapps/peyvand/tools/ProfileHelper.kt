@@ -10,7 +10,7 @@ import java.io.FileOutputStream
 
 class ProfileHelper(private val context: Context) {
 
-    private val profilePictureFile = File(context.cacheDir, "user/user_profile.png")
+    private val profilePictureFile = File(context.cacheDir, "user/picture.png")
     private val preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
 
     fun getProfile(): Profile? {
@@ -36,6 +36,15 @@ class ProfileHelper(private val context: Context) {
     private fun setPicture(picture: Picture) {
         val ous = FileOutputStream(profilePictureFile)
         picture.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, ous)
+    }
+
+    fun isFirstLaunch() = preferences.getBoolean("fistLaunch", true)
+
+    fun disableFirstLaunch() {
+        preferences.edit().apply {
+            putBoolean("firstLaunch", false)
+            apply()
+        }
     }
 
 }

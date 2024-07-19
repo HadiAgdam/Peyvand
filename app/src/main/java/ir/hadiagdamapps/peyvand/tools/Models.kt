@@ -18,7 +18,7 @@ data class Profile(
     }
 }
 
-
+// TODO add location on map maybe
 
 
 class Tell(private val tell: String) {

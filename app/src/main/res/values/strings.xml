@@ -6,4 +6,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="connect_title">Scan Code</string>
     <string name="connect_description">Scan this code to share your contact information with your friends. Or Scan your friends QRCode with scan button. </string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="intro_title_1">Title 1</string>
+    <string name="intro_title_2">Title 2</string>
+    <string name="intro_title_3">Title 3</string>
+    <string name="intro_content_1">Intro Content 1</string>
+    <string name="intro_content_2">Intro Content 2</string>
+    <string name="intro_content_3">Intro Content 3</string>
 </resources>

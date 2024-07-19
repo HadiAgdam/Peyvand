@@ -21,12 +21,12 @@ class ConnectFragment : MyFragment(R.layout.fragment_connect) {
     }
 
 
+    private fun scanCode() {
+    }
+
+
     private fun loadQrCode() {
-        val profile = profileHelper.getProfile()
-        if (profile == null) {
-            requireActivity().finish()
-            TODO("Force user to ser profile.")
-        }
+        val profile = profileHelper.getProfile() ?: return
         val bitMatrix = writer.encode(profile.toJson().toString(), BarcodeFormat.QR_CODE, 720, 720)
         val encoder = BarcodeEncoder()
         qrContainer.setImageBitmap(encoder.createBitmap(bitMatrix))
@@ -35,6 +35,7 @@ class ConnectFragment : MyFragment(R.layout.fragment_connect) {
     override fun initViews(view: View) {
         qrContainer = view.findViewById(R.id.qrContainer)
         scanButton = view.findViewById(R.id.scanButton)
+        scanButton.setOnClickListener { scanCode() }
     }
 
     override fun main() {
