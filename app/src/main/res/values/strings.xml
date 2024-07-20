@@ -14,4 +14,8 @@
     <string name="intro_content_1">Intro Content 1</string>
     <string name="intro_content_2">Intro Content 2</string>
     <string name="intro_content_3">Intro Content 3</string>
+    <string name="login">Login</string>
+    <string name="back">Back</string>
+    <string name="name">Name</string>
+    <string name="invalid_name">Name is invalid.</string>
 </resources>

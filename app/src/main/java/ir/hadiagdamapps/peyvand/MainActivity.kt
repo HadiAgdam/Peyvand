@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ir.hadiagdamapps.peyvand.intro.IntroActivity
+import ir.hadiagdamapps.peyvand.register.RegisterActivity
 import ir.hadiagdamapps.peyvand.tools.Activity
 import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 
@@ -30,16 +31,16 @@ class MainActivity : Activity(R.layout.activity_main) {
     }
 
     override fun main() {
-        startActivity(Intent(this, IntroActivity::class.java))
+        startActivity(Intent(this, RegisterActivity::class.java))
         finish()
         return
 
         val profile = profileHelper.getProfile()
         if (profile == null) {
             if (profileHelper.isFirstLaunch())
-                TODO("Show Intro")
+                startActivity(Intent(this, IntroActivity::class.java))
             else
-                TODO("Show Set Profile")
+                startActivity(Intent(this, RegisterActivity::class.java))
             finish()
         }
     }

@@ -2,9 +2,6 @@ package ir.hadiagdamapps.peyvand.tools
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
-import android.provider.MediaStore
-import androidx.core.net.toUri
 import java.io.File
 import java.io.FileOutputStream
 
@@ -17,7 +14,7 @@ class ProfileHelper(private val context: Context) {
         return Profile(
             preferences.getString("name", null) ?: return null,
             Picture.parse(profilePictureFile)!!,
-            Tell(preferences.getString("tell", null) ?: return null),
+            Tel(preferences.getString("tell", null) ?: return null),
             preferences.getString("bio", null) ?: return null
         )
     }
@@ -25,7 +22,7 @@ class ProfileHelper(private val context: Context) {
     fun setProfile(profile: Profile) {
         preferences.edit().apply {
             putString("name", profile.name)
-            putString("tell", profile.tell.toString())
+            putString("tell", profile.tel.toString())
             putString("bio", profile.bio)
             apply()
         }
@@ -33,7 +30,8 @@ class ProfileHelper(private val context: Context) {
         setPicture(profile.picture)
     }
 
-    private fun setPicture(picture: Picture) {
+    private fun setPicture(picture: Picture?) {
+        if (picture == null) return
         val ous = FileOutputStream(profilePictureFile)
         picture.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, ous)
     }

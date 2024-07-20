@@ -1,5 +1,6 @@
 package ir.hadiagdamapps.peyvand.intro
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -12,7 +13,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import ir.hadiagdamapps.peyvand.R
+import ir.hadiagdamapps.peyvand.register.RegisterActivity
 import ir.hadiagdamapps.peyvand.tools.Activity
+import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 
 class IntroActivity : Activity(R.layout.activity_intro) {
 
@@ -24,8 +27,8 @@ class IntroActivity : Activity(R.layout.activity_intro) {
 
 
     private fun end() {
-        Toast.makeText(this@IntroActivity, "end", Toast.LENGTH_SHORT).show()
-        Log.e("end", "end")
+        ProfileHelper(this).disableFirstLaunch()
+        startActivity(Intent(this, RegisterActivity::class.java))
     }
 
 

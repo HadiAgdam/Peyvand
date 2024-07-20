@@ -42,4 +42,13 @@
     </style>
 
 
+    <style name="TextInputContainer" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+
+    </style>
+
+    <style name="TextInput" parent="Widget.Design.TextInputLayout">
+
+    </style>
+
+
 </resources>
