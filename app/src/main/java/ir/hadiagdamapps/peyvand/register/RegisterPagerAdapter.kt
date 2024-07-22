@@ -63,5 +63,9 @@ class RegisterPagerAdapter(
         }
     }
 
+    fun back() {
+        if (pager.currentItem > 0)
+            pager.currentItem--
+    }
 
 }

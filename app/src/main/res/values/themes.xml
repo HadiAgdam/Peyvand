@@ -48,6 +48,11 @@
 
     <style name="TextInput" parent="Widget.Design.TextInputLayout">
 
+<!--        <item name="android:background">@color/white</item>-->
+<!--        <item name="boxBackgroundColor">@color/white</item>-->
+<!--        <item name="boxBackgroundMode">outline</item>-->
+<!--        <item name="boxStrokeColor">@color/primary</item>-->
+
     </style>
 
 

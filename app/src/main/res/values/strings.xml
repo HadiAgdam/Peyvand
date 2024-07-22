@@ -17,8 +17,14 @@
     <string name="login">Login</string>
     <string name="back">Back</string>
     <string name="name">Name</string>
+    <string name="tel_input">Tel : 09123456789</string>
+    <string name="bio_input">Enter Biography</string>
     <string name="invalid_name">Name is invalid.</string>
+    <string name="invalid_tel">Phone number is invalid.</string>
+    <string name="invalid_bio">Biography is invalid.</string>
     <string name="use_camera">Use Camera</string>
     <string name="pick_image">Pick from Gallery</string>
     <string name="unselect_image">Unselect Image</string>
+    <string name="tel_title">Phone Number</string>
+    <string name="bio_title">Bio</string>
 </resources>

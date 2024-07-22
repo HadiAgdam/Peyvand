@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.MyFragment
+import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.tools.TextValidator
 import kotlinx.coroutines.selects.select
@@ -52,7 +53,7 @@ class NameAndPictureFragment(private val fragmentManager: FragmentManager) :
     private lateinit var imageContainerIcon: ImageView
 
     var picture: Picture? = null
-    var name: String? = null
+    var name: Name? = null
 
     // TODO if name is null, means this is not in correct format
     // TODO if image is null, means image not selected
@@ -63,7 +64,7 @@ class NameAndPictureFragment(private val fragmentManager: FragmentManager) :
         nameContainer = view.findViewById(R.id.nameContainer)
 
         nameInput.doOnTextChanged { text, _, _, _ ->
-            name = TextValidator.validateName(text.toString())
+            name = Name.parse(text.toString())
 
             if (name == null) nameContainer.error = getString(R.string.invalid_name)
         }
@@ -110,7 +111,7 @@ class ChoosePictureDialogFragment(
     }
 
     fun showDialog(showUnSelect: Boolean) {
-
+        // WTF ?
         Handler().postDelayed(
             {
                 if (showUnSelect) {
