@@ -22,12 +22,14 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:scaleType="centerCrop"
                 android:id="@+id/placeHolderImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/light_gray" />
 
             <ImageView
+                android:id="@+id/imageContainerIcon"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignParentBottom="true"

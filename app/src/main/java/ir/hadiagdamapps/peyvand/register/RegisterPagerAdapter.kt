@@ -20,7 +20,7 @@ class RegisterPagerAdapter(
 ) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    private val nameFragment = NameAndPictureFragment()
+    private val nameFragment = NameAndPictureFragment(fragmentManager)
     private val telFragment = TelFragment()
     private val bioFragment = BioFragment()
 
