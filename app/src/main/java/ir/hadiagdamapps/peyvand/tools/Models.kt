@@ -12,7 +12,7 @@ data class Profile(
     var name: Name,
     var picture: Picture?,
     var tel: Tel,
-    var bio: String
+    var bio: Bio
 ) {
     fun toJson(): JSONObject {
 
@@ -69,11 +69,21 @@ class Name private constructor(private val name: String) {
 
 }
 
-
 class Bio private constructor(private val bio: String) {
     companion object {
         fun parse(text: String?): Bio? {
             return Bio(TextValidator.validateBio(text ?: return null) ?: return null)
         }
     }
+}
+
+
+
+class Contact(
+    var name: Name,
+    var picture: Picture?,
+    var tel: Tel,
+    var bio: Bio
+) {
+
 }

@@ -11,24 +11,24 @@ class ProfileHelper(private val context: Context) {
     private val preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
 
     fun getProfile(): Profile? {
-        val p = Profile(
-            Name.parse(preferences.getString("name", null) ?: return null) ?: return null,
-            Picture.parse(profilePictureFile)!!,
-            Tel.parse(preferences.getString("tell", null) ?: return null) ?: return null,
-            preferences.getString("bio", null) ?: return null
-        )
 
-        if (p == null)
+        val name =     Name.parse(preferences.getString("name", null) ?: return null)
+        val picture =    Picture.parse(profilePictureFile)
+        val tel =    Tel.parse(preferences.getString("tell", null) ?: return null)
+        val bio =     Bio.parse(preferences.getString("bio", null) ?: return null)
+
+
+        if (name == null || tel == null || bio == null)
             TODO("clear shared preferences")
 
-        return p
+        return Profile(name, picture, tel, bio)
     }
 
     fun setProfile(profile: Profile) {
         preferences.edit().apply {
             putString("name", profile.name.toString())
             putString("tell", profile.tel.toString())
-            putString("bio", profile.bio)
+            putString("bio", profile.bio.toString())
             apply()
         }
 
