@@ -7,11 +7,11 @@
     tools:context=".register.TelFragment">
 
     <TextView
+        android:id="@+id/staticTitle"
         style="@style/Text.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/tel_title"
-        android:id="@+id/staticTitle"
         app:layout_constraintBottom_toTopOf="@id/telContainer"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,17 +31,26 @@
         app:boxBackgroundColor="@color/white"
         app:boxBackgroundMode="outline"
         app:boxStrokeColor="@color/primary"
-        app:layout_constraintTop_toBottomOf="@+id/staticTitle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/staticTitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/telInput"
-            android:inputType="phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/tel_input" />
+            android:hint="@string/tel_input"
+            android:inputType="phone"
+            android:maxLength="11" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_margin="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tel_hint"
+        app:layout_constraintLeft_toLeftOf="@id/telContainer"
+        app:layout_constraintTop_toBottomOf="@id/telContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

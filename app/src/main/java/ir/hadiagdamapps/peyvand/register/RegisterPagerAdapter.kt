@@ -16,11 +16,11 @@ class RegisterPagerAdapter(
     lifecycle: Lifecycle,
     private val end: (
         profile: Profile
-    ) -> Unit
+    ) -> Unit,
 ) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    private val nameFragment = NameAndPictureFragment(fragmentManager)
+    private val nameFragment = NameAndPictureFragment(fragmentManager,)
     private val telFragment = TelFragment()
     private val bioFragment = BioFragment()
 
@@ -34,7 +34,6 @@ class RegisterPagerAdapter(
     }
 
     private fun page() {
-
         if (pager.currentItem < 2)
             pager.currentItem++
         else if (pager.currentItem == 2) {

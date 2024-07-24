@@ -53,17 +53,15 @@
         android:id="@+id/qrContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="48dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher_background"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@id/hd3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/hd1" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -77,7 +75,7 @@
             android:layout_height="wrap_content"
             android:background="@color/primary"
             android:foreground="?selectableItemBackground"
-            android:padding="28dp"
+            android:padding="20dp"
             android:scaleType="fitXY"
             android:src="@drawable/qr_code_icon"
             app:fabCustomSize="108dp" />

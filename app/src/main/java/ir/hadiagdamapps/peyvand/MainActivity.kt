@@ -31,10 +31,6 @@ class MainActivity : Activity(R.layout.activity_main) {
     }
 
     override fun main() {
-        startActivity(Intent(this, RegisterActivity::class.java))
-        finish()
-        return
-
         val profile = profileHelper.getProfile()
         if (profile == null) {
             if (profileHelper.isFirstLaunch())

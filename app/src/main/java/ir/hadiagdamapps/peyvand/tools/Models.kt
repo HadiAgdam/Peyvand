@@ -75,8 +75,9 @@ class Bio private constructor(private val bio: String) {
             return Bio(TextValidator.validateBio(text ?: return null) ?: return null)
         }
     }
-}
 
+    override fun toString() = bio
+}
 
 
 class Contact(

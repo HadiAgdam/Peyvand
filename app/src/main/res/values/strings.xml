@@ -17,7 +17,8 @@
     <string name="login">Login</string>
     <string name="back">Back</string>
     <string name="name">Name</string>
-    <string name="tel_input">Tel : 09123456789</string>
+    <string name="tel_input">Phone Number</string>
+    <string name="tel_hint">Example : 09012345678</string>
     <string name="bio_input">Enter Biography</string>
     <string name="invalid_name">Name is invalid.</string>
     <string name="invalid_tel">Phone number is invalid.</string>
@@ -27,4 +28,8 @@
     <string name="unselect_image">Unselect Image</string>
     <string name="tel_title">Phone Number</string>
     <string name="bio_title">Bio</string>
+    <string name="edit_name_title">Name</string>
+    <string name="edit_bio_title">About</string>
+    <string name="edit_tel_title">Phone</string>
+    <string name="edit_name_description">This is not your username or pin. This name will be visible to your WhatsApp contacts.</string>
 </resources>

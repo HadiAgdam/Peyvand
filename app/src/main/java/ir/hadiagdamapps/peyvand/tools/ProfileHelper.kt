@@ -33,6 +33,7 @@ class ProfileHelper(private val context: Context) {
         }
 
         setPicture(profile.picture)
+//        TODO("upload the picture, and some how save it")
     }
 
     private fun setPicture(picture: Picture?) {
@@ -41,7 +42,7 @@ class ProfileHelper(private val context: Context) {
         picture.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, ous)
     }
 
-    fun isFirstLaunch() = preferences.getBoolean("fistLaunch", true)
+    fun isFirstLaunch() = preferences.getBoolean("firstLaunch", true)
 
     fun disableFirstLaunch() {
         preferences.edit().apply {

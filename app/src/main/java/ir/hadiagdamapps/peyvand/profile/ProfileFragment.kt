@@ -1,60 +1,105 @@
 package ir.hadiagdamapps.peyvand.profile
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.net.Uri
 import android.view.View
-import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.findNavController
 import ir.hadiagdamapps.peyvand.R
+import ir.hadiagdamapps.peyvand.register.ChoosePictureDialogFragment
+import ir.hadiagdamapps.peyvand.tools.MyFragment
+import ir.hadiagdamapps.peyvand.tools.Picture
+import ir.hadiagdamapps.peyvand.tools.Profile
+import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class ProfileFragment : MyFragment(R.layout.fragment_profile) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private var picture: Picture? = null
+    private val helper by lazy { ProfileHelper(requireContext()) }
+    private lateinit var profile: Profile
+
+
+    private val pickImage = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
+        if (it == null) return@registerForActivityResult
+        picture = Picture.parse(requireContext().contentResolver, it)
+        image.setImageBitmap(picture!!.toBitmap())
+        helper.setProfile(profile)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+    private val chooseDialog: ChoosePictureDialogFragment by lazy {
+        ChoosePictureDialogFragment(requireActivity().supportFragmentManager,
+            { // camera
+                TODO("implement")
+            },
+            { // gallery
+                pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            },
+            { // unSelect
+                picture = null
+                image.setImageURI(Uri.parse(""))
+            })
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
+    private lateinit var image: ImageView
+    private lateinit var imageContainer: View
+    private lateinit var smallImageIcon: View
+
+    private lateinit var nameText: TextView
+    private lateinit var nameContainer: View
+
+    private lateinit var bioText: TextView
+    private lateinit var bioContainer: View
+
+    private lateinit var telText: TextView
+    private lateinit var telContainer: View
+
+    private fun editName() {
+
+    }
+
+    private fun editBio() {
+
+    }
+
+    private fun editTel() {
+
+    }
+
+    override fun initViews(view: View) {
+        image = view.findViewById(R.id.image)
+        imageContainer = view.findViewById(R.id.imageContainer)
+        smallImageIcon = view.findViewById(R.id.smallImageIcon)
+
+        nameText = view.findViewById(R.id.nameText)
+        nameContainer = view.findViewById(R.id.nameContainer)
+
+        bioText = view.findViewById(R.id.bioText)
+        bioContainer = view.findViewById(R.id.bioContainer)
+
+        telText = view.findViewById(R.id.telText)
+        telContainer = view.findViewById(R.id.telContainer)
+
+        nameContainer.setOnClickListener { editName() }
+        bioContainer.setOnClickListener { editBio() }
+        telContainer.setOnClickListener { editTel() }
+    }
+
+    override fun main() {
+        image.setOnClickListener { chooseDialog.showDialog(picture != null) }
+        smallImageIcon.setOnClickListener { image.performClick() }
+        val p = helper.getProfile()
+        if (p != null)
+            profile = p
+
+
+        image.setImageBitmap(profile.picture?.toBitmap())
+        nameText.text = profile.name.toString()
+        bioText.text = profile.bio.toString()
+        telText.text = profile.tel.toString()
     }
 }

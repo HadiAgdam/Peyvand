@@ -18,7 +18,7 @@ class TelFragment : MyFragment(R.layout.fragment_tel) {
 
     override fun initViews(view: View) {
         telInput = view.findViewById(R.id.telInput)
-        telContainer = view.findViewById(R.id.container)
+        telContainer = view.findViewById(R.id.telContainer)
 
         telInput.doOnTextChanged { text, _, _, _ ->
             tel = Tel.parse(text.toString())
