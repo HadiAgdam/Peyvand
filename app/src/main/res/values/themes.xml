@@ -38,8 +38,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Button" parent="Widget.AppCompat.Button">
-    </style>
+    <style name="Button" parent="Widget.AppCompat.Button"></style>
 
     <style name="Button.Primary" parent="Button">
         <item name="android:backgroundTint">@color/primary</item>
@@ -51,17 +50,21 @@
         <item name="android:textColor">@color/primary</item>
     </style>
 
+    <style name="Button.TextButton" parent="Text">
+        <item name="android:padding">12dp</item>
+        <item name="android:paddingHorizontal">16dp</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
 
     <style name="TextInputContainer" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
 
     </style>
 
     <style name="TextInput" parent="Widget.Design.TextInputLayout">
-
-<!--        <item name="android:background">@color/white</item>-->
-<!--        <item name="boxBackgroundColor">@color/white</item>-->
-<!--        <item name="boxBackgroundMode">outline</item>-->
-<!--        <item name="boxStrokeColor">@color/primary</item>-->
 
     </style>
 

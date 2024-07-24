@@ -10,10 +10,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.register.ChoosePictureDialogFragment
+import ir.hadiagdamapps.peyvand.tools.Bio
 import ir.hadiagdamapps.peyvand.tools.MyFragment
+import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.tools.Profile
 import ir.hadiagdamapps.peyvand.tools.ProfileHelper
+import ir.hadiagdamapps.peyvand.tools.Tel
 
 
 class ProfileFragment : MyFragment(R.layout.fragment_profile) {
@@ -21,7 +24,6 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     private var picture: Picture? = null
     private val helper by lazy { ProfileHelper(requireContext()) }
     private lateinit var profile: Profile
-
 
     private val pickImage = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         if (it == null) return@registerForActivityResult
@@ -44,6 +46,26 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
             })
     }
 
+    private val nameDialog = object : EditNameDialog() {
+        override fun setName(name: Name) {
+            profile.name = name
+            helper.setProfile(profile)
+        }
+    }
+
+    private val telDialog = object : EditTelDialog() {
+        override fun setTel(tel: Tel) {
+            profile.tel = tel
+            helper.setProfile(profile)
+        }
+    }
+
+    private val bioDialog = object : EditBioDialog() {
+        override fun setBio(bio: Bio) {
+            profile.bio = bio
+            helper.setProfile(profile)
+        }
+    }
 
     private lateinit var image: ImageView
     private lateinit var imageContainer: View
@@ -58,19 +80,23 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     private lateinit var telText: TextView
     private lateinit var telContainer: View
 
-    private fun editName() {
+    private lateinit var overlay: View
 
+    private fun editName() {
+        nameDialog.show(requireActivity().supportFragmentManager, null)
     }
 
     private fun editBio() {
-
+        bioDialog.show(requireActivity().supportFragmentManager, null)
     }
 
     private fun editTel() {
-
+        telDialog.show(requireActivity().supportFragmentManager, null)
     }
 
     override fun initViews(view: View) {
+        overlay = view.findViewById(R.id.overlay)
+
         image = view.findViewById(R.id.image)
         imageContainer = view.findViewById(R.id.imageContainer)
         smallImageIcon = view.findViewById(R.id.smallImageIcon)
