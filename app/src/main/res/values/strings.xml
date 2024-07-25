@@ -37,4 +37,9 @@
     <string name="enter_tel">Enter your phone number</string>
     <string name="save">Save</string>
     <string name="Cancel">Cancel</string>
+    <string name="delete_dialog_title">Delete</string>
+    <string name="delete_dialog_content">Do you want to delete contact ?</string>
+    <string name="delete_dialog_positive">Yes</string>
+    <string name="delete_dialog_negative">No</string>
+    <string name="delete_dialog_neutral">Cancel</string>
 </resources>

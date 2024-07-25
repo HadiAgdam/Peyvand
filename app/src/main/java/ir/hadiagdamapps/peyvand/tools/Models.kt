@@ -1,10 +1,13 @@
 package ir.hadiagdamapps.peyvand.tools
 
 import android.content.ContentResolver
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.provider.MediaStore
+import ir.hadiagdamapps.peyvand.R
 import org.json.JSONObject
 import java.io.File
 
@@ -50,12 +53,13 @@ class Picture private constructor(private val bitmap: Bitmap) {
             }
         }
 
-        fun parse(url: String) {
+        fun parse(url: String): Picture? {
             TODO("download the image from web and cache it")
         }
 
-        fun getPlaceHolder(): Bitmap {
-            TODO("return an 'person image' maybe select it from drawable ")
+        fun getPlaceHolder(context: Context): Bitmap {
+            return BitmapFactory.decodeResource(context.resources, R.drawable.picture_placeholder)
+//            TODO("return an 'person image' maybe select it from drawable ")
         }
     }
 
@@ -89,10 +93,11 @@ class Bio private constructor(private val bio: String) {
 
 
 class Contact(
+    val id: Int,
     var name: Name,
     var picture: Picture?,
     var tel: Tel,
-    var bio: Bio
+    var bio: Bio,
 ) {
 
 }
