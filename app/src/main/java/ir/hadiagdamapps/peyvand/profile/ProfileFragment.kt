@@ -123,7 +123,10 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
             profile = p
 
 
-        image.setImageBitmap(profile.picture?.toBitmap())
+        val picture = profile.picture
+        if (picture != null)
+            image.setImageBitmap(picture.toBitmap())
+        else image.setImageBitmap(Picture.getPlaceHolder())
         nameText.text = profile.name.toString()
         bioText.text = profile.bio.toString()
         telText.text = profile.tel.toString()

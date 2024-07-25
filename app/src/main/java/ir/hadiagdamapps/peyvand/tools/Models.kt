@@ -49,6 +49,14 @@ class Picture private constructor(private val bitmap: Bitmap) {
                 null
             }
         }
+
+        fun parse(url: String) {
+            TODO("download the image from web and cache it")
+        }
+
+        fun getPlaceHolder(): Bitmap {
+            TODO("return an 'person image' maybe select it from drawable ")
+        }
     }
 
     fun toBitmap(): Bitmap {

@@ -40,6 +40,7 @@ class ProfileHelper(private val context: Context) {
         if (picture == null) return
         val ous = FileOutputStream(profilePictureFile)
         picture.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, ous)
+        // TODO("upload the picture")
     }
 
     fun isFirstLaunch() = preferences.getBoolean("firstLaunch", true)

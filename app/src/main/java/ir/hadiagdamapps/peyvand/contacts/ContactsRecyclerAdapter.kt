@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.Contact
+import ir.hadiagdamapps.peyvand.tools.Picture
 
 class ContactsRecyclerAdapter(private val context: Context, private val list: List<Contact>) :
     RecyclerView.Adapter<ContactsRecyclerAdapter.Holder>() {
@@ -35,11 +36,10 @@ class ContactsRecyclerAdapter(private val context: Context, private val list: Li
 
 
 
-        if (contact.picture == null) {
-            TODO("load from a placeholder")
-        } else {
-            TODO("load the image using picasso")
-        }
+        if (contact.picture == null)
+            holder.image.setImageBitmap(Picture.getPlaceHolder())
+         else holder.image.setImageBitmap(contact.picture!!.toBitmap())
+        // TODO instead of picasso I'll just download/cache it and convert to bitmap
     }
 
 

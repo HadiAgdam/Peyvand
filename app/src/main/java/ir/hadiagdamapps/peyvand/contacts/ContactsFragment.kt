@@ -9,7 +9,7 @@ import ir.hadiagdamapps.peyvand.tools.MyFragment
 
 class ContactsFragment : MyFragment(R.layout.fragment_contacts) {
 
-    // TODO implement hold to select, and remove functions
+    // TODO implement hold to remove function
 
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: ContactsRecyclerAdapter
