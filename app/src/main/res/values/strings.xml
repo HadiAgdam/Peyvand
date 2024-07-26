@@ -42,4 +42,5 @@
     <string name="delete_dialog_positive">Yes</string>
     <string name="delete_dialog_negative">No</string>
     <string name="delete_dialog_neutral">Cancel</string>
+    <string name="save_contact">Save Contact</string>
 </resources>

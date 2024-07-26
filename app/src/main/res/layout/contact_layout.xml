@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".profile.ProfileFragment">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,21 +15,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/staticTitle"
-                style="@style/Text.Title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/profile"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp">
-
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/imageContainer"
@@ -49,23 +37,6 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    app:cardCornerRadius="64dp"
-                    app:layout_constraintBottom_toBottomOf="@id/imageContainer"
-                    app:layout_constraintRight_toRightOf="@id/imageContainer">
-
-                    <ImageView
-                        android:id="@+id/smallImageIcon"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/primary"
-                        android:padding="8dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/camera_white_icon" />
-                </androidx.cardview.widget.CardView>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -79,9 +50,6 @@
                     android:id="@+id/nameContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:padding="16dp">
 
                     <ImageView
@@ -111,26 +79,6 @@
                         app:layout_constraintLeft_toLeftOf="@id/staticNameTitle"
                         app:layout_constraintTop_toBottomOf="@id/staticNameTitle" />
 
-                    <ImageView
-                        android:id="@+id/StaticNameEditIcon"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:src="@drawable/edit_icon"
-                        app:layout_constraintBottom_toTopOf="@id/nameDescriptionStatic"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/nameDescriptionStatic"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="start"
-                        android:text="@string/edit_name_description"
-                        app:layout_constraintLeft_toLeftOf="@id/staticNameTitle"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/nameText" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.google.android.material.divider.MaterialDivider
@@ -142,9 +90,6 @@
                     android:id="@+id/bioContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:padding="16dp">
 
                     <ImageView
@@ -176,15 +121,6 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/staticBioTitle" />
 
-                    <ImageView
-                        android:id="@+id/StaticBioEditIcon"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:src="@drawable/edit_icon"
-                        app:layout_constraintBottom_toTopOf="@id/bioText"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.google.android.material.divider.MaterialDivider
@@ -196,9 +132,7 @@
                     android:id="@+id/telContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
+
                     android:padding="16dp">
 
                     <ImageView
@@ -230,14 +164,6 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/staticTelTitle" />
 
-                    <ImageView
-                        android:id="@+id/StaticTelEditIcon"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:src="@drawable/edit_icon"
-                        app:layout_constraintBottom_toTopOf="@id/telText"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -246,6 +172,15 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <Button
+        android:id="@+id/saveContactButton"
+        style="@style/Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:text="@string/save_contact"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
