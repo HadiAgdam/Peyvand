@@ -6,8 +6,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.os.Parcelable
 import android.provider.MediaStore
 import ir.hadiagdamapps.peyvand.R
+import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.io.File
 
@@ -25,8 +27,8 @@ data class Profile(
 
 // TODO add location on map maybe
 
-
-class Tel private constructor(private val tell: String) {
+@Parcelize
+class Tel private constructor(private val tell: String): Parcelable {
 
     override fun toString() = tell
 
@@ -37,8 +39,8 @@ class Tel private constructor(private val tell: String) {
     }
 
 }
-
-class Picture private constructor(private val bitmap: Bitmap) {
+@Parcelize
+class Picture private constructor(private val bitmap: Bitmap): Parcelable {
 
     companion object {
         fun parse(file: File): Picture? {
@@ -68,8 +70,8 @@ class Picture private constructor(private val bitmap: Bitmap) {
     }
 
 }
-
-class Name private constructor(private val name: String) {
+@Parcelize
+class Name private constructor(private val name: String): Parcelable {
 
     companion object {
         fun parse(text: String): Name? {
@@ -80,8 +82,8 @@ class Name private constructor(private val name: String) {
     override fun toString() = name
 
 }
-
-class Bio private constructor(private val bio: String) {
+@Parcelize
+class Bio private constructor(private val bio: String): Parcelable {
     companion object {
         fun parse(text: String?): Bio? {
             return Bio(TextValidator.validateBio(text ?: return null) ?: return null)
@@ -91,13 +93,11 @@ class Bio private constructor(private val bio: String) {
     override fun toString() = bio
 }
 
-
+@Parcelize
 class Contact(
     val id: Int,
     var name: Name,
     var picture: Picture?,
     var tel: Tel,
     var bio: Bio,
-) {
-
-}
+): Parcelable

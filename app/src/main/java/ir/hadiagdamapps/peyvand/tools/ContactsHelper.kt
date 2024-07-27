@@ -11,7 +11,26 @@ class ContactsHelper(private val context: Context) {
 
     private val database = ContactsDatabaseHelper(context)
 
-    fun getAll() = database.getAll()
+//    fun getAll() = database.getAll()
+
+    fun getAll(): List<Contact> {
+        val result = ArrayList<Contact>()
+
+        for (i in 0 until 10) {
+            result.add(
+                Contact(
+                    i,
+                    Name.parse("contact $i")!!,
+                    null,
+                    Tel.parse("09012345678")!!,
+                    Bio.parse("Hello, I am contact $i")!!
+                )
+            )
+
+        }
+
+        return result
+    }
 
     fun delete(contact: Contact) = database.delete(contact)
 

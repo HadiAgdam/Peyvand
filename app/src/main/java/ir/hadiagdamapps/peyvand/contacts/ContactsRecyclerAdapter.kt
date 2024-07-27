@@ -2,6 +2,7 @@ package ir.hadiagdamapps.peyvand.contacts
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +49,10 @@ class ContactsRecyclerAdapter(private val context: Context) :
         }
 
         holder.overlay.setOnClickListener {
-            TODO("implement an animated new activity")
+            Intent(context, ContactActivity::class.java).apply {
+                putExtra("contact", list[position])
+                context.startActivity(this)
+            }
         }
 
         holder.name.text = contact.name.toString()
