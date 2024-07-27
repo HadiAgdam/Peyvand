@@ -9,9 +9,11 @@ import android.net.Uri
 import android.os.Parcelable
 import android.provider.MediaStore
 import ir.hadiagdamapps.peyvand.R
+import ir.hadiagdamapps.peyvand.tools.Constants.Companion.TARGET_SERVER
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.io.File
+import java.net.URLDecoder
 import java.net.URLEncoder
 
 data class Profile(
@@ -26,7 +28,8 @@ data class Profile(
         val telEncoded = URLEncoder.encode(tel.toString(), "UTF-8")
         val bioEncoded = URLEncoder.encode(bio.toString(), "UTF-8")
 
-        val result = "${Constants.TARGET_SERVER}?name=$nameEncoded&picture=$pictureEncoded&tel=$telEncoded&bio=$bioEncoded"
+        val result =
+            "${TARGET_SERVER}?name=$nameEncoded&picture=$pictureEncoded&tel=$telEncoded&bio=$bioEncoded"
 
         return result
     }
@@ -65,6 +68,7 @@ class Picture private constructor(private val bitmap: Bitmap) : Parcelable {
 
         fun parse(url: String): Picture? {
             TODO("download the image from web and cache it")
+            // if unable to get image, use placeholder
         }
 
         fun getPlaceHolder(context: Context): Bitmap {
@@ -105,7 +109,7 @@ class Bio private constructor(private val bio: String) : Parcelable {
 
 @Parcelize
 class Contact(
-    val id: Int,
+    val id: Int = -1,
     var name: Name,
     var picture: Picture?,
     var tel: Tel,
@@ -114,8 +118,24 @@ class Contact(
 
 
     companion object {
-        fun parseFromURL(text: String) : Contact? {
-            TODO("")
+
+        private fun parseFromHashmap(map: HashMap<String, String>): Contact? {
+            return Contact(
+                -1,
+                Name.parse(map["name"] ?: return null) ?: return null,
+                Picture.parse(map["picture"]?: ""),
+                Tel.parse(map["tel"]) ?: return null,
+                Bio.parse(map["bio"]) ?: return null
+            )
+        }
+
+        fun parseFromURL(text: String): Contact? {
+            val result = HashMap<String, String>()
+
+            for (i in text.removeRange(0, TARGET_SERVER.length + 1).split("&"))
+                result[URLDecoder.decode(i.split("=")[0], "UTF-8")] = URLDecoder.decode(i.split("=")[1], "UTF-8")
+
+            return parseFromHashmap(result)
         }
     }
 

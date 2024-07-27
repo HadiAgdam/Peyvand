@@ -14,7 +14,6 @@ import ir.hadiagdamapps.peyvand.contacts.ContactActivity
 import ir.hadiagdamapps.peyvand.tools.Contact
 import ir.hadiagdamapps.peyvand.tools.ContactsHelper
 import ir.hadiagdamapps.peyvand.tools.MyFragment
-import ir.hadiagdamapps.peyvand.tools.Profile
 import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 import ir.hadiagdamapps.peyvand.tools.TextValidator
 
@@ -39,10 +38,9 @@ class ConnectFragment : MyFragment(R.layout.fragment_connect) {
         setBarcodeImageEnabled(true)
     }
 
-
     private val qrLauncher = registerForActivityResult(ScanContract()) {
         if (it.contents != null) {
-            if (TextValidator.isValidQr(it.contents)) {
+            if (TextValidator.isValidQrString(it.contents)) {
                 val contact = Contact.parseFromURL(it.contents)
                 if (contact == null)
                     Toast.makeText(requireContext(), getString(R.string.invalid_qr), Toast.LENGTH_LONG)
