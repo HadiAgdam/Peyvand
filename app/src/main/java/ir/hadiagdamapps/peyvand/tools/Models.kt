@@ -12,6 +12,7 @@ import ir.hadiagdamapps.peyvand.R
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.io.File
+import java.net.URLEncoder
 
 data class Profile(
     var name: Name,
@@ -19,16 +20,22 @@ data class Profile(
     var tel: Tel,
     var bio: Bio
 ) {
-    fun toJson(): JSONObject {
+    fun toQrString(profileHelper: ProfileHelper): String {
+        val nameEncoded = URLEncoder.encode(name.toString(), "UTF-8")
+        val pictureEncoded = URLEncoder.encode(profileHelper.getPictureUrl(), "UTF-8")
+        val telEncoded = URLEncoder.encode(tel.toString(), "UTF-8")
+        val bioEncoded = URLEncoder.encode(bio.toString(), "UTF-8")
 
-        return JSONObject()
+        val result = "${Constants.TARGET_SERVER}?name=$nameEncoded&picture=$pictureEncoded&tel=$telEncoded&bio=$bioEncoded"
+
+        return result
     }
 }
 
 // TODO add location on map maybe
 
 @Parcelize
-class Tel private constructor(private val tell: String): Parcelable {
+class Tel private constructor(private val tell: String) : Parcelable {
 
     override fun toString() = tell
 
@@ -39,8 +46,9 @@ class Tel private constructor(private val tell: String): Parcelable {
     }
 
 }
+
 @Parcelize
-class Picture private constructor(private val bitmap: Bitmap): Parcelable {
+class Picture private constructor(private val bitmap: Bitmap) : Parcelable {
 
     companion object {
         fun parse(file: File): Picture? {
@@ -70,8 +78,9 @@ class Picture private constructor(private val bitmap: Bitmap): Parcelable {
     }
 
 }
+
 @Parcelize
-class Name private constructor(private val name: String): Parcelable {
+class Name private constructor(private val name: String) : Parcelable {
 
     companion object {
         fun parse(text: String): Name? {
@@ -82,8 +91,9 @@ class Name private constructor(private val name: String): Parcelable {
     override fun toString() = name
 
 }
+
 @Parcelize
-class Bio private constructor(private val bio: String): Parcelable {
+class Bio private constructor(private val bio: String) : Parcelable {
     companion object {
         fun parse(text: String?): Bio? {
             return Bio(TextValidator.validateBio(text ?: return null) ?: return null)
@@ -100,4 +110,4 @@ class Contact(
     var picture: Picture?,
     var tel: Tel,
     var bio: Bio,
-): Parcelable
+) : Parcelable

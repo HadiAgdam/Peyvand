@@ -12,10 +12,10 @@ class ProfileHelper(private val context: Context) {
 
     fun getProfile(): Profile? {
 
-        val name =     Name.parse(preferences.getString("name", null) ?: return null)
-        val picture =    Picture.parse(profilePictureFile)
-        val tel =    Tel.parse(preferences.getString("tell", null) ?: return null)
-        val bio =     Bio.parse(preferences.getString("bio", null) ?: return null)
+        val name = Name.parse(preferences.getString("name", null) ?: return null)
+        val picture = Picture.parse(profilePictureFile)
+        val tel = Tel.parse(preferences.getString("tell", null) ?: return null)
+        val bio = Bio.parse(preferences.getString("bio", null) ?: return null)
 
 
         if (name == null || tel == null || bio == null)
@@ -41,6 +41,10 @@ class ProfileHelper(private val context: Context) {
         val ous = FileOutputStream(profilePictureFile)
         picture.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, ous)
         // TODO("upload the picture")
+    }
+
+    fun getPictureUrl(): String {
+        TODO("return the profile image url")
     }
 
     fun isFirstLaunch() = preferences.getBoolean("firstLaunch", true)

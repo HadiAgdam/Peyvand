@@ -1,6 +1,11 @@
 package ir.hadiagdamapps.peyvand.tools
 
 class Constants {
+
+    companion object{
+        const val TARGET_SERVER = "https://hadiagdam.github.io/PeyvandWebResult/"
+    }
+
     class Database {
         companion object {
             // should increment the version if there was a change in schema

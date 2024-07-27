@@ -22,12 +22,16 @@ class ConnectFragment : MyFragment(R.layout.fragment_connect) {
 
 
     private fun scanCode() {
+        TODO("implement a qr code scanner")
+        TODO("when scanned get the contact from url and save it")
+        TODO("after saving open contact activity")
     }
 
 
     private fun loadQrCode() {
         val profile = profileHelper.getProfile() ?: return
-        val bitMatrix = writer.encode(profile.toJson().toString(), BarcodeFormat.QR_CODE, 720, 720)
+        val bitMatrix =
+            writer.encode(profile.toQrString(profileHelper), BarcodeFormat.QR_CODE, 720, 720)
         val encoder = BarcodeEncoder()
         qrContainer.setImageBitmap(encoder.createBitmap(bitMatrix))
     }
