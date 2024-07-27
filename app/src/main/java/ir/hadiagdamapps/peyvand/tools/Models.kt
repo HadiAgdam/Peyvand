@@ -110,4 +110,13 @@ class Contact(
     var picture: Picture?,
     var tel: Tel,
     var bio: Bio,
-) : Parcelable
+) : Parcelable {
+
+
+    companion object {
+        fun parseFromURL(text: String) : Contact? {
+            TODO("")
+        }
+    }
+
+}

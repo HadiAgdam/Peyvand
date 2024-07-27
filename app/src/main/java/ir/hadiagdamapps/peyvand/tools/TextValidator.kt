@@ -18,5 +18,9 @@ class TextValidator {
             return text
         }
 
+        fun isValidQr(text: String): Boolean {
+            TODO()
+        }
+
     }
 }

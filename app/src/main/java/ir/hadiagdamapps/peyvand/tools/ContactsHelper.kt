@@ -34,7 +34,7 @@ class ContactsHelper(private val context: Context) {
 
     fun delete(contact: Contact) = database.delete(contact)
 
-    fun newUser(contact: Contact) = database.insert(contact)
+    fun newContact(contact: Contact) = database.insert(contact)
 
 }
 

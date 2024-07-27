@@ -43,4 +43,6 @@
     <string name="delete_dialog_negative">No</string>
     <string name="delete_dialog_neutral">Cancel</string>
     <string name="save_contact">Save Contact</string>
+    <string name="invalid_qr">Qr code is invalid</string>
+    <string name="scan_qr_code">Scan the code</string>
 </resources>
