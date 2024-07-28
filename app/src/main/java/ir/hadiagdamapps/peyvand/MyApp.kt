@@ -1,6 +1,7 @@
 package ir.hadiagdamapps.peyvand
 
 import android.app.Application
+import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 import java.io.File
 import java.io.FileOutputStream
 
@@ -29,6 +30,7 @@ class MyApp : Application() {
         super.onCreate()
         makCacheDirs()
         loadPlaceHolder()
+        ProfileHelper(this).resumeUploading()
     }
 
 }

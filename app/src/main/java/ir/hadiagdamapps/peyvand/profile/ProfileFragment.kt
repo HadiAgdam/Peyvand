@@ -29,7 +29,8 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
         if (it == null) return@registerForActivityResult
         picture = Picture.parse(requireContext().contentResolver, it)
         image.setImageBitmap(picture!!.toBitmap())
-        helper.setProfile(profile)
+        if (picture != null)
+            helper.setPicture(picture!!)
     }
 
     private val chooseDialog: ChoosePictureDialogFragment by lazy {
@@ -49,21 +50,24 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     private val nameDialog = object : EditNameDialog() {
         override fun setName(name: Name) {
             profile.name = name
-            helper.setProfile(profile)
+            helper.setName(name)
+            nameText.text = name.toString()
         }
     }
 
     private val telDialog = object : EditTelDialog() {
         override fun setTel(tel: Tel) {
             profile.tel = tel
-            helper.setProfile(profile)
+            helper.setTel(tel)
+            telText.text = tel.toString()
         }
     }
 
     private val bioDialog = object : EditBioDialog() {
         override fun setBio(bio: Bio) {
             profile.bio = bio
-            helper.setProfile(profile)
+            helper.setBio(bio)
+            bioText.text = bio.toString()
         }
     }
 

@@ -13,6 +13,7 @@ import ir.hadiagdamapps.peyvand.tools.Constants.Companion.TARGET_SERVER
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.io.File
+import java.net.URL
 import java.net.URLDecoder
 import java.net.URLEncoder
 
@@ -67,14 +68,15 @@ class Picture private constructor(private val bitmap: Bitmap) : Parcelable {
         }
 
         fun parse(url: String): Picture? {
-            TODO("download the image from web and cache it")
-            // if unable to get image, use placeholder
+            val bitmap = BitmapFactory.decodeStream(URL(url).openConnection().getInputStream())
+
+            return if (bitmap != null)
+                Picture(bitmap)
+            else null
         }
 
-        fun getPlaceHolder(context: Context): Bitmap {
-            return BitmapFactory.decodeResource(context.resources, R.drawable.picture_placeholder)
-//            TODO("return an 'person image' maybe select it from drawable ")
-        }
+        fun getPlaceHolder(context: Context): Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.picture_placeholder)
+        
     }
 
     fun toBitmap(): Bitmap {
@@ -123,7 +125,7 @@ class Contact(
             return Contact(
                 -1,
                 Name.parse(map["name"] ?: return null) ?: return null,
-                Picture.parse(map["picture"]?: ""),
+                Picture.parse(map["picture"] ?: ""),
                 Tel.parse(map["tel"]) ?: return null,
                 Bio.parse(map["bio"]) ?: return null
             )
@@ -133,7 +135,8 @@ class Contact(
             val result = HashMap<String, String>()
 
             for (i in text.removeRange(0, TARGET_SERVER.length + 1).split("&"))
-                result[URLDecoder.decode(i.split("=")[0], "UTF-8")] = URLDecoder.decode(i.split("=")[1], "UTF-8")
+                result[URLDecoder.decode(i.split("=")[0], "UTF-8")] =
+                    URLDecoder.decode(i.split("=")[1], "UTF-8")
 
             return parseFromHashmap(result)
         }
