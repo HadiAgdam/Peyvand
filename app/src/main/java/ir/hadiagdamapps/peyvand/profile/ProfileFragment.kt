@@ -44,6 +44,7 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
             { // unSelect
                 picture = null
                 image.setImageURI(Uri.parse(""))
+                helper.deletePicture()
             })
     }
 

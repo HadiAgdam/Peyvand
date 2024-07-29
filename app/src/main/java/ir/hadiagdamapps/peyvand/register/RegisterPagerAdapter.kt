@@ -1,5 +1,6 @@
 package ir.hadiagdamapps.peyvand.register
 
+import android.content.Context
 import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -9,20 +10,23 @@ import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.tools.Profile
+import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 
 class RegisterPagerAdapter(
+    context: Context,
     private val pager: ViewPager2,
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
     private val end: (
-        profile: Profile
     ) -> Unit,
 ) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    private val nameFragment = NameAndPictureFragment(fragmentManager,)
+    private val nameFragment = NameAndPictureFragment(fragmentManager)
     private val telFragment = TelFragment()
     private val bioFragment = BioFragment()
+
+    private val helper = ProfileHelper(context)
 
     override fun getItemCount() = 3
 
@@ -33,34 +37,29 @@ class RegisterPagerAdapter(
         else -> Fragment()
     }
 
-    private fun page() {
-        if (pager.currentItem < 2)
-            pager.currentItem++
-        else if (pager.currentItem == 2) {
-            val p = Profile(
-                nameFragment.name!!,
-                nameFragment.picture,
-                telFragment.tel!!,
-                bioFragment.bio!!
-            )
-            end(p)
-        }
-
-    }
-
-    fun next() {
+    fun page() {
         when (pager.currentItem) {
+            0 -> if (nameFragment.name != null) {
+                helper.setName(nameFragment.name!!)
+                if (nameFragment.picture != null)
+                    helper.setPicture(nameFragment.picture!!)
+                pager.currentItem++
+            }
 
-            // Name and Picture
-            0 -> if (nameFragment.name != null) page()
+            1 -> if (telFragment.tel != null) {
+                helper.setTel(telFragment.tel!!)
+                pager.currentItem++
+            }
 
-            // Tel
-            1 -> if (telFragment.tel != null) page()
+            2 -> {
+                if (bioFragment.bio != null)
+                    helper.setBio(bioFragment.bio!!)
 
-            // Biography
-            2 -> if (bioFragment.bio != null) page()
+                end()
+            }
         }
     }
+
 
     fun back() {
         if (pager.currentItem > 0)

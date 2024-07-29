@@ -34,7 +34,7 @@ class ProfileHelper(private val context: Context) {
         val bio = Bio.parse(preferences.getString("bio", null) ?: return null)
 
         if (name == null || tel == null || bio == null)
-            TODO("clear shared preferences")
+            return null
 
         return Profile(name, picture, tel, bio)
     }
@@ -92,6 +92,10 @@ class ProfileHelper(private val context: Context) {
         }
 
         resumeUploading()
+    }
+
+    fun deletePicture() {
+        TODO()
     }
 
     fun getPictureUrl() = preferences.getString("image_url", "")

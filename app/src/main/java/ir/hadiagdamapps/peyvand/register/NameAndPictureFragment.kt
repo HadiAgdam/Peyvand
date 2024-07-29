@@ -55,9 +55,6 @@ class NameAndPictureFragment(private val fragmentManager: FragmentManager) :
     var picture: Picture? = null
     var name: Name? = null
 
-    // TODO if name is null, means this is not in correct format
-    // TODO if image is null, means image not selected
-
 
     override fun initViews(view: View) {
         nameInput = view.findViewById(R.id.nameInput)
