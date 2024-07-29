@@ -10,9 +10,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.Tel
 
-abstract class EditTelDialog : BottomSheetDialogFragment(R.layout.edit_tel_dialog) {
-
-    abstract fun setTel(tel: Tel)
+class EditTelDialog(
+    private val tel: Tel,
+    private val setTel: (Tel) -> Unit
+) : BottomSheetDialogFragment(R.layout.edit_tel_dialog) {
 
     private lateinit var telInput: EditText
     private lateinit var saveButton: View
@@ -27,7 +28,9 @@ abstract class EditTelDialog : BottomSheetDialogFragment(R.layout.edit_tel_dialo
         val tel = Tel.parse(telInput.text.toString())
         if (tel == null)
             errorText.text = getString(R.string.invalid_tel)
-        else setTel(tel)
+        else {
+            setTel(tel); dismiss()
+        }
     }
 
     override fun onCreateView(
@@ -41,6 +44,8 @@ abstract class EditTelDialog : BottomSheetDialogFragment(R.layout.edit_tel_dialo
         saveButton = view.findViewById(R.id.saveTelButton)
         cancelButton = view.findViewById(R.id.cancelTelButton)
         errorText = view.findViewById(R.id.errorText)
+
+        telInput.setText(tel.toString())
 
 
         cancelButton.setOnClickListener { cancelClick() }

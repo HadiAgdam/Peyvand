@@ -29,13 +29,15 @@ class ConnectFragment : MyFragment(R.layout.fragment_connect) {
     private val contactsHelper by lazy {
         ContactsHelper(requireContext())
     }
-    private val scanOptions = ScanOptions().apply {
-        setDesiredBarcodeFormats(ScanOptions.QR_CODE)
-        setPrompt(getString(R.string.scan_qr_code))
-        setCameraId(0)
-        setBeepEnabled(false)
-        setOrientationLocked(false)
-        setBarcodeImageEnabled(true)
+    private val scanOptions by lazy {
+        ScanOptions().apply {
+            setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+            setPrompt(getString(R.string.scan_qr_code))
+            setCameraId(0)
+            setBeepEnabled(false)
+            setOrientationLocked(false)
+            setBarcodeImageEnabled(true)
+        }
     }
 
     private val qrLauncher = registerForActivityResult(ScanContract()) {
@@ -43,7 +45,11 @@ class ConnectFragment : MyFragment(R.layout.fragment_connect) {
             if (TextValidator.isValidQrString(it.contents)) {
                 val contact = Contact.parseFromURL(it.contents)
                 if (contact == null)
-                    Toast.makeText(requireContext(), getString(R.string.invalid_qr), Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.invalid_qr),
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 else {
                     contactsHelper.newContact(contact)

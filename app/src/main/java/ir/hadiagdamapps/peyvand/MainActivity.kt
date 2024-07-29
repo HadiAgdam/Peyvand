@@ -17,9 +17,7 @@ class MainActivity : Activity(R.layout.activity_main) {
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var bottomNavigationView: BottomNavigationView
 
-    private val profileHelper by lazy {
-        ProfileHelper(this)
-    }
+    private lateinit var profileHelper: ProfileHelper
 
     override fun initViews() {
         navHostFragment = supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
@@ -31,6 +29,7 @@ class MainActivity : Activity(R.layout.activity_main) {
     }
 
     override fun main() {
+        profileHelper = ProfileHelper(this)
         val profile = profileHelper.getProfile()
         if (profile == null) {
             if (profileHelper.isFirstLaunch())

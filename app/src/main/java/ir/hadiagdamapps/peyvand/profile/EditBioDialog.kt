@@ -10,10 +10,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.Bio
 
-abstract class EditBioDialog
-    : BottomSheetDialogFragment(R.layout.edit_bio_dialog) {
-
-    abstract fun setBio(bio: Bio)
+class EditBioDialog(
+    private val bio: Bio,
+    private val setBio: (bio: Bio) -> Unit
+) : BottomSheetDialogFragment(R.layout.edit_bio_dialog) {
 
     private lateinit var bioInout: EditText
     private lateinit var saveButton: View
@@ -28,7 +28,7 @@ abstract class EditBioDialog
         val bio = Bio.parse(bioInout.text.toString())
         if (bio == null)
             errorText.text = getString(R.string.invalid_bio)
-        else setBio(bio)
+        else {setBio(bio); dismiss() }
     }
 
 
@@ -46,6 +46,8 @@ abstract class EditBioDialog
 
         cancelButton.setOnClickListener { cancelClick() }
         saveButton.setOnClickListener { saveClick() }
+
+        bioInout.setText(bio.toString())
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }

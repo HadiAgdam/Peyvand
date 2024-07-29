@@ -48,29 +48,30 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
             })
     }
 
-    private val nameDialog = object : EditNameDialog() {
-        override fun setName(name: Name) {
+    private val nameDialog by lazy {
+        EditNameDialog(profile.name) { name ->
             profile.name = name
             helper.setName(name)
             nameText.text = name.toString()
         }
     }
 
-    private val telDialog = object : EditTelDialog() {
-        override fun setTel(tel: Tel) {
+    private val telDialog by lazy {
+        EditTelDialog(profile.tel) { tel ->
             profile.tel = tel
             helper.setTel(tel)
             telText.text = tel.toString()
         }
     }
 
-    private val bioDialog = object : EditBioDialog() {
-        override fun setBio(bio: Bio) {
+    private val bioDialog by lazy {
+        EditBioDialog(profile.bio) { bio ->
             profile.bio = bio
             helper.setBio(bio)
             bioText.text = bio.toString()
         }
     }
+
 
     private lateinit var image: ImageView
     private lateinit var imageContainer: View
@@ -85,8 +86,6 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     private lateinit var telText: TextView
     private lateinit var telContainer: View
 
-    private lateinit var overlay: View
-
     private fun editName() {
         nameDialog.show(requireActivity().supportFragmentManager, null)
     }
@@ -100,8 +99,6 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     }
 
     override fun initViews(view: View) {
-        overlay = view.findViewById(R.id.overlay)
-
         image = view.findViewById(R.id.image)
         imageContainer = view.findViewById(R.id.imageContainer)
         smallImageIcon = view.findViewById(R.id.smallImageIcon)

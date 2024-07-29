@@ -12,25 +12,29 @@ import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 
-abstract class EditNameDialog
-    : BottomSheetDialogFragment(R.layout.edit_name_dialog) {
-
-    abstract fun setName(name: Name)
+class EditNameDialog(
+    private val name: Name,
+    private val setName: (Name) -> Unit
+) :
+    BottomSheetDialogFragment(R.layout.edit_name_dialog) {
 
     private lateinit var nameInput: EditText
     private lateinit var saveButton: View
     private lateinit var cancelButton: View
     private lateinit var errorText: TextView
 
-    private fun cancelClick() {
-        dismiss()
-    }
+    private fun cancelClick() = dismiss()
+
 
     private fun saveClick() {
         val name = Name.parse(nameInput.text.toString())
         if (name == null)
             errorText.text = getString(R.string.invalid_name)
-        else setName(name)
+        else {
+            setName(name)
+            dismiss()
+        }
+
     }
 
     override fun onCreateView(
@@ -47,6 +51,8 @@ abstract class EditNameDialog
 
         cancelButton.setOnClickListener { cancelClick() }
         saveButton.setOnClickListener { saveClick() }
+
+        nameInput.setText(name.toString())
 
         return view
     }

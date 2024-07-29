@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import ir.hadiagdamapps.peyvand.tools.Constants.Database;
 import ir.hadiagdamapps.peyvand.tools.Constants.Database.Contacts.Columns;
 
@@ -67,13 +68,13 @@ class ContactsDatabaseHelper(private val context: Context) :
     fun getAll(): List<Contact> {
         val items = ArrayList<Contact>()
         val cursor = readableDatabase.rawQuery(
-            "SELECT (" +
+            "select " +
                     "${Columns.ID}," +
                     "${Columns.NAME}," +
                     "${Columns.PICTURE}," +
                     "${Columns.TEL}," +
                     Columns.BIO +
-                    ") from ${Database.Contacts.NAME}",
+                    " from ${Database.Contacts.NAME}",
             null
         )
 
