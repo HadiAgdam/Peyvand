@@ -6,18 +6,20 @@ class TextValidator {
 
     companion object {
         fun validateName(text: String): String? {
-//            TODO("return null if it cannot be validated")
-            return text
+            return if (text.isNotBlank() && text.all { it.isLetter() }) text
+            else null
+
         }
 
         fun validateTel(text: String): String? {
-//            TODO("return null if it cannot be validated")
-            return text
+
+            return if (text.isNotBlank() && text.all { it.isDigit() } && text.length == 11 && text[0] == '0') text
+            else null
         }
 
         fun validateBio(text: String): String? {
-//            TODO("return null if it cannot be validated")
-            return text
+            return if (text.isNotBlank() && text.length <= 250) text
+            else null
         }
 
         fun isValidQrString(text: String): Boolean {
@@ -34,7 +36,7 @@ class TextValidator {
             }
             if (headers.size != 0) return false
 
-            return false
+            return true
         }
 
     }
