@@ -29,6 +29,7 @@ class IntroActivity : Activity(R.layout.activity_intro) {
     private fun end() {
         ProfileHelper(this).disableFirstLaunch()
         startActivity(Intent(this, RegisterActivity::class.java))
+        finish()
     }
 
 
