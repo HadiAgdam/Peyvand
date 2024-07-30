@@ -12,8 +12,12 @@ class TextValidator {
         }
 
         fun validateTel(text: String): String? {
-
-            return if (text.isNotBlank() && text.all { it.isDigit() } && text.length == 11 && text[0] == '0') text
+            return if (text.isNotBlank() &&
+                text.all { it.isDigit() } &&
+                text.length == 11 &&
+                text[0] == '0' &&
+                text[1] == '9'
+            ) text
             else null
         }
 

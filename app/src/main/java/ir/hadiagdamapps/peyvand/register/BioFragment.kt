@@ -23,8 +23,16 @@ class BioFragment : MyFragment(R.layout.fragment_bio) {
 
         bioInput.doOnTextChanged { text, _, _, _ ->
             bio = Bio.parse(text.toString())
-            if (bio == null) bioContainer.error = getString(R.string.invalid_bio)
+            if (bio != null) clearError()
         }
+    }
+
+    fun displayError() {
+        if (bio == null) bioContainer.error = getString(R.string.invalid_bio)
+    }
+
+    fun clearError() {
+        bioContainer.error = null
     }
 
     override fun main() {

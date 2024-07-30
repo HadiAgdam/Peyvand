@@ -44,18 +44,21 @@ class RegisterPagerAdapter(
                 if (nameFragment.picture != null)
                     helper.setPicture(nameFragment.picture!!)
                 pager.currentItem++
-            }
+            } else nameFragment.displayError()
 
-            1 -> if (telFragment.tel != null) {
-                helper.setTel(telFragment.tel!!)
-                pager.currentItem++
-            }
+            1 ->
+                if (telFragment.tel != null) {
+                    helper.setTel(telFragment.tel!!)
+                    pager.currentItem++
+                } else telFragment.displayError()
 
             2 -> {
-                if (bioFragment.bio != null)
+                if (bioFragment.bio != null) {
                     helper.setBio(bioFragment.bio!!)
+                    end()
+                }
+                else bioFragment.displayError()
 
-                end()
             }
         }
     }

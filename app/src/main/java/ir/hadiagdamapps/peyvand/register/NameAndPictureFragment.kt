@@ -32,7 +32,7 @@ class NameAndPictureFragment(private val fragmentManager: FragmentManager) :
     }
 
     private val chooseDialog: ChoosePictureDialogFragment by lazy {
-        ChoosePictureDialogFragment( fragmentManager,
+        ChoosePictureDialogFragment(fragmentManager,
             { // camera
                 TODO("implement")
             },
@@ -55,6 +55,14 @@ class NameAndPictureFragment(private val fragmentManager: FragmentManager) :
     var picture: Picture? = null
     var name: Name? = null
 
+    private fun clearError() {
+        nameContainer.error = null
+    }
+
+    fun displayError() {
+        if (name == null) nameContainer.error = getString(R.string.invalid_name)
+    }
+
 
     override fun initViews(view: View) {
         nameInput = view.findViewById(R.id.nameInput)
@@ -63,7 +71,7 @@ class NameAndPictureFragment(private val fragmentManager: FragmentManager) :
         nameInput.doOnTextChanged { text, _, _, _ ->
             name = Name.parse(text.toString())
 
-            if (name == null) nameContainer.error = getString(R.string.invalid_name)
+            if (name != null) clearError()
         }
 
         imageContainer = view.findViewById(R.id.imageContainer)
@@ -114,13 +122,13 @@ class ChoosePictureDialogFragment(
                 if (showUnSelect) {
                     unselectItem.visibility = View.VISIBLE
                     div2.visibility = View.VISIBLE
-                }
-                else {
+                } else {
                     unselectItem.visibility = View.GONE
                     div2.visibility = View.GONE
                 }
 
-            }, 10)
+            }, 10
+        )
 
         show(fragmentManager, null)
     }
