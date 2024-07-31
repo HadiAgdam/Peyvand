@@ -1,9 +1,11 @@
 package ir.hadiagdamapps.peyvand.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -15,7 +17,7 @@ class EditBioDialog(
     private val setBio: (bio: Bio) -> Unit
 ) : BottomSheetDialogFragment(R.layout.edit_bio_dialog) {
 
-    private lateinit var bioInout: EditText
+    private lateinit var bioInput: EditText
     private lateinit var saveButton: View
     private lateinit var cancelButton: View
     private lateinit var errorText: TextView
@@ -25,12 +27,13 @@ class EditBioDialog(
     }
 
     private fun saveClick() {
-        val bio = Bio.parse(bioInout.text.toString())
+        val bio = Bio.parse(bioInput.text.toString())
         if (bio == null)
             errorText.text = getString(R.string.invalid_bio)
-        else {setBio(bio); dismiss() }
+        else {
+            setBio(bio); dismiss()
+        }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,17 +42,23 @@ class EditBioDialog(
     ): View? {
         val view = inflater.inflate(R.layout.edit_bio_dialog, container, false)
 
-        bioInout = view.findViewById(R.id.bioInput)
+        bioInput = view.findViewById(R.id.editBioInput)
         saveButton = view.findViewById(R.id.saveBioButton)
         cancelButton = view.findViewById(R.id.cancelBioButton)
         errorText = view.findViewById(R.id.errorText)
 
+        bioInput.setText(bio.toString())
+
         cancelButton.setOnClickListener { cancelClick() }
         saveButton.setOnClickListener { saveClick() }
 
-        bioInout.setText(bio.toString())
 
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
 
 }

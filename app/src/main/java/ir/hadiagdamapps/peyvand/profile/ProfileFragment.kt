@@ -1,6 +1,7 @@
 package ir.hadiagdamapps.peyvand.profile
 
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -27,10 +28,11 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
 
     private val pickImage = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         if (it == null) return@registerForActivityResult
-        picture = Picture.parse(requireContext().contentResolver, it)
-        image.setImageBitmap(picture!!.toBitmap())
-        if (picture != null)
-            helper.setPicture(picture!!)
+        val picture =
+            Picture.parse(requireContext().contentResolver, it) ?: return@registerForActivityResult
+        helper.setPicture(picture)
+        image.setImageBitmap(picture.toBitmap())
+        helper.setPicture(profile.picture!!)
     }
 
     private val chooseDialog: ChoosePictureDialogFragment by lazy {
@@ -118,19 +120,20 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     }
 
     override fun main() {
-        image.setOnClickListener { chooseDialog.showDialog(picture != null) }
         smallImageIcon.setOnClickListener { image.performClick() }
         val p = helper.getProfile()
         if (p != null)
             profile = p
 
+        picture = profile.picture
 
-        val picture = profile.picture
         if (picture != null)
-            image.setImageBitmap(picture.toBitmap())
+            image.setImageBitmap(picture!!.toBitmap())
         else image.setImageBitmap(Picture.getPlaceHolder(requireContext()))
         nameText.text = profile.name.toString()
         bioText.text = profile.bio.toString()
         telText.text = profile.tel.toString()
+
+        image.setOnClickListener { chooseDialog.showDialog(picture != null) }
     }
 }
