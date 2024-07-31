@@ -1,6 +1,9 @@
 package ir.hadiagdamapps.peyvand.profile
 
+import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -35,10 +38,19 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
         helper.setPicture(profile.picture!!)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0 && data != null) {
+            picture = Picture.parse(data.extras?.get("data") as Bitmap)
+            image.setImageBitmap(picture!!.toBitmap())
+        }
+    }
+
     private val chooseDialog: ChoosePictureDialogFragment by lazy {
         ChoosePictureDialogFragment(requireActivity().supportFragmentManager,
             { // camera
-                TODO("implement")
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, 0)
             },
             { // gallery
                 pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))

@@ -1,8 +1,11 @@
 package ir.hadiagdamapps.peyvand.register
 
+import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,10 +34,20 @@ class NameAndPictureFragment(private val fragmentManager: FragmentManager) :
         imageView.setImageBitmap(picture!!.toBitmap())
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0 && data != null) {
+            picture = Picture.parse(data.extras?.get("data") as Bitmap)
+            imageView.setImageBitmap(picture!!.toBitmap())
+        }
+    }
+
     private val chooseDialog: ChoosePictureDialogFragment by lazy {
         ChoosePictureDialogFragment(fragmentManager,
             { // camera
-                TODO("implement")
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, 0)
             },
             { // gallery
                 pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))

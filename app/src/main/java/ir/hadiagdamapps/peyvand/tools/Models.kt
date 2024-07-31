@@ -75,6 +75,10 @@ class Picture private constructor(private val bitmap: Bitmap) : Parcelable {
             else null
         }
 
+        fun parse(bitmap: Bitmap): Picture {
+            return Picture(bitmap)
+        }
+
         fun getPlaceHolder(context: Context): Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.picture_placeholder)
         
     }
