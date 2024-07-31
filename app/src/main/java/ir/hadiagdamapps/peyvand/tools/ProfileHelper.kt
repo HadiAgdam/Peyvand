@@ -94,8 +94,16 @@ class ProfileHelper(private val context: Context) {
         resumeUploading()
     }
 
-    fun deletePicture() {
-        TODO()
+    fun deletePicture()  {
+        val imageRef = ref.child(getImageKey() + ".png")
+
+        imageRef.delete()
+
+        profilePictureFile.delete()
+        preferences.edit().apply {
+            putString("image_url", "")
+            apply()
+        }
     }
 
     fun getPictureUrl() = preferences.getString("image_url", "")
