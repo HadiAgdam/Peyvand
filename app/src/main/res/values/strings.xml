@@ -8,12 +8,16 @@
     <string name="connect_description">Scan this code to share your contact information with your friends. Or Scan your friends QRCode with scan button. </string>
     <string name="skip">Skip</string>
     <string name="next">Next</string>
-    <string name="intro_title_1">Title 1</string>
-    <string name="intro_title_2">Title 2</string>
-    <string name="intro_title_3">Title 3</string>
-    <string name="intro_content_1">Intro Content 1</string>
-    <string name="intro_content_2">Intro Content 2</string>
-    <string name="intro_content_3">Intro Content 3</string>
+
+    <string name="intro_title_1">QR Code Connect</string>
+    <string name="intro_content_1">Effortlessly share your contact information with a simple QR code scan. Instantly connect and save profiles to your phone’s contacts, complete with pictures and bios.</string>
+
+    <string name="intro_title_2">Connect with Ease</string>
+    <string name="intro_content_2">Simplify the way you connect with people. Use QR codes to quickly exchange contact details, including names, phone numbers, emails, and profile pictures. Perfect for business or social gatherings.</string>
+
+    <string name="intro_title_3">Quick Contacts</string>
+    <string name="intro_content_3">Adding new contacts has never been easier. Scan QR codes to instantly save detailed contact information, ensuring you never lose a connection.</string>
+
     <string name="login">Login</string>
     <string name="back">Back</string>
     <string name="name">Name</string>

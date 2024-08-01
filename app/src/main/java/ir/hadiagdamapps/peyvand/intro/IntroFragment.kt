@@ -15,7 +15,7 @@ import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.MyFragment
 
 class IntroFragment(
-    @RawRes private val animation: Int,
+    private val animation: Int,
     private val title: String,
     private val description: String
 ) : MyFragment(R.layout.fragment_intro) {
@@ -25,7 +25,7 @@ class IntroFragment(
     private lateinit var descriptionText: TextView
     private var played = false
 
-    fun playAnimation() {
+    private fun playAnimation() {
         if (played) return
 
         animationView.playAnimation()

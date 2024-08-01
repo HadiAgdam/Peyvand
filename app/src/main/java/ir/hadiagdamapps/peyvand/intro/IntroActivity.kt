@@ -25,7 +25,6 @@ class IntroActivity : Activity(R.layout.activity_intro) {
     private val tab: TabLayout by lazy { findViewById(R.id.tab) }
 
 
-
     private fun end() {
         ProfileHelper(this).disableFirstLaunch()
         startActivity(Intent(this, RegisterActivity::class.java))
