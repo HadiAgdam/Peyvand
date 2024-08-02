@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">پیوند</string>
+    <string name="profile">پروفایل</string>
+    <string name="connect">اتصال</string>
+    <string name="contacts">مخاطبین</string>
+    <string name="hello_blank_fragment">سلام بخش خالی</string>
+    <string name="connect_title">اسکن کد</string>
+    <string name="connect_description">این کد را اسکن کنید تا اطلاعات تماس خود را با دوستانتان به اشتراک بگذارید. یا کد QR دوستانتان را با دکمه اسکن اسکن کنید.</string>
+    <string name="skip">رد کردن</string>
+    <string name="next">بعدی</string>
+
+    <string name="intro_title_1">اتصال با کد QR</string>
+    <string name="intro_content_1">به راحتی اطلاعات تماس خود را با یک اسکن ساده کد QR به اشتراک بگذارید. بلافاصله متصل شوید و پروفایل‌ها را با تصاویر و بیوگرافی‌ها در مخاطبین گوشی خود ذخیره کنید.</string>
+
+    <string name="intro_title_2">اتصال آسان</string>
+    <string name="intro_content_2">روش اتصال با افراد را ساده کنید. از کدهای QR برای تبادل سریع جزئیات تماس، از جمله نام، شماره تلفن، ایمیل و تصاویر پروفایل استفاده کنید. مناسب برای گردهمایی‌های تجاری یا اجتماعی.</string>
+
+    <string name="intro_title_3">مخاطبین سریع</string>
+    <string name="intro_content_3">افزودن مخاطبین جدید هرگز به این آسانی نبوده است. کدهای QR را اسکن کنید تا بلافاصله اطلاعات تماس دقیق را ذخیره کنید و هرگز یک ارتباط را از دست ندهید.</string>
+
+    <string name="login">ورود</string>
+    <string name="back">بازگشت</string>
+    <string name="name">نام</string>
+    <string name="tel_input">شماره تلفن</string>
+    <string name="tel_hint">مثال: 09012345678</string>
+    <string name="bio_input">بیوگرافی خود را وارد کنید</string>
+    <string name="invalid_name">نام نامعتبر است.</string>
+    <string name="invalid_tel">شماره تلفن نامعتبر است.</string>
+    <string name="invalid_bio">بیوگرافی نامعتبر است.</string>
+    <string name="use_camera">استفاده از دوربین</string>
+    <string name="pick_image">انتخاب از گالری</string>
+    <string name="unselect_image">لغو انتخاب تصویر</string>
+    <string name="tel_title">شماره تلفن</string>
+    <string name="bio_title">بیو</string>
+    <string name="edit_name_title">نام</string>
+    <string name="edit_bio_title">درباره</string>
+    <string name="edit_tel_title">تلفن</string>
+    <string name="edit_name_description">این نام کاربری یا پین شما نیست. این نام برای مخاطبین واتساپ شما قابل مشاهده خواهد بود.</string>
+    <string name="enter_name">نام خود را وارد کنید</string>
+    <string name="enter_bio">اطلاعات خود را وارد کنید</string>
+    <string name="enter_tel">شماره تلفن خود را وارد کنید</string>
+    <string name="save">ذخیره</string>
+    <string name="Cancel">لغو</string>
+    <string name="delete_dialog_title">حذف</string>
+    <string name="delete_dialog_content">آیا می‌خواهید مخاطب را حذف کنید؟</string>
+    <string name="delete_dialog_positive">بله</string>
+    <string name="delete_dialog_negative">خیر</string>
+    <string name="delete_dialog_neutral">لغو</string>
+    <string name="save_contact">ذخیره مخاطب</string>
+    <string name="invalid_qr">کد QR نامعتبر است</string>
+    <string name="scan_qr_code">کد را اسکن کنید</string>
+</resources>
