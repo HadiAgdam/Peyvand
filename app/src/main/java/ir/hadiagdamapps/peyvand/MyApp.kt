@@ -1,13 +1,27 @@
 package ir.hadiagdamapps.peyvand
 
 import android.app.Application
+import android.content.res.Configuration
 import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 import java.io.File
 import java.io.FileOutputStream
+import java.util.Locale
 
 class MyApp : Application() {
 
     private val cacheDirs = listOf("user")
+
+    private fun setLocale() {
+        val locale = Locale(getDeviceLanguage())
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.setLocale(locale)
+        this.resources.updateConfiguration(config, this.resources.displayMetrics)
+    }
+
+    private fun getDeviceLanguage(): String {
+        return this.resources.configuration.locale.language
+    }
 
     private fun loadPlaceHolder() {
         val f = File(cacheDir, "user/picture.png")
@@ -31,6 +45,7 @@ class MyApp : Application() {
         makCacheDirs()
         loadPlaceHolder()
         ProfileHelper(this).resumeUploading()
+        setLocale()
     }
 
 }

@@ -36,7 +36,7 @@
     <string name="edit_name_title">نام</string>
     <string name="edit_bio_title">درباره</string>
     <string name="edit_tel_title">تلفن</string>
-    <string name="edit_name_description">این نام کاربری یا پین شما نیست. این نام برای مخاطبین واتساپ شما قابل مشاهده خواهد بود.</string>
+    <string name="edit_name_description">این نام کاربری است که مخاطبان شما میبینند.</string>
     <string name="enter_name">نام خود را وارد کنید</string>
     <string name="enter_bio">اطلاعات خود را وارد کنید</string>
     <string name="enter_tel">شماره تلفن خود را وارد کنید</string>
