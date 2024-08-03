@@ -6,8 +6,7 @@ class TextValidator {
 
     companion object {
         fun validateName(text: String): String? {
-            return if (text.isNotBlank() && text.all { it.isLetter() }) text
-            else null
+            return text.ifBlank { null }
 
         }
 

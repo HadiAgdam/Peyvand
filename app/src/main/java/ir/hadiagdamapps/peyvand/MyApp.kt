@@ -24,14 +24,14 @@ class MyApp : Application() {
     }
 
     private fun loadPlaceHolder() {
-        val f = File(cacheDir, "user/picture.png")
-        if (!f.exists())
-        {
-            val input = assets.open("picture_placeholder.png")
-            val output = FileOutputStream(f)
-
-            output.write(input.readBytes())
-        }
+//        val f = File(cacheDir, "user/picture.png")
+//        if (!f.exists())
+//        {
+//            val input = assets.open("picture_placeholder.png")
+//            val output = FileOutputStream(f)
+//
+//            output.write(input.readBytes())
+//        }
     }
 
     private fun makCacheDirs() {

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.FragmentManager
@@ -35,22 +36,26 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
             Picture.parse(requireContext().contentResolver, it) ?: return@registerForActivityResult
         helper.setPicture(picture)
         image.setImageBitmap(picture.toBitmap())
-        helper.setPicture(profile.picture!!)
+        profile.picture = picture
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 0 && data != null) {
             picture = Picture.parse(data.extras?.get("data") as Bitmap)
+
+            helper.setPicture(picture!!)
             image.setImageBitmap(picture!!.toBitmap())
+            profile.picture = picture
+
         }
     }
 
     private val chooseDialog: ChoosePictureDialogFragment by lazy {
         ChoosePictureDialogFragment(requireActivity().supportFragmentManager,
             { // camera
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(intent, 0)
+                val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(takePictureIntent, 0)
             },
             { // gallery
                 pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -132,7 +137,6 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     }
 
     override fun main() {
-        smallImageIcon.setOnClickListener { image.performClick() }
         val p = helper.getProfile()
         if (p != null)
             profile = p
@@ -141,11 +145,11 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
 
         if (picture != null)
             image.setImageBitmap(picture!!.toBitmap())
-        else image.setImageBitmap(Picture.getPlaceHolder(requireContext()))
         nameText.text = profile.name.toString()
         bioText.text = profile.bio.toString()
         telText.text = profile.tel.toString()
 
         image.setOnClickListener { chooseDialog.showDialog(picture != null) }
+        smallImageIcon.setOnClickListener { image.performClick() }
     }
 }

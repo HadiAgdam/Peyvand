@@ -2,6 +2,7 @@ package ir.hadiagdamapps.peyvand.tools
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -61,23 +62,26 @@ class ProfileHelper(private val context: Context) {
     }
 
     fun resumeUploading() {
-        if (!preferences.getBoolean("image_uploaded", true)) {
-            val imageRef = ref.child(getImageKey() + ".png")
+        try {
+            if (!preferences.getBoolean("image_uploaded", true)) {
+                val imageRef = ref.child(getImageKey() + ".png")
 
-            imageRef.putBytes(profilePictureFile.readBytes()).addOnSuccessListener {
-                imageRef.downloadUrl.addOnSuccessListener {
-                    preferences.edit().apply {
-                        putBoolean("image_uploaded", true)
-                        putString("image_url", it.toString())
-                        apply()
+                imageRef.putBytes(profilePictureFile.readBytes()).addOnSuccessListener {
+                    imageRef.downloadUrl.addOnSuccessListener {
+                        preferences.edit().apply {
+                            putBoolean("image_uploaded", true)
+                            putString("image_url", it.toString())
+                            apply()
+                        }
                     }
+
                 }
 
             }
-
+        }catch (e: Exception) {
+            e.printStackTrace()
         }
     }
-
     fun setPicture(picture: Picture) {
         val ous = ByteArrayOutputStream()
         picture.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, ous)
