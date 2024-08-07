@@ -1,17 +1,21 @@
 package ir.hadiagdamapps.peyvand.register
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -21,8 +25,6 @@ import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.MyFragment
 import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.Picture
-import ir.hadiagdamapps.peyvand.tools.TextValidator
-import kotlinx.coroutines.selects.select
 
 
 class NameAndPictureFragment(private val fragmentManager: FragmentManager) :
@@ -34,6 +36,31 @@ class NameAndPictureFragment(private val fragmentManager: FragmentManager) :
         imageView.setImageBitmap(picture!!.toBitmap())
     }
 
+    private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted: Boolean ->
+            if (granted) {
+                startActivityForResult(cameraIntent, 0)
+            } else {
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle(R.string.permission_dialog_title)
+                    setMessage(R.string.permission_dialog_text_camera)
+
+                    setNeutralButton(R.string.dismiss, null)
+
+                    setPositiveButton(R.string.ok) { _, _ ->
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri: Uri = Uri.fromParts("package", requireContext().packageName, null)
+                        intent.data = uri
+                        startActivityForResult(intent, 1)
+                    }
+
+                }.show()
+            }
+        }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -41,13 +68,15 @@ class NameAndPictureFragment(private val fragmentManager: FragmentManager) :
             picture = Picture.parse(data.extras?.get("data") as Bitmap)
             imageView.setImageBitmap(picture!!.toBitmap())
         }
+        if (requestCode == 1 && ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            startActivityForResult(cameraIntent, 0)
+        }
     }
 
     private val chooseDialog: ChoosePictureDialogFragment by lazy {
         ChoosePictureDialogFragment(fragmentManager,
             { // camera
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(intent, 0)
+                requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
             },
             { // gallery
                 pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))

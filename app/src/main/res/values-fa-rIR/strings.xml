@@ -50,4 +50,8 @@
     <string name="save_contact">ذخیره مخاطب</string>
     <string name="invalid_qr">کد QR نامعتبر است</string>
     <string name="scan_qr_code">کد را اسکن کنید</string>
+    <string name="permission_dialog_title">عدم دسترسی</string>
+    <string name="permission_dialog_text_camera">اگر میخواهید با استفاده از دوربین عکس پروفایل خود را تنظیم کنید٬ دسترسی به دوربین را فعال کنید.</string>
+    <string name="dismiss">بیخیال</string>
+    <string name="ok">باشه</string>
 </resources>

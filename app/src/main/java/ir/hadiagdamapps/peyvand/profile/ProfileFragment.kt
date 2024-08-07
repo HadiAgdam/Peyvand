@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -11,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import ir.hadiagdamapps.peyvand.R
@@ -39,6 +41,30 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
         profile.picture = picture
     }
 
+    private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted: Boolean ->
+            if (granted) {
+                startActivityForResult(cameraIntent, 0)
+            } else {
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle(R.string.permission_dialog_title)
+                    setMessage(R.string.permission_dialog_text_camera)
+
+                    setNeutralButton(R.string.dismiss, null)
+
+                    setPositiveButton(R.string.ok) { _, _ ->
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri: Uri = Uri.fromParts("package", requireContext().packageName, null)
+                        intent.data = uri
+                        startActivityForResult(intent, 1)
+                    }
+
+                }.show()
+            }
+        }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 0 && data != null) {
@@ -54,8 +80,7 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     private val chooseDialog: ChoosePictureDialogFragment by lazy {
         ChoosePictureDialogFragment(requireActivity().supportFragmentManager,
             { // camera
-                val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(takePictureIntent, 0)
+                requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
             },
             { // gallery
                 pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -90,7 +115,6 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
             bioText.text = bio.toString()
         }
     }
-
 
     private lateinit var image: ImageView
     private lateinit var imageContainer: View

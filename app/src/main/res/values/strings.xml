@@ -49,4 +49,8 @@
     <string name="save_contact">Save Contact</string>
     <string name="invalid_qr">Qr code is invalid</string>
     <string name="scan_qr_code">Scan the code</string>
+    <string name="permission_dialog_title">Permission denied</string>
+    <string name="permission_dialog_text_camera">If you want to use camera to set a profile picture, please grant permission from app settings.</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="ok">Ok</string>
 </resources>
