@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "45689344034",
+    "project_id": "peyvand-391ab",
+    "storage_bucket": "peyvand-391ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45689344034:android:0b433f91abd3e0b8673a7b",
+        "android_client_info": {
+          "package_name": "ir.hadiagdamapps.peyvand"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkYYu1Ns3A9brhdLAHcfCEV1_Te1X4v7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
