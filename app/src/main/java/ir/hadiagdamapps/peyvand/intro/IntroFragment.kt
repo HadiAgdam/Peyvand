@@ -31,12 +31,13 @@ class IntroFragment(
         animationView.playAnimation()
 
         // temp
-        Handler().postDelayed(
-            {
-                animationView.pauseAnimation()
-            },
-            1000
-        )
+        if (animation == R.raw.anim1)
+            Handler().postDelayed(
+                {
+                    animationView.pauseAnimation()
+                },
+                1000
+            )
 
 
         played = true
