@@ -17,20 +17,24 @@ Adding new contacts has never been easier. Scan QR codes to instantly save detai
 
 Here are some screenshots of the Peyvand app in action:
 
-![Home Screen](screenshots/home.png)
-*Easy access to qr code.*
+# My Android App
 
-![Intro](screenshots/intro1.png)
+<img src="screenshots/home.png" alt="Home Screen" width="400"/>
+*Easy access to QR code.*
+
+<img src="screenshots/intro1.png" alt="Intro" width="400"/>
 *Intro 1*
 
-![Intro](screenshots/intro2.png)
+<img src="screenshots/intro2.png" alt="Intro" width="400"/>
 *Intro 2*
 
-![Profile](screenshots/profile.png)
-*Profile screen with a smooth ux*
+<img src="screenshots/profile.png" alt="Profile" width="400"/>
+*Profile screen with a smooth UX*
 
-![Register](screenshots/register.png)
-*Register activity using viewpager*
+<img src="screenshots/register.png" alt="Register" width="400"/>
+*Register activity using ViewPager*
+
+
 
 ## Download
 
