@@ -1,9 +1,17 @@
 package ir.hadiagdamapps.peyvand.connect
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore
+import android.provider.Settings
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -14,6 +22,7 @@ import ir.hadiagdamapps.peyvand.contacts.ContactActivity
 import ir.hadiagdamapps.peyvand.tools.Contact
 import ir.hadiagdamapps.peyvand.tools.ContactsHelper
 import ir.hadiagdamapps.peyvand.tools.MyFragment
+import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 import ir.hadiagdamapps.peyvand.tools.TextValidator
 
@@ -63,11 +72,40 @@ class ConnectFragment : MyFragment(R.layout.fragment_connect) {
         }
     }
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted: Boolean ->
+            if (granted) {
+                qrLauncher.launch(scanOptions)
+            } else {
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle(R.string.permission_dialog_title)
+                    setMessage(R.string.permission_dialog_text_camera)
+
+                    setNeutralButton(R.string.dismiss, null)
+
+                    setPositiveButton(R.string.ok) { _, _ ->
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri: Uri = Uri.fromParts("package", requireContext().packageName, null)
+                        intent.data = uri
+                        startActivityForResult(intent, 0)
+                    }
+
+                }.show()
+            }
+        }
+
 
     private fun scanCode() {
-        qrLauncher.launch(scanOptions)
+        requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0 && ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            qrLauncher.launch(scanOptions)
+        }
+    }
 
     private fun loadQrCode() {
         val profile = profileHelper.getProfile() ?: return
