@@ -53,4 +53,11 @@
     <string name="permission_dialog_text_camera">If you want to use camera to set a profile picture, please grant permission from app settings.</string>
     <string name="dismiss">Dismiss</string>
     <string name="ok">Ok</string>
+
+    <string name="privacy_title">Privacy Policy</string>
+    <string name="privacy_content">We require access to your phone number, telephone details, and an image (also your name and biography, although these may be considered less critical). All information, except for the image, is stored locally in the phone\'s cache. This ensures that your personal data, such as your phone number and other details, remain accessible for quicker retrieval without requiring external storage or network access. However, the image is handled separately and may be stored differently to optimize app performance and user experience.</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ask_privacy">If you want to use the app, you should accept privacy policy.</string>
 </resources>
