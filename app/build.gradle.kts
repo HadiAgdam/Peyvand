@@ -13,7 +13,7 @@ android {
         applicationId = "ir.hadiagdamapps.peyvand"
         minSdk = 21
         targetSdk = 34
-        versionCode = 1
+        versionCode = 2
         versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
