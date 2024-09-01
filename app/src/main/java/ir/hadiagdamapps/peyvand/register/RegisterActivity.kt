@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -15,6 +16,31 @@ import ir.hadiagdamapps.peyvand.tools.Profile
 import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 
 class RegisterActivity : Activity(R.layout.activity_register) {
+
+
+    private val privacyDialog by lazy {
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.privacy_title)
+            setMessage(R.string.privacy_content)
+
+            setPositiveButton(R.string.yes) { _, _ -> }
+            setNegativeButton(R.string.no) { _, _ -> }
+
+            setCancelable(false)
+        }.create()
+    }
+
+    private val askPrivacyDialog by lazy {
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.privacy_title)
+            setMessage(R.string.ask_privacy)
+
+            setPositiveButton(R.string.ok) { _, _ -> privacyDialog.show() }
+
+            setCancelable(false)
+        }.create()
+    }
+
 
     private val pager: ViewPager2 by lazy { findViewById(R.id.pager) }
     private val nextButton: Button by lazy { findViewById(R.id.nextButton) }
@@ -35,6 +61,6 @@ class RegisterActivity : Activity(R.layout.activity_register) {
     }
 
     override fun main() {
-
+        askPrivacyDialog.show()
     }
 }
