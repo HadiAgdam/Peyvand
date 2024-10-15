@@ -42,7 +42,7 @@ class ConnectFragment : MyFragment(R.layout.fragment_connect) {
         ScanOptions().apply {
             setDesiredBarcodeFormats(ScanOptions.QR_CODE)
             setPrompt(getString(R.string.scan_qr_code))
-            setCameraId(0)
+            setCameraId(1)
             setBeepEnabled(false)
             setOrientationLocked(false)
             setBarcodeImageEnabled(true)

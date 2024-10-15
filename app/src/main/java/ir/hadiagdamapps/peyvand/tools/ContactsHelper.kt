@@ -21,7 +21,7 @@ class ContactsHelper(private val context: Context) {
 }
 
 
-class ContactsDatabaseHelper(private val context: Context) :
+class ContactsDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, Database.NAME, null, Database.VERSION) {
 
     private val createTableQuery =
@@ -83,7 +83,7 @@ class ContactsDatabaseHelper(private val context: Context) :
 
                 val id = getInt(0)
                 val name = Name.parse(getString(1)) ?: continue
-                val picture = Picture.parse(getString(2)) ?: continue
+                val picture = Picture.parse(getString(2))
                 val tel = Tel.parse(getString(3)) ?: continue
                 val bio = Bio.parse(getString(4)) ?: continue
 

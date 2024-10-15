@@ -68,11 +68,16 @@ class Picture private constructor(private val bitmap: Bitmap) : Parcelable {
         }
 
         fun parse(url: String): Picture? {
-            val bitmap = BitmapFactory.decodeStream(URL(url).openConnection().getInputStream())
+            try {
+                val bitmap = BitmapFactory.decodeStream(URL(url).openConnection().getInputStream())
 
-            return if (bitmap != null)
-                Picture(bitmap)
-            else null
+                if (bitmap != null)
+                    return Picture(bitmap)
+                return null
+            }
+            catch (ex: Exception) {
+                return null
+            }
         }
 
         fun parse(bitmap: Bitmap): Picture {
