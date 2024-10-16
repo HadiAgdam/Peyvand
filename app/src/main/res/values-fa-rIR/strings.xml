@@ -47,7 +47,7 @@
     <string name="delete_dialog_positive">بله</string>
     <string name="delete_dialog_negative">خیر</string>
     <string name="delete_dialog_neutral">لغو</string>
-    <string name="save_contact">ذخیره مخاطب</string>
+    <string name="save_contact">ذخیره در دستگاه</string>
     <string name="invalid_qr">کد QR نامعتبر است</string>
     <string name="scan_qr_code">کد را اسکن کنید</string>
     <string name="permission_dialog_title">عدم دسترسی</string>
@@ -60,4 +60,5 @@
     <string name="yes">بله</string>
     <string name="no">خیر</string>
     <string name="ask_privacy">اگر می خواهید از برنامه استفاده کنید، باید سیاست حفظ حریم خصوصی را بپذیرید.</string>
+    <string name="copied_to_clipboard">کپی شد</string>
 </resources>

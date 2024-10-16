@@ -46,7 +46,6 @@
     <string name="delete_dialog_positive">Yes</string>
     <string name="delete_dialog_negative">No</string>
     <string name="delete_dialog_neutral">Cancel</string>
-    <string name="save_contact">Save Contact</string>
     <string name="invalid_qr">Qr code is invalid</string>
     <string name="scan_qr_code">Scan the code</string>
     <string name="permission_dialog_title">Permission denied</string>
@@ -60,4 +59,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="ask_privacy">If you want to use the app, you should accept privacy policy.</string>
+    <string name="save_contact">Save in device</string>
+    <string name="copied_to_clipboard">Copied to clipboard !</string>
 </resources>
