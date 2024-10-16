@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.squareup.picasso.Picasso
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.Contact
 import ir.hadiagdamapps.peyvand.tools.ContactsHelper
@@ -21,7 +22,7 @@ class ContactsRecyclerAdapter(private val context: Context) :
     RecyclerView.Adapter<ContactsRecyclerAdapter.Holder>() {
 
     private val helper = ContactsHelper(context)
-    private val list = helper.getAll()
+    private val list: ArrayList<Contact> = helper.getAll() as ArrayList
 
     override fun getItemCount(): Int {
         return list.size
@@ -40,7 +41,11 @@ class ContactsRecyclerAdapter(private val context: Context) :
             AlertDialog.Builder(context).apply {
                 setTitle(R.string.delete_dialog_title)
                 setMessage(R.string.delete_dialog_content)
-                setPositiveButton(R.string.delete_dialog_positive) { _, _ -> helper.delete(list[position]) }
+                setPositiveButton(R.string.delete_dialog_positive) { _, _ ->
+                    helper.delete(list[position])
+                    list.removeAt(position)
+                    notifyItemRemoved(position)
+                }
                 setNegativeButton(R.string.delete_dialog_negative, null)
                 setNeutralButton(R.string.delete_dialog_neutral, null)
             }.show()
@@ -58,9 +63,15 @@ class ContactsRecyclerAdapter(private val context: Context) :
         holder.name.text = contact.name.toString()
         holder.tel.text = contact.tel.toString()
 
-        if (contact.picture == null)
-            holder.image.setImageBitmap(Picture.getPlaceHolder(context))
-        else holder.image.setImageBitmap(contact.picture!!.toBitmap())
+        if (contact.picture == null || contact.picture?.toBitmap() == null) {
+            if (contact.picture!!.urlString != null) {
+                Log.e("image loaded picasso", contact.picture!!.urlString ?: "null")
+                Picasso.get().load(contact.picture!!.urlString).into(holder.image)
+            }
+//            else
+//                holder.image.setImageBitmap(Picture.getPlaceHolder(context))
+        } else
+            holder.image.setImageBitmap(contact.picture!!.toBitmap())
         // TODO instead of picasso I'll just download/cache it and convert to bitmap
     }
 

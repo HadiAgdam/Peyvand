@@ -84,7 +84,7 @@ class ProfileHelper(private val context: Context) {
     }
     fun setPicture(picture: Picture) {
         val ous = ByteArrayOutputStream()
-        picture.toBitmap().compress(Bitmap.CompressFormat.PNG, 100, ous)
+        (picture.toBitmap() ?: return).compress(Bitmap.CompressFormat.PNG, 100, ous)
 
         profilePictureFile.outputStream().use {
             ous.writeTo(it)

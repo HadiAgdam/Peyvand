@@ -4,12 +4,12 @@ import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Parcelable
 import android.provider.MediaStore
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.Constants.Companion.TARGET_SERVER
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.io.File
@@ -52,7 +52,10 @@ class Tel private constructor(private val tell: String) : Parcelable {
 }
 
 @Parcelize
-class Picture private constructor(private val bitmap: Bitmap) : Parcelable {
+class Picture private constructor(private val bitmap: Bitmap?) : Parcelable {
+
+    @IgnoredOnParcel
+    var urlString: String? = null
 
     companion object {
         fun parse(file: File): Picture? {
@@ -68,28 +71,29 @@ class Picture private constructor(private val bitmap: Bitmap) : Parcelable {
         }
 
         fun parse(url: String): Picture? {
-            try {
-                val bitmap = BitmapFactory.decodeStream(URL(url).openConnection().getInputStream())
+            if (url == "") return null
 
-                if (bitmap != null)
-                    return Picture(bitmap)
-                return null
+            val bitmap = try {
+                BitmapFactory.decodeStream(URL(url).openConnection().getInputStream())
+            } catch (ex: Exception) {
+                null
             }
-            catch (ex: Exception) {
-                return null
-            }
+
+            return Picture(bitmap).apply { urlString = url }
         }
 
         fun parse(bitmap: Bitmap): Picture {
             return Picture(bitmap)
         }
 
-        fun getPlaceHolder(context: Context): Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.picture_placeholder)
-        
     }
 
-    fun toBitmap(): Bitmap {
+    fun toBitmap(): Bitmap? {
         return bitmap
+    }
+
+    override fun toString(): String {
+        return urlString ?: "null"
     }
 
 }

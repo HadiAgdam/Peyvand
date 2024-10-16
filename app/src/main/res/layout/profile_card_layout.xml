@@ -24,9 +24,10 @@
 
             <ImageView
                 android:id="@+id/image"
+                android:scaleType="fitXY"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_launcher_background" />
+                android:background="@drawable/picture_placeholder" />
         </androidx.cardview.widget.CardView>
 
         <TextView

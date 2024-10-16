@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import ir.hadiagdamapps.peyvand.tools.Constants.Database;
 import ir.hadiagdamapps.peyvand.tools.Constants.Database.Contacts.Columns;
 
@@ -48,10 +47,10 @@ class ContactsDatabaseHelper(context: Context) :
     }
 
     fun delete(contact: Contact) {
-        writableDatabase.rawQuery(
-            "DELETE FROM ${Database.Contacts.NAME} WHERE (${Columns.ID}=${contact.id})",
-            null
-        ).close()
+        writableDatabase.apply {
+            delete(Database.Contacts.NAME, "${Columns.ID} = ?", arrayOf(contact.id.toString()))
+            close()
+        }
     }
 
     fun insert(contact: Contact): Int {
