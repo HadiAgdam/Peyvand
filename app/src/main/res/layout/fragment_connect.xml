@@ -53,35 +53,36 @@
         android:id="@+id/qrContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@id/scanButtonContainer"
+        android:layout_marginVertical="48dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/descriptionStatic" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/scanButtonContainer"
-        android:layout_width="86dp"
-        android:layout_height="86dp"
-        app:cardCornerRadius="64dp"
-        app:cardElevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintRight_toRightOf="parent">
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/scanButtonContainer"-->
+<!--        android:layout_width="86dp"-->
+<!--        android:layout_height="86dp"-->
+<!--        app:cardCornerRadius="64dp"-->
+<!--        app:cardElevation="10dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        app:layout_constraintRight_toRightOf="parent">-->
 
-        <ImageButton
-            android:id="@+id/scanButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/primary"
-            android:foreground="?selectableItemBackground"
-            android:padding="20dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/qr_code_icon"
-            app:fabCustomSize="108dp" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/scanButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/primary"-->
+<!--            android:foreground="?selectableItemBackground"-->
+<!--            android:padding="20dp"-->
+<!--            android:scaleType="fitXY"-->
+<!--            android:src="@drawable/qr_code_icon"-->
+<!--            app:fabCustomSize="108dp" />-->
 
-    </androidx.cardview.widget.CardView>
+<!--    </androidx.cardview.widget.CardView>-->
 
     <TextView
         android:id="@+id/titleStatic"

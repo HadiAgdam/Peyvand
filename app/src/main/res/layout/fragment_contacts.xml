@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/Container"
     tools:context=".contacts.ContactsFragment">
 
     <TextView
@@ -21,5 +21,28 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/staticTitle" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/scanButtonContainer"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:cardCornerRadius="64dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <ImageButton
+            android:id="@+id/scanButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/primary"
+            android:foreground="?selectableItemBackground"
+            android:padding="18dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/qr_code_icon"
+            app:fabCustomSize="108dp"
+            app:tint="@color/white" />
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

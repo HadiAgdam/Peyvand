@@ -31,80 +31,8 @@ class ConnectFragment : MyFragment(R.layout.fragment_connect) {
     private val writer = MultiFormatWriter()
 
     private lateinit var qrContainer: ImageView
-    private lateinit var scanButton: View
     private val profileHelper by lazy {
         ProfileHelper(requireContext())
-    }
-    private val contactsHelper by lazy {
-        ContactsHelper(requireContext())
-    }
-    private val scanOptions by lazy {
-        ScanOptions().apply {
-            setDesiredBarcodeFormats(ScanOptions.QR_CODE)
-            setPrompt(getString(R.string.scan_qr_code))
-            setCameraId(1)
-            setBeepEnabled(false)
-            setOrientationLocked(false)
-            setBarcodeImageEnabled(true)
-        }
-    }
-
-    private val qrLauncher = registerForActivityResult(ScanContract()) {
-        if (it.contents != null) {
-            if (TextValidator.isValidQrString(it.contents)) {
-                val contact = Contact.parseFromURL(it.contents)
-                if (contact == null)
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.invalid_qr),
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
-                else {
-                    contactsHelper.newContact(contact)
-                    startActivity(Intent(requireContext(), ContactActivity::class.java).apply {
-                        putExtra("contact", contact)
-                    })
-                }
-            } else
-                Toast.makeText(requireContext(), getString(R.string.invalid_qr), Toast.LENGTH_LONG)
-                    .show()
-        }
-    }
-
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted: Boolean ->
-            if (granted) {
-                qrLauncher.launch(scanOptions)
-            } else {
-                AlertDialog.Builder(requireContext()).apply {
-                    setTitle(R.string.permission_dialog_title)
-                    setMessage(R.string.permission_dialog_text_camera)
-
-                    setNeutralButton(R.string.dismiss, null)
-
-                    setPositiveButton(R.string.ok) { _, _ ->
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        val uri: Uri = Uri.fromParts("package", requireContext().packageName, null)
-                        intent.data = uri
-                        startActivityForResult(intent, 0)
-                    }
-
-                }.show()
-            }
-        }
-
-
-    private fun scanCode() {
-        requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 0 && ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            qrLauncher.launch(scanOptions)
-        }
     }
 
     private fun loadQrCode() {
@@ -117,8 +45,6 @@ class ConnectFragment : MyFragment(R.layout.fragment_connect) {
 
     override fun initViews(view: View) {
         qrContainer = view.findViewById(R.id.qrContainer)
-        scanButton = view.findViewById(R.id.scanButton)
-        scanButton.setOnClickListener { scanCode() }
     }
 
     override fun main() {
