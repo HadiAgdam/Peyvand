@@ -39,6 +39,9 @@ android {
 
 dependencies {
 
+    // Volley
+    implementation(libs.volley)
+
     // Picasso
     implementation(libs.picasso)
 
