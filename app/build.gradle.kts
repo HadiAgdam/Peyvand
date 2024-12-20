@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "ir.hadiagdamapps.peyvand"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 34
         versionCode = 2
         versionName = "1.1"
@@ -38,6 +38,9 @@ android {
 }
 
 dependencies {
+
+    // crypto
+    implementation(libs.androidx.security.crypto)
 
     // Volley
     implementation(libs.volley)

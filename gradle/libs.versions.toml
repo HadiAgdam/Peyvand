@@ -1,5 +1,5 @@
 [versions]
-agp = "8.4.2"
+agp = "8.7.3"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -13,10 +13,12 @@ navigationFragment = "2.7.7"
 googleGmsGoogleServices = "4.4.2"
 firebaseStorage = "21.0.0"
 picasso = "2.8"
+securityCrypto = "1.1.0-alpha06"
 volley = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
