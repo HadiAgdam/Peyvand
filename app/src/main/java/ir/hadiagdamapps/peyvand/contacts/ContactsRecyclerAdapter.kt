@@ -24,6 +24,11 @@ class ContactsRecyclerAdapter(private val context: Context) :
     private val helper = ContactsHelper(context)
     private val list: ArrayList<Contact> = helper.getAll() as ArrayList
 
+    fun addItem(contact: Contact) {
+        list.add(contact)
+        notifyItemInserted(list.size - 1)
+    }
+
     override fun getItemCount(): Int {
         return list.size
     }
