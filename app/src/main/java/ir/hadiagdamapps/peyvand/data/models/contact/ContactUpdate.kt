@@ -1,4 +1,4 @@
-package ir.hadiagdamapps.peyvand.data.models
+package ir.hadiagdamapps.peyvand.data.models.contact
 
 import ir.hadiagdamapps.peyvand.data.models.key.PublicKey
 import ir.hadiagdamapps.peyvand.tools.Bio

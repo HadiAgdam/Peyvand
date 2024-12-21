@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import ir.hadiagdamapps.peyvand.R
-import ir.hadiagdamapps.peyvand.tools.Contact
+import ir.hadiagdamapps.peyvand.data.models.contact.Contact
 import ir.hadiagdamapps.peyvand.tools.ContactsHelper
 import ir.hadiagdamapps.peyvand.tools.MyFragment
 import ir.hadiagdamapps.peyvand.tools.TextValidator

@@ -1,7 +1,6 @@
 package ir.hadiagdamapps.peyvand.contacts
 
 import android.content.Intent
-import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.View
 import android.widget.ImageView
@@ -10,7 +9,7 @@ import android.widget.Toast
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.Activity
 import ir.hadiagdamapps.peyvand.tools.Clipboard
-import ir.hadiagdamapps.peyvand.tools.Contact
+import ir.hadiagdamapps.peyvand.data.models.contact.Contact
 
 class ContactActivity : Activity(R.layout.activity_contact) {
     private lateinit var imageView: ImageView

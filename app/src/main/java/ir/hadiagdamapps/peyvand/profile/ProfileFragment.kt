@@ -5,25 +5,18 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.FragmentManager
-import androidx.navigation.fragment.findNavController
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.register.ChoosePictureDialogFragment
-import ir.hadiagdamapps.peyvand.tools.Bio
 import ir.hadiagdamapps.peyvand.tools.MyFragment
-import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.Picture
-import ir.hadiagdamapps.peyvand.tools.Profile
+import ir.hadiagdamapps.peyvand.data.models.profile.Profile
 import ir.hadiagdamapps.peyvand.tools.ProfileHelper
-import ir.hadiagdamapps.peyvand.tools.Tel
 
 
 class ProfileFragment : MyFragment(R.layout.fragment_profile) {

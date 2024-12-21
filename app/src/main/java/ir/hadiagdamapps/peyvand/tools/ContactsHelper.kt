@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import ir.hadiagdamapps.peyvand.data.models.contact.Contact
 import ir.hadiagdamapps.peyvand.tools.Constants.Database;
 import ir.hadiagdamapps.peyvand.tools.Constants.Database.Contacts.Columns;
 

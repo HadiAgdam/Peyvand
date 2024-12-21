@@ -3,7 +3,7 @@ package ir.hadiagdamapps.peyvand.data.storage
 import android.content.Context
 import ir.hadiagdamapps.peyvand.data.Error
 import ir.hadiagdamapps.peyvand.data.Key
-import ir.hadiagdamapps.peyvand.data.models.SyncProfile
+import ir.hadiagdamapps.peyvand.data.models.profile.SyncProfile
 import ir.hadiagdamapps.peyvand.data.models.key.KeySet
 import ir.hadiagdamapps.peyvand.data.network.ApiSingleton
 import ir.hadiagdamapps.peyvand.data.network.UserApi

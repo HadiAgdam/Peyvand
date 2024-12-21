@@ -2,11 +2,10 @@ package ir.hadiagdamapps.peyvand.tools
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
+import ir.hadiagdamapps.peyvand.data.models.profile.Profile
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
 import kotlin.random.Random
 
 class ProfileHelper(private val context: Context) {

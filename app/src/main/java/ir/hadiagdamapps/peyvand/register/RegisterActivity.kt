@@ -1,19 +1,12 @@
 package ir.hadiagdamapps.peyvand.register
 
 import android.content.Intent
-import android.os.Bundle
 import android.widget.Button
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
 import ir.hadiagdamapps.peyvand.MainActivity
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.Activity
-import ir.hadiagdamapps.peyvand.tools.Profile
-import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 
 class RegisterActivity : Activity(R.layout.activity_register) {
 

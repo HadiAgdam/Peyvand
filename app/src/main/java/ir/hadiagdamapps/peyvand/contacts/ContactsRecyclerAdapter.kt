@@ -1,7 +1,6 @@
 package ir.hadiagdamapps.peyvand.contacts
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,9 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.squareup.picasso.Picasso
 import ir.hadiagdamapps.peyvand.R
-import ir.hadiagdamapps.peyvand.tools.Contact
+import ir.hadiagdamapps.peyvand.data.models.contact.Contact
 import ir.hadiagdamapps.peyvand.tools.ContactsHelper
-import ir.hadiagdamapps.peyvand.tools.Picture
 
 class ContactsRecyclerAdapter(private val context: Context) :
     RecyclerView.Adapter<ContactsRecyclerAdapter.Holder>() {

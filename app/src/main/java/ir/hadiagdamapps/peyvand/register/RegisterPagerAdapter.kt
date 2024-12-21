@@ -1,15 +1,11 @@
 package ir.hadiagdamapps.peyvand.register
 
 import android.content.Context
-import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import ir.hadiagdamapps.peyvand.tools.Picture
-import ir.hadiagdamapps.peyvand.tools.Profile
 import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 
 class RegisterPagerAdapter(

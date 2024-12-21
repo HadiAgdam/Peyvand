@@ -4,13 +4,13 @@ import com.android.volley.Request.Method
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import ir.hadiagdamapps.peyvand.data.Key
-import ir.hadiagdamapps.peyvand.data.models.ContactUpdate
+import ir.hadiagdamapps.peyvand.data.models.contact.ContactUpdate
 import ir.hadiagdamapps.peyvand.data.models.key.KeySet
 import ir.hadiagdamapps.peyvand.data.models.key.PrivateKey
 import ir.hadiagdamapps.peyvand.data.models.key.PublicKey
 import ir.hadiagdamapps.peyvand.tools.Bio
 import ir.hadiagdamapps.peyvand.tools.Name
-import ir.hadiagdamapps.peyvand.tools.Profile
+import ir.hadiagdamapps.peyvand.data.models.profile.Profile
 import org.json.JSONObject
 import ir.hadiagdamapps.peyvand.data.Key.*
 import org.json.JSONArray

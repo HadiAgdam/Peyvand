@@ -6,13 +6,9 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import ir.hadiagdamapps.peyvand.data.network.ApiSingleton
-import ir.hadiagdamapps.peyvand.data.network.UserApi
-import ir.hadiagdamapps.peyvand.data.storage.KeyManager
 import ir.hadiagdamapps.peyvand.intro.IntroActivity
 import ir.hadiagdamapps.peyvand.register.RegisterActivity
 import ir.hadiagdamapps.peyvand.tools.Activity
-import ir.hadiagdamapps.peyvand.tools.Profile
 import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 
 class MainActivity : Activity(R.layout.activity_main) {
