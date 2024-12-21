@@ -15,6 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Peyvand"
         tools:targetApi="31">
+        <service
+            android:name=".data.services.ProfileUpdateService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".contacts.ContactActivity"
             android:exported="false" />
@@ -24,7 +29,6 @@
         <activity
             android:name=".intro.IntroActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true"

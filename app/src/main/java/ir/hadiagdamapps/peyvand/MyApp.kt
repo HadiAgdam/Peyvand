@@ -1,10 +1,11 @@
 package ir.hadiagdamapps.peyvand
 
 import android.app.Application
+import android.content.Intent
 import android.content.res.Configuration
+import ir.hadiagdamapps.peyvand.data.services.ProfileUpdateService
 import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 import java.io.File
-import java.io.FileOutputStream
 import java.util.Locale
 
 class MyApp : Application() {
@@ -39,6 +40,10 @@ class MyApp : Application() {
             File(cacheDir, dir).mkdir()
     }
 
+    private fun startProfileUpdateService() {
+        val intent = Intent(this, ProfileUpdateService::class.java)
+        startService(intent)
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -46,6 +51,7 @@ class MyApp : Application() {
         loadPlaceHolder()
         ProfileHelper(this).resumeUploading()
         setLocale()
+        startProfileUpdateService()
     }
 
 }

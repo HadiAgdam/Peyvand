@@ -20,23 +20,7 @@ class MainActivity : Activity(R.layout.activity_main) {
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var bottomNavigationView: BottomNavigationView
-
-
     private lateinit var profileHelper: ProfileHelper
-
-
-    private fun updateKeySet(profile: Profile) {
-        val keyManager = KeyManager(this)
-        val set = keyManager.getKeySet()
-        if (set == null) {
-            val api = UserApi(ApiSingleton.getInstance(this).getRequestQueue())
-            api.register(profile, {
-                keyManager.put(it)
-            }, {
-                // I'll just ignore it
-            })
-        }
-    }
 
     override fun initViews() {
         navHostFragment = supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
@@ -56,7 +40,6 @@ class MainActivity : Activity(R.layout.activity_main) {
             else
                 startActivity(Intent(this, RegisterActivity::class.java))
             finish()
-        } else
-            updateKeySet(profile)
+        }
     }
 }

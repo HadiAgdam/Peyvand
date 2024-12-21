@@ -1,18 +1,18 @@
 package ir.hadiagdamapps.peyvand.data.storage
 
 import android.content.Context
+import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
-import ir.hadiagdamapps.peyvand.data.models.KeySet
-import ir.hadiagdamapps.peyvand.data.models.PrivateKey
-import ir.hadiagdamapps.peyvand.data.models.PublicKey
+import ir.hadiagdamapps.peyvand.data.Key
+import ir.hadiagdamapps.peyvand.data.models.key.KeySet
+import ir.hadiagdamapps.peyvand.data.models.key.PrivateKey
+import ir.hadiagdamapps.peyvand.data.models.key.PublicKey
+import ir.hadiagdamapps.peyvand.data.Key.PUBLIC_KEY
+import ir.hadiagdamapps.peyvand.data.Key.PRIVATE_KEY
 
 class KeyManager(context: Context) {
-
-    companion object {
-        private const val PUBLIC_KEY = "public_key"
-        private const val PRIVATE_KEY = "private_key"
-    }
 
     private val sharedPreferences = context.getSharedPreferences("Key_preferences", 0)
     private val encryptedSharedPreferences = EncryptedSharedPreferences.create(
@@ -25,12 +25,12 @@ class KeyManager(context: Context) {
 
 
     private fun getPublicKey(): PublicKey? {
-        return PublicKey.parse(sharedPreferences.getString(PUBLIC_KEY, null) ?: return null)
+        return PublicKey.parse(sharedPreferences.getString(PUBLIC_KEY) ?: return null)
     }
 
     private fun getPrivateKey(): PrivateKey? {
         return PrivateKey.parse(
-            encryptedSharedPreferences.getString(PRIVATE_KEY, null) ?: return null
+            encryptedSharedPreferences.getString(PRIVATE_KEY) ?: return null
         )
     }
 
@@ -64,3 +64,9 @@ class KeyManager(context: Context) {
 
 
 }
+
+fun Editor.putString(key: Key, value: String) {
+    this.putString(key.toString(), value)
+}
+
+fun SharedPreferences.getString(key: Key) = this.getString(key.toString(), null)
