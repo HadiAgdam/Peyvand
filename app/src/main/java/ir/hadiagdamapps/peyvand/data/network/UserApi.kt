@@ -41,4 +41,26 @@ class UserApi(private val queue: RequestQueue) : Api() {
 
     }
 
+
+    fun update(
+        login: KeySet,
+        name: Name? = null,
+        pictureUrl: String? = null,
+        bio: Bio? = null,
+        failed: (ApiError?) -> Unit = {},
+        success: () -> Unit
+    ) {
+        queue.add(
+            JsonObjectRequest(Method.PUT, "$BASE_URL/users/${login.public}", JSONObject().apply {
+                put(NAME, name?.toString())
+                put(PICTURE, pictureUrl)
+                put(BIO, bio.toString())
+            }, {
+                success()
+            }, { failed(it.toApiError()) })
+        )
+    }
+
+    }
+
 }
