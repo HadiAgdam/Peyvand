@@ -1,6 +1,6 @@
-package ir.hadiagdamapps.peyvand.data.models
+package ir.hadiagdamapps.peyvand.data.models.key
 
-class PrivateKey private constructor(val text: String) {
+class PrivateKey private constructor(private val text: String) {
 
     companion object {
 
