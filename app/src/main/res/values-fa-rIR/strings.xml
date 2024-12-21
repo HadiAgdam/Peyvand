@@ -61,4 +61,5 @@
     <string name="no">خیر</string>
     <string name="ask_privacy">اگر می خواهید از برنامه استفاده کنید، باید سیاست حفظ حریم خصوصی را بپذیرید.</string>
     <string name="copied_to_clipboard">کپی شد</string>
+    <string name="qrcode_click_info">برای ذخیره یا به اشتراک گذاری کلیک کنید !</string>
 </resources>

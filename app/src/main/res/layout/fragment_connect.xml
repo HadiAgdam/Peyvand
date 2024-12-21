@@ -101,5 +101,27 @@
         android:text="@string/connect_description"
         app:layout_constraintTop_toBottomOf="@id/titleStatic" />
 
+    <ImageView
+        android:id="@+id/staticInfoIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/info_icon"
+        app:layout_constraintTop_toBottomOf="@id/qrContainer"
+        app:layout_constraintLeft_toLeftOf="@id/qrContainer"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/qrcode_click_info"
+        android:layout_marginHorizontal="8dp"
+        android:textColor="@color/primary"
+        android:gravity="start"
+        app:layout_constraintLeft_toRightOf="@id/staticInfoIcon"
+        app:layout_constraintTop_toTopOf="@id/staticInfoIcon"
+        app:layout_constraintBottom_toBottomOf="@id/staticInfoIcon"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

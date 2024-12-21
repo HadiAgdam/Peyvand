@@ -61,4 +61,5 @@
     <string name="ask_privacy">If you want to use the app, you should accept privacy policy.</string>
     <string name="save_contact">Save in device</string>
     <string name="copied_to_clipboard">Copied to clipboard !</string>
+    <string name="qrcode_click_info">Click to share link or save qr code !</string>
 </resources>
