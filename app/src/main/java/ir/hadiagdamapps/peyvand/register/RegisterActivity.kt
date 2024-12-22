@@ -6,7 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.viewpager2.widget.ViewPager2
 import ir.hadiagdamapps.peyvand.MainActivity
 import ir.hadiagdamapps.peyvand.R
-import ir.hadiagdamapps.peyvand.tools.Activity
+import ir.hadiagdamapps.peyvand.data.Activity
 
 class RegisterActivity : Activity(R.layout.activity_register) {
 

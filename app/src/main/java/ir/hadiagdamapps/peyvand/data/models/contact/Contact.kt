@@ -2,7 +2,7 @@ package ir.hadiagdamapps.peyvand.data.models.contact
 
 import android.os.Parcelable
 import ir.hadiagdamapps.peyvand.tools.Bio
-import ir.hadiagdamapps.peyvand.tools.Constants
+import ir.hadiagdamapps.peyvand.data.Constants
 import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.tools.Tel

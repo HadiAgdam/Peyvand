@@ -1,10 +1,10 @@
 package ir.hadiagdamapps.peyvand.data.models.profile
 
 import ir.hadiagdamapps.peyvand.tools.Bio
-import ir.hadiagdamapps.peyvand.tools.Constants
+import ir.hadiagdamapps.peyvand.data.Constants
 import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.Picture
-import ir.hadiagdamapps.peyvand.tools.ProfileHelper
+import ir.hadiagdamapps.peyvand.data.ProfileHelper
 import ir.hadiagdamapps.peyvand.tools.Tel
 import java.net.URLEncoder
 

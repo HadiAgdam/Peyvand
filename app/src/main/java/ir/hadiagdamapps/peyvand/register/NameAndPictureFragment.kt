@@ -22,7 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ir.hadiagdamapps.peyvand.R
-import ir.hadiagdamapps.peyvand.tools.MyFragment
+import ir.hadiagdamapps.peyvand.data.MyFragment
 import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.Picture
 

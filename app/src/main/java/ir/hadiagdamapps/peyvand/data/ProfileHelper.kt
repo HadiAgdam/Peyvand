@@ -1,9 +1,13 @@
-package ir.hadiagdamapps.peyvand.tools
+package ir.hadiagdamapps.peyvand.data
 
 import android.content.Context
 import android.graphics.Bitmap
 import com.google.firebase.storage.FirebaseStorage
 import ir.hadiagdamapps.peyvand.data.models.profile.Profile
+import ir.hadiagdamapps.peyvand.tools.Bio
+import ir.hadiagdamapps.peyvand.tools.Name
+import ir.hadiagdamapps.peyvand.tools.Picture
+import ir.hadiagdamapps.peyvand.tools.Tel
 import java.io.ByteArrayOutputStream
 import java.io.File
 import kotlin.random.Random

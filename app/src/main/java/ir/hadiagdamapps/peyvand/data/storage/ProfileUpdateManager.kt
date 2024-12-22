@@ -9,7 +9,7 @@ import ir.hadiagdamapps.peyvand.data.network.ApiSingleton
 import ir.hadiagdamapps.peyvand.data.network.UserApi
 import ir.hadiagdamapps.peyvand.tools.Bio
 import ir.hadiagdamapps.peyvand.tools.Name
-import ir.hadiagdamapps.peyvand.tools.ProfileHelper
+import ir.hadiagdamapps.peyvand.data.ProfileHelper
 
 class ProfileUpdateManager(private val context: Context) {
 

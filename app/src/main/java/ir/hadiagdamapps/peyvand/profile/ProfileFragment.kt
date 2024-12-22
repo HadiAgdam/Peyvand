@@ -13,10 +13,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.register.ChoosePictureDialogFragment
-import ir.hadiagdamapps.peyvand.tools.MyFragment
+import ir.hadiagdamapps.peyvand.data.MyFragment
 import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.data.models.profile.Profile
-import ir.hadiagdamapps.peyvand.tools.ProfileHelper
+import ir.hadiagdamapps.peyvand.data.ProfileHelper
 
 
 class ProfileFragment : MyFragment(R.layout.fragment_profile) {

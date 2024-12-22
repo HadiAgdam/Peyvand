@@ -1,14 +1,12 @@
 package ir.hadiagdamapps.peyvand.register
 
-import android.util.Log
 import android.view.View
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ir.hadiagdamapps.peyvand.R
-import ir.hadiagdamapps.peyvand.tools.MyFragment
+import ir.hadiagdamapps.peyvand.data.MyFragment
 import ir.hadiagdamapps.peyvand.tools.Tel
-import ir.hadiagdamapps.peyvand.tools.TextValidator
 
 class TelFragment : MyFragment(R.layout.fragment_tel) {
 

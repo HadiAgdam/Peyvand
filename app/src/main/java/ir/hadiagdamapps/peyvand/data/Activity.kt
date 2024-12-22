@@ -1,4 +1,4 @@
-package ir.hadiagdamapps.peyvand.tools
+package ir.hadiagdamapps.peyvand.data
 
 import android.content.Context
 import android.content.res.Configuration

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.squareup.picasso.Picasso
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.data.models.contact.Contact
-import ir.hadiagdamapps.peyvand.tools.ContactsHelper
+import ir.hadiagdamapps.peyvand.data.ContactsHelper
 
 class ContactsRecyclerAdapter(private val context: Context) :
     RecyclerView.Adapter<ContactsRecyclerAdapter.Holder>() {

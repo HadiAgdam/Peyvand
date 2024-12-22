@@ -6,8 +6,8 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import ir.hadiagdamapps.peyvand.R
-import ir.hadiagdamapps.peyvand.tools.MyFragment
-import ir.hadiagdamapps.peyvand.tools.ProfileHelper
+import ir.hadiagdamapps.peyvand.data.MyFragment
+import ir.hadiagdamapps.peyvand.data.ProfileHelper
 
 class ConnectFragment : MyFragment(R.layout.fragment_connect) {
 

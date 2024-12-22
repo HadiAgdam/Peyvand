@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import ir.hadiagdamapps.peyvand.tools.ProfileHelper
+import ir.hadiagdamapps.peyvand.data.ProfileHelper
 
 class RegisterPagerAdapter(
     context: Context,

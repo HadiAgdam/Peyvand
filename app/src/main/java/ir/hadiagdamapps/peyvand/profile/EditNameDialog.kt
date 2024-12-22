@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.Name
-import ir.hadiagdamapps.peyvand.tools.ProfileHelper
 
 class EditNameDialog(
     private val name: Name,

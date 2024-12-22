@@ -1,18 +1,11 @@
 package ir.hadiagdamapps.peyvand.intro
 
-import android.os.Bundle
 import android.os.Handler
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.RawRes
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.airbnb.lottie.LottieAnimationView
 import ir.hadiagdamapps.peyvand.R
-import ir.hadiagdamapps.peyvand.tools.MyFragment
+import ir.hadiagdamapps.peyvand.data.MyFragment
 
 class IntroFragment(
     private val animation: Int,

@@ -15,9 +15,9 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.data.models.contact.Contact
-import ir.hadiagdamapps.peyvand.tools.ContactsHelper
-import ir.hadiagdamapps.peyvand.tools.MyFragment
-import ir.hadiagdamapps.peyvand.tools.TextValidator
+import ir.hadiagdamapps.peyvand.data.ContactsHelper
+import ir.hadiagdamapps.peyvand.data.MyFragment
+import ir.hadiagdamapps.peyvand.data.TextValidator
 
 class ContactsFragment : MyFragment(R.layout.fragment_contacts) {
 

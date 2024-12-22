@@ -2,12 +2,11 @@ package ir.hadiagdamapps.peyvand.register
 
 import android.view.View
 import androidx.core.widget.doOnTextChanged
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.tools.Bio
-import ir.hadiagdamapps.peyvand.tools.MyFragment
+import ir.hadiagdamapps.peyvand.data.MyFragment
 
 
 class BioFragment : MyFragment(R.layout.fragment_bio) {

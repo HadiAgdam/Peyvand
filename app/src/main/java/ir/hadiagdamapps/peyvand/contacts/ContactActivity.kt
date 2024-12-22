@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import ir.hadiagdamapps.peyvand.R
-import ir.hadiagdamapps.peyvand.tools.Activity
-import ir.hadiagdamapps.peyvand.tools.Clipboard
+import ir.hadiagdamapps.peyvand.data.Activity
+import ir.hadiagdamapps.peyvand.data.Clipboard
 import ir.hadiagdamapps.peyvand.data.models.contact.Contact
 
 class ContactActivity : Activity(R.layout.activity_contact) {

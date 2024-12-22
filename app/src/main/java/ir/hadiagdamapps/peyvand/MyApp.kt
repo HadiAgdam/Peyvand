@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Intent
 import android.content.res.Configuration
 import ir.hadiagdamapps.peyvand.data.services.ProfileUpdateService
-import ir.hadiagdamapps.peyvand.tools.ProfileHelper
+import ir.hadiagdamapps.peyvand.data.ProfileHelper
 import java.io.File
 import java.util.Locale
 

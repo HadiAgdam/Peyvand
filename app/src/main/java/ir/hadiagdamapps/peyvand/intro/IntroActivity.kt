@@ -1,21 +1,14 @@
 package ir.hadiagdamapps.peyvand.intro
 
 import android.content.Intent
-import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.register.RegisterActivity
-import ir.hadiagdamapps.peyvand.tools.Activity
-import ir.hadiagdamapps.peyvand.tools.ProfileHelper
+import ir.hadiagdamapps.peyvand.data.Activity
+import ir.hadiagdamapps.peyvand.data.ProfileHelper
 
 class IntroActivity : Activity(R.layout.activity_intro) {
 

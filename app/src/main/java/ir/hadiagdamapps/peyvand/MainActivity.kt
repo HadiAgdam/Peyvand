@@ -8,8 +8,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ir.hadiagdamapps.peyvand.intro.IntroActivity
 import ir.hadiagdamapps.peyvand.register.RegisterActivity
-import ir.hadiagdamapps.peyvand.tools.Activity
-import ir.hadiagdamapps.peyvand.tools.ProfileHelper
+import ir.hadiagdamapps.peyvand.data.Activity
+import ir.hadiagdamapps.peyvand.data.ProfileHelper
 
 class MainActivity : Activity(R.layout.activity_main) {
 

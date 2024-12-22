@@ -1,12 +1,16 @@
-package ir.hadiagdamapps.peyvand.tools
+package ir.hadiagdamapps.peyvand.data
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import ir.hadiagdamapps.peyvand.data.models.contact.Contact
-import ir.hadiagdamapps.peyvand.tools.Constants.Database;
-import ir.hadiagdamapps.peyvand.tools.Constants.Database.Contacts.Columns;
+import ir.hadiagdamapps.peyvand.data.Constants.Database;
+import ir.hadiagdamapps.peyvand.data.Constants.Database.Contacts.Columns;
+import ir.hadiagdamapps.peyvand.tools.Bio
+import ir.hadiagdamapps.peyvand.tools.Name
+import ir.hadiagdamapps.peyvand.tools.Picture
+import ir.hadiagdamapps.peyvand.tools.Tel
 
 class ContactsHelper(private val context: Context) {
 

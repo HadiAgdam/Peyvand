@@ -1,6 +1,6 @@
-package ir.hadiagdamapps.peyvand.tools
+package ir.hadiagdamapps.peyvand.data
 
-import ir.hadiagdamapps.peyvand.tools.Constants.Companion.TARGET_SERVER
+import ir.hadiagdamapps.peyvand.data.Constants.Companion.TARGET_SERVER
 
 class TextValidator {
 

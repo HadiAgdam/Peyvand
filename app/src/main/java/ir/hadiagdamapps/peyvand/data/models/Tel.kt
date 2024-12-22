@@ -1,6 +1,7 @@
 package ir.hadiagdamapps.peyvand.tools
 
 import android.os.Parcelable
+import ir.hadiagdamapps.peyvand.data.TextValidator
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
