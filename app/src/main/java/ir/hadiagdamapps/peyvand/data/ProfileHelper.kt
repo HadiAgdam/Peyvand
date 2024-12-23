@@ -10,6 +10,7 @@ import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.tools.Tel
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.net.URLEncoder
 import kotlin.random.Random
 
 class ProfileHelper(private val context: Context) {
@@ -81,10 +82,11 @@ class ProfileHelper(private val context: Context) {
                 }
 
             }
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
+
     fun setPicture(picture: Picture) {
         val ous = ByteArrayOutputStream()
         (picture.toBitmap() ?: return).compress(Bitmap.CompressFormat.PNG, 100, ous)
@@ -101,7 +103,7 @@ class ProfileHelper(private val context: Context) {
         resumeUploading()
     }
 
-    fun deletePicture()  {
+    fun deletePicture() {
         val imageRef = ref.child(getImageKey() + ".png")
 
         imageRef.delete()
@@ -115,13 +117,26 @@ class ProfileHelper(private val context: Context) {
 
     fun getPictureUrl() = preferences.getString("image_url", "")
 
-
     fun isFirstLaunch() = preferences.getBoolean("firstLaunch", true)
 
     fun disableFirstLaunch() {
         preferences.edit().apply {
             putBoolean("firstLaunch", false)
             apply()
+        }
+    }
+
+    fun toQrString(profile: Profile): String {
+        profile.apply {
+            val nameEncoded = URLEncoder.encode(name.toString(), "UTF-8")
+            val pictureEncoded = URLEncoder.encode(this@ProfileHelper.getPictureUrl(), "UTF-8")
+            val telEncoded = URLEncoder.encode(tel.toString(), "UTF-8")
+            val bioEncoded = URLEncoder.encode(bio.toString(), "UTF-8")
+
+            val result =
+                "${Constants.TARGET_SERVER}?name=$nameEncoded&picture=$pictureEncoded&tel=$telEncoded&bio=$bioEncoded"
+
+            return result
         }
     }
 

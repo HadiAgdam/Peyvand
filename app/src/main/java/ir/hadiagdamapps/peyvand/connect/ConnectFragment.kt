@@ -19,9 +19,8 @@ class ConnectFragment : MyFragment(R.layout.fragment_connect) {
     }
 
     private fun loadQrCode() {
-        val profile = profileHelper.getProfile() ?: return
         val bitMatrix =
-            writer.encode(profile.toQrString(profileHelper), BarcodeFormat.QR_CODE, 720, 720)
+            profileHelper.getProfile()?.let {  writer.encode(profileHelper.toQrString(it), BarcodeFormat.QR_CODE, 720, 720) } ?: return
         val encoder = BarcodeEncoder()
         qrContainer.setImageBitmap(encoder.createBitmap(bitMatrix))
     }
