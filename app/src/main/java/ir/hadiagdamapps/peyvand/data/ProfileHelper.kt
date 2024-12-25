@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import com.google.firebase.storage.FirebaseStorage
 import ir.hadiagdamapps.peyvand.data.models.profile.Profile
+import ir.hadiagdamapps.peyvand.data.network.Api
+import ir.hadiagdamapps.peyvand.data.storage.KeyManager
 import ir.hadiagdamapps.peyvand.tools.Bio
 import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.Picture
@@ -13,11 +15,12 @@ import java.io.File
 import java.net.URLEncoder
 import kotlin.random.Random
 
-class ProfileHelper(private val context: Context) {
+class ProfileHelper(context: Context) {
 
     private val profilePictureFile = File(context.cacheDir, "user/picture.png")
     private val preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
     private val ref = FirebaseStorage.getInstance().reference.child("profile_pictures/")
+    private val keyManager = KeyManager(context)
 
 
     private fun getImageKey(): String {
