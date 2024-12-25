@@ -5,5 +5,16 @@ enum class Key {
     PRIVATE_KEY,
     NAME,
     PICTURE,
-    BIO
+    BIO,
+    TEL,
+    ;
+
+    override fun toString() = this.name.lowercase()
+
+    companion object {
+        private val map = entries.associateBy { it.toString() }
+
+        fun fromString(key: String): Key? = map[key]
+    }
 }
+

@@ -133,10 +133,7 @@ class ProfileHelper(private val context: Context) {
             val telEncoded = URLEncoder.encode(tel.toString(), "UTF-8")
             val bioEncoded = URLEncoder.encode(bio.toString(), "UTF-8")
 
-            val result =
-                "${Constants.TARGET_SERVER}?name=$nameEncoded&picture=$pictureEncoded&tel=$telEncoded&bio=$bioEncoded"
-
-            return result
+            return "${Api.BASE_URL}?${Key.NAME}=$nameEncoded&${Key.PICTURE}=$pictureEncoded&${Key.TEL}=$telEncoded&${Key.BIO}=$bioEncoded${keyManager.getPublicKey()?.let { "&${Key.PUBLIC_KEY}=$it" } ?: ""}"
         }
     }
 

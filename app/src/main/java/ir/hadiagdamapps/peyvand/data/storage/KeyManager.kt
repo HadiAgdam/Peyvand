@@ -24,7 +24,7 @@ class KeyManager(context: Context) {
     )
 
 
-    private fun getPublicKey(): PublicKey? {
+    fun getPublicKey(): PublicKey? {
         return PublicKey.parse(sharedPreferences.getString(PUBLIC_KEY) ?: return null)
     }
 

@@ -1,13 +1,17 @@
 package ir.hadiagdamapps.peyvand.data.models.contact
 
 import android.os.Parcelable
+import ir.hadiagdamapps.peyvand.data.Key
 import ir.hadiagdamapps.peyvand.tools.Bio
-import ir.hadiagdamapps.peyvand.data.Constants
 import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.tools.Tel
 import kotlinx.parcelize.Parcelize
+import java.net.URI
 import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
+import ir.hadiagdamapps.peyvand.data.Key.*
+
 
 @Parcelize
 class Contact(
@@ -16,30 +20,30 @@ class Contact(
     var picture: Picture?,
     var tel: Tel,
     var bio: Bio,
+    val publicKey: String? = null
 ) : Parcelable {
 
 
     companion object {
 
-        private fun parseFromHashmap(map: HashMap<String, String>): Contact? {
+        private fun parseFromHashmap(map: Map<Key?, String>): Contact? {
             return Contact(
-                -1,
-                Name.parse(map["name"] ?: return null) ?: return null,
-                Picture.parse(map["picture"] ?: ""),
-                Tel.parse(map["tel"]) ?: return null,
-                Bio.parse(map["bio"]) ?: return null
+                id = -1,
+                name = Name.parse(map[NAME] ?: return null) ?: return null,
+                picture = Picture.parse(map[PICTURE] ?: ""),
+                tel = Tel.parse(map[TEL]) ?: return null,
+                bio = Bio.parse(map[BIO]) ?: return null,
+                publicKey = map[PUBLIC_KEY]
             )
         }
 
-        fun parseFromURL(text: String): Contact? {
-            val result = HashMap<String, String>()
+        fun parseFromURL(url: String): Contact? =
+            parseFromHashmap(URI(url).query.split("&").associate { param ->
+                param.split("=").let {
+                    Key.fromString(it[0]) to URLDecoder.decode(it[1], StandardCharsets.UTF_8.name())
+                }
+            })
 
-            for (i in text.removeRange(0, Constants.TARGET_SERVER.length + 1).split("&"))
-                result[URLDecoder.decode(i.split("=")[0], "UTF-8")] =
-                    URLDecoder.decode(i.split("=")[1], "UTF-8")
-
-            return parseFromHashmap(result)
-        }
     }
 
 }

@@ -1,6 +1,7 @@
 package ir.hadiagdamapps.peyvand.data
 
-import ir.hadiagdamapps.peyvand.data.Constants.Companion.TARGET_SERVER
+import ir.hadiagdamapps.peyvand.data.network.Api
+import ir.hadiagdamapps.peyvand.data.Key.*
 
 class TextValidator {
 
@@ -27,19 +28,23 @@ class TextValidator {
 
         fun isValidQrString(text: String): Boolean {
 
-            if (!text.startsWith(TARGET_SERVER))
+            if (!text.startsWith(Api.BASE_URL))
                 return false
 
-            val args = text.removeRange(0, TARGET_SERVER.length + 1).split("&")
+            val args = text.removeRange(0, Api.BASE_URL.length + 1).split("&")
 
-            val headers = ArrayList("name picture tel bio".split(" "))
-            for (a in args) {
-                if (!headers.contains(a.split("=")[0])) return false
-                headers.remove(a.split("=")[0])
+            val headers = arrayListOf(NAME, PICTURE, TEL, BIO, PUBLIC_KEY)
+
+            args.forEach { arg ->
+                arg.split("=")[0].let { Key.fromString(it) }?.apply {
+
+                    if (!headers.contains(this)) return false
+
+                    headers.remove(this)
+                } ?: return false
             }
-            if (headers.size != 0) return false
 
-            return true
+            return headers.size == 0
         }
 
     }

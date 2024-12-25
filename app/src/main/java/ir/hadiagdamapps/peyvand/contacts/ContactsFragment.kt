@@ -41,29 +41,23 @@ class ContactsFragment : MyFragment(R.layout.fragment_contacts) {
         }
     }
 
-    private val qrLauncher = registerForActivityResult(ScanContract()) {
-        if (it.contents != null) {
-            if (TextValidator.isValidQrString(it.contents)) {
-                val contact = Contact.parseFromURL(it.contents)
-                if (contact == null)
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.invalid_qr),
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
-                else {
-                    contact?.let {
-                        contactsHelper.newContact(it)
-                        adapter.addItem(it)
-                        startActivity(Intent(requireContext(), ContactActivity::class.java).apply {
-                            putExtra("contact", it)
-                        })
-                    }
-                }
-            } else
-                Toast.makeText(requireContext(), getString(R.string.invalid_qr), Toast.LENGTH_LONG)
-                    .show()
+    private val qrLauncher = registerForActivityResult(ScanContract()) { scanResult ->
+        if (scanResult.contents != null) {
+            if (TextValidator.isValidQrString(scanResult.contents))
+                Contact.parseFromURL(scanResult.contents)?.let {
+                    contactsHelper.newContact(it)
+                    adapter.addItem(it)
+                    startActivity(Intent(requireContext(), ContactActivity::class.java).apply {
+                        putExtra("contact", it)
+                    })
+                } ?: Toast.makeText(
+                    requireContext(), getString(R.string.invalid_qr), Toast.LENGTH_LONG
+                ).show()
+            else Toast.makeText(
+                requireContext(),
+                getString(R.string.invalid_qr),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 

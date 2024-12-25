@@ -59,14 +59,13 @@ class ContactsDatabaseHelper(context: Context) :
     }
 
     fun insert(contact: Contact): Int {
-        val values = ContentValues().apply {
+        return writableDatabase.insert(Database.Contacts.NAME, null, ContentValues().apply {
             put(Columns.NAME, contact.name.toString())
             put(Columns.TEL, contact.tel.toString())
             put(Columns.PICTURE, contact.picture.toString())
             put(Columns.BIO, contact.bio.toString())
-        }
-
-        return writableDatabase.insert(Database.Contacts.NAME, null, values).toInt()
+            contact.publicKey?.apply { put(Columns.PUBLIC_KEY, this) }
+        }).toInt()
     }
 
     fun getAll(): List<Contact> {
