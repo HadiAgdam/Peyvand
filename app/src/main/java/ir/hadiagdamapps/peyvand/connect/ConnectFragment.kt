@@ -22,6 +22,7 @@ import ir.hadiagdamapps.peyvand.data.storage.FileManager
 
 class ConnectFragment : Fragment() {
 
+    private val encoder = BarcodeEncoder()
     private val writer = MultiFormatWriter()
     private val profileHelper by lazy { ProfileHelper(requireContext()) }
     private var qrCodeBitmap: Bitmap? = null
@@ -34,6 +35,7 @@ class ConnectFragment : Fragment() {
             Toast.makeText(requireContext(), "failed", Toast.LENGTH_LONG).show()
         }
     }
+    private var qrString: String? = null
 
     private lateinit var qrContainer: ImageView
     private lateinit var dialog: BottomSheetDialog
@@ -43,22 +45,23 @@ class ConnectFragment : Fragment() {
     private lateinit var saveQrCodeButton: View
 
     private fun loadQrCode() {
-        val bitMatrix = profileHelper.getProfile()?.let {
-            writer.encode(
-                profileHelper.toQrString(it), BarcodeFormat.QR_CODE, 720, 720
-            )
-        } ?: return
-        val encoder = BarcodeEncoder()
+        val bitMatrix = profileHelper.getProfile()
+            ?.let {
+                writer.encode(
+                    profileHelper.toQrString(it),
+                    BarcodeFormat.QR_CODE,
+                    720,
+                    720
+                )
+            } ?: return
+
         encoder.createBitmap(bitMatrix)?.apply {
-            qrContainer.setImageBitmap(encoder.createBitmap(bitMatrix))
             qrCodeBitmap = this
-        }
+            qrContainer.setImageBitmap(qrCodeBitmap)
+        } ?: Toast.makeText(requireContext(), "null", Toast.LENGTH_LONG).show()
+
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadQrCode()
-    }
 
     private fun saveQrCode() {
         saveLauncher.launch("peyvand.png")
@@ -108,10 +111,10 @@ class ConnectFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_connect, container, false).apply {
             qrContainer = findViewById(R.id.qrContainer)
             initDialog(inflater, container)
+            loadQrCode()
         }
 
     }
