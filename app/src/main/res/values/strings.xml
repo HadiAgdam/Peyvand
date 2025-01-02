@@ -64,4 +64,6 @@
     <string name="qrcode_click_info">Click to share link or save qr code !</string>
     <string name="copy">Copy</string>
     <string name="save_qr_code">Save QrCode</string>
+    <string name="save_qr_code_failed">Failed to save Qr Code !</string>
+    <string name="saved">Saved !</string>
 </resources>

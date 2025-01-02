@@ -17,6 +17,10 @@ import kotlin.random.Random
 
 class ProfileHelper(context: Context) {
 
+    companion object {
+        const val TARGET_URL = ""
+    }
+
     private val profilePictureFile = File(context.cacheDir, "user/picture.png")
     private val preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
     private val ref = FirebaseStorage.getInstance().reference.child("profile_pictures/")
@@ -136,8 +140,14 @@ class ProfileHelper(context: Context) {
             val telEncoded = URLEncoder.encode(tel.toString(), "UTF-8")
             val bioEncoded = URLEncoder.encode(bio.toString(), "UTF-8")
 
-            return "${Api.BASE_URL}?${Key.NAME}=$nameEncoded&${Key.PICTURE}=$pictureEncoded&${Key.TEL}=$telEncoded&${Key.BIO}=$bioEncoded${keyManager.getPublicKey()?.let { "&${Key.PUBLIC_KEY}=$it" } ?: ""}"
+            return "${TARGET_URL}?${Key.NAME}=$nameEncoded&${Key.PICTURE}=$pictureEncoded&${Key.TEL}=$telEncoded&${Key.BIO}=$bioEncoded${
+                keyManager.getPublicKey()?.let { "&${Key.PUBLIC_KEY}=$it" } ?: ""
+            }"
         }
+    }
+
+    fun getProfileUrl(): String? {
+        return "${TARGET_URL}/${keyManager.getPublicKey()?.toString() ?: return null}"
     }
 
 }
