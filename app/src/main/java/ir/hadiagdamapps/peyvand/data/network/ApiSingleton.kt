@@ -17,9 +17,9 @@ class ApiSingleton private constructor(context: Context) {
         }
     }
 
-    private val requestQueue: RequestQueue by lazy {
+    private val requestQueue: RequestQueue =
         Volley.newRequestQueue(context.applicationContext)
-    }
+
 
     fun getRequestQueue(): RequestQueue = requestQueue
 }
