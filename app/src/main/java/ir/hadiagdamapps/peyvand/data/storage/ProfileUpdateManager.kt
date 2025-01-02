@@ -16,7 +16,7 @@ class ProfileUpdateManager(private val context: Context) {
     private val profileHelper = ProfileHelper(context)
     private val keyManager = KeyManager(context)
     private val sharedPreferences = context.getSharedPreferences("update_manager", 0)
-    private val api: UserApi = UserApi(ApiSingleton.getInstance(context).getRequestQueue())
+    private val api: UserApi by lazy { UserApi(ApiSingleton.getInstance(context).getRequestQueue()) }
 
 
     private fun put(profile: SyncProfile) {

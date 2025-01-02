@@ -9,7 +9,7 @@ import ir.hadiagdamapps.peyvand.data.storage.ProfileUpdateManager
 class ProfileUpdateService : Service() {
 
     private var looping = false
-    private val updateManager = ProfileUpdateManager(baseContext)
+    private val updateManager by lazy { ProfileUpdateManager(baseContext) }
 
     private fun tick() {
         updateManager.sync()

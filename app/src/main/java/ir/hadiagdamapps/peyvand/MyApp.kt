@@ -3,6 +3,7 @@ package ir.hadiagdamapps.peyvand
 import android.app.Application
 import android.content.Intent
 import android.content.res.Configuration
+import android.os.Build
 import ir.hadiagdamapps.peyvand.data.services.ProfileUpdateService
 import ir.hadiagdamapps.peyvand.data.ProfileHelper
 import java.io.File
@@ -42,7 +43,11 @@ class MyApp : Application() {
 
     private fun startProfileUpdateService() {
         val intent = Intent(this, ProfileUpdateService::class.java)
-        startService(intent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
     }
 
     override fun onCreate() {
@@ -51,7 +56,7 @@ class MyApp : Application() {
         loadPlaceHolder()
         ProfileHelper(this).resumeUploading()
         setLocale()
-        startProfileUpdateService()
+//        startProfileUpdateService() TODO need fixing
     }
 
 }
