@@ -35,8 +35,8 @@ class UserApi(private val queue: RequestQueue) : Api() {
         queue.add(
             JsonObjectRequest(Method.POST, BASE_URL, JSONObject().apply {
 
-                put(PUBLIC_KEY, profile.name.toString())
-                profile.picture?.urlString?.let { put(PRIVATE_KEY, it) }
+                put(NAME, profile.name.toString())
+                profile.picture?.urlString?.let { put(PICTURE, it) }
                 put(BIO, profile.bio.toString())
 
             }, {
@@ -64,6 +64,7 @@ class UserApi(private val queue: RequestQueue) : Api() {
     ) {
         queue.add(
             JsonObjectRequest(Method.PUT, "$BASE_URL/users/${login.public}", JSONObject().apply {
+                put(PRIVATE_KEY, login.private.toString())
                 put(NAME, name?.toString())
                 put(PICTURE, pictureUrl)
                 put(BIO, bio.toString())
