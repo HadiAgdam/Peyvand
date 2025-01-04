@@ -1,5 +1,7 @@
 package ir.hadiagdamapps.peyvand.data
 
+import org.json.JSONObject
+
 enum class Key {
     PUBLIC_KEY,
     PRIVATE_KEY,
@@ -18,3 +20,6 @@ enum class Key {
     }
 }
 
+fun JSONObject.put(key: Key, value: Any?): JSONObject = put(key.toString(), value)
+
+fun JSONObject.getString(key: Key): String = getString(key.toString())

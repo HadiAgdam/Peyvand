@@ -4,8 +4,6 @@ import android.util.Log
 import com.android.volley.Request.Method
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
-import ir.hadiagdamapps.peyvand.data.Key
-import ir.hadiagdamapps.peyvand.data.models.contact.ContactUpdate
 import ir.hadiagdamapps.peyvand.data.models.key.KeySet
 import ir.hadiagdamapps.peyvand.data.models.key.PrivateKey
 import ir.hadiagdamapps.peyvand.data.models.key.PublicKey
@@ -14,15 +12,9 @@ import ir.hadiagdamapps.peyvand.tools.Name
 import org.json.JSONObject
 import ir.hadiagdamapps.peyvand.data.Key.*
 import ir.hadiagdamapps.peyvand.data.models.profile.SyncProfile
-import org.json.JSONArray
+import ir.hadiagdamapps.peyvand.data.put
 
 class UserApi(private val queue: RequestQueue) : Api() {
-
-
-    private fun JSONObject.put(key: Key, value: Any?) = put(key.toString(), value)
-
-    private fun JSONObject.getString(key: Key): String = getString(key.toString())
-
 
     companion object {
         private const val BASE_URL = "${Api.BASE_URL}/users"
