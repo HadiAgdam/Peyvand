@@ -48,7 +48,6 @@ class KeyManager(context: Context) {
         }
     }
 
-
     fun getKeySet(): KeySet? {
         return KeySet(
             public = getPublicKey() ?: return null,
@@ -56,16 +55,23 @@ class KeyManager(context: Context) {
         )
     }
 
-
     fun put(set: KeySet) {
         setPublicKey(set.public)
         setPrivateKey(set.private)
     }
 
+    fun clear() {
+        sharedPreferences.edit().apply {
+            putString(PUBLIC_KEY, null)
+            putString(PRIVATE_KEY, null)
+            apply()
+        }
+    }
+
 
 }
 
-fun Editor.putString(key: Key, value: String) {
+fun Editor.putString(key: Key, value: String?) {
     this.putString(key.toString(), value)
 }
 

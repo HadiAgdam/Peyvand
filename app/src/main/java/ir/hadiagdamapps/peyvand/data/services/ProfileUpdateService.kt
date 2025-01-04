@@ -8,7 +8,7 @@ import ir.hadiagdamapps.peyvand.data.storage.ProfileUpdateManager
 class ProfileUpdateService(context: Context) {
 
     companion object {
-        private const val DELAY = 3000L
+        private const val DELAY = 5000L
     }
 
     private val updateManager = ProfileUpdateManager(context)

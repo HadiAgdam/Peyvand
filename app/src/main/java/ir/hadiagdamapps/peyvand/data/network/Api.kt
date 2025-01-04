@@ -15,6 +15,8 @@ open class Api {
     fun VolleyError.toApiError(): ApiError? {
         return if (this.cause is NoConnectionError || this.networkResponse == null)
             ApiError.NO_CONNECTION
+        else if (this.networkResponse.statusCode == 401)
+            ApiError.LOGIN_FAILED
         else null
     }
 

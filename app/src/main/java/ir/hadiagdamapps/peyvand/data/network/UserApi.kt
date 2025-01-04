@@ -1,5 +1,6 @@
 package ir.hadiagdamapps.peyvand.data.network
 
+import android.util.Log
 import com.android.volley.Request.Method
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
@@ -10,9 +11,9 @@ import ir.hadiagdamapps.peyvand.data.models.key.PrivateKey
 import ir.hadiagdamapps.peyvand.data.models.key.PublicKey
 import ir.hadiagdamapps.peyvand.tools.Bio
 import ir.hadiagdamapps.peyvand.tools.Name
-import ir.hadiagdamapps.peyvand.data.models.profile.Profile
 import org.json.JSONObject
 import ir.hadiagdamapps.peyvand.data.Key.*
+import ir.hadiagdamapps.peyvand.data.models.profile.SyncProfile
 import org.json.JSONArray
 
 class UserApi(private val queue: RequestQueue) : Api() {
@@ -28,15 +29,18 @@ class UserApi(private val queue: RequestQueue) : Api() {
     }
 
     fun register(
-        profile: Profile,
+        profile: SyncProfile,
         success: (KeySet) -> Unit,
-        failed: (ApiError?) -> Unit
+        failed: (ApiError?) -> Unit,
+        finally: () -> Unit = {}
     ) {
+        Log.e("UserApi register name", profile.name.toString())
+
         queue.add(
             JsonObjectRequest(Method.POST, BASE_URL, JSONObject().apply {
 
                 put(NAME, profile.name.toString())
-                profile.picture?.urlString?.let { put(PICTURE, it) }
+                profile.picture?.let { put(PICTURE, it) }
                 put(BIO, profile.bio.toString())
 
             }, {
@@ -47,8 +51,12 @@ class UserApi(private val queue: RequestQueue) : Api() {
                         private = PrivateKey.parse(it.getString("private_key"))!!
                     )
                 )
-
-            }, { failed(it.toApiError()) })
+                finally()
+            }, {
+                Log.e("UserApi register", it.toString())
+                failed(it.toApiError());
+                finally()
+            })
         )
 
     }
@@ -63,11 +71,14 @@ class UserApi(private val queue: RequestQueue) : Api() {
         success: () -> Unit
     ) {
         queue.add(
-            JsonObjectRequest(Method.PUT, "$BASE_URL/users/${login.public}", JSONObject().apply {
+            JsonObjectRequest(Method.PUT, "$BASE_URL/${login.public}", JSONObject().apply {
+
                 put(PRIVATE_KEY, login.private.toString())
-                put(NAME, name?.toString())
-                put(PICTURE, pictureUrl)
-                put(BIO, bio.toString())
+
+                name?.let { put(NAME, it.toString()) }
+                pictureUrl?.let { put(PICTURE, it) }
+                bio?.let { put(BIO, it.toString()) }
+
             }, {
                 success()
             }, { failed(it.toApiError()) })

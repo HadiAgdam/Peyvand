@@ -9,14 +9,20 @@ import ir.hadiagdamapps.peyvand.data.network.UserApi
 import ir.hadiagdamapps.peyvand.tools.Bio
 import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.data.ProfileHelper
+import ir.hadiagdamapps.peyvand.data.network.ApiError
 
 class ProfileUpdateManager(private val context: Context) {
 
     private val profileHelper = ProfileHelper(context)
     private val keyManager = KeyManager(context)
     private val sharedPreferences = context.getSharedPreferences("update_manager", 0)
-    private val api: UserApi by lazy { UserApi(ApiSingleton.getInstance(context).getRequestQueue()) }
+    private val api: UserApi by lazy {
+        UserApi(
+            ApiSingleton.getInstance(context).getRequestQueue()
+        )
+    }
 
+    private var registerInProgress = false
 
     private fun put(profile: SyncProfile) {
         sharedPreferences.edit().apply {
@@ -39,6 +45,22 @@ class ProfileUpdateManager(private val context: Context) {
         )
     }
 
+    private fun register(profile: SyncProfile) {
+        if (registerInProgress) return; registerInProgress = true
+
+        api.register(
+            profile = profile,
+            success = {
+                keyManager.put(it)
+                sync()
+            },
+            failed = {
+            }, finally = {
+                registerInProgress = false
+            }
+        )
+    }
+
     private fun push(login: KeySet, profile: SyncProfile) {
         api.update(
             login = login,
@@ -47,6 +69,15 @@ class ProfileUpdateManager(private val context: Context) {
             bio = profile.bio,
             success = {
                 put(profile)
+            }, failed = {
+                when (it) {
+                    ApiError.LOGIN_FAILED -> {
+                        keyManager.clear()
+                        register(profile)
+                    }
+
+                    else -> {}
+                }
             }
         )
     }
@@ -58,14 +89,7 @@ class ProfileUpdateManager(private val context: Context) {
 
 
         if (login == null) {
-            api.register(
-                profile = profile,
-                success = {
-                    keyManager.put(it)
-                    sync()
-                },
-                failed = {}
-            )
+            register(profile.toSyncProfile())
             return
         }
 

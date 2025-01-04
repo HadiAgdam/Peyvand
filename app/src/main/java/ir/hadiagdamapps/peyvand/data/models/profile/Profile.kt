@@ -10,4 +10,12 @@ data class Profile(
     var picture: Picture?,
     var tel: Tel,
     var bio: Bio
-)
+) {
+    fun toSyncProfile(): SyncProfile =
+        SyncProfile(
+            name = name,
+            picture = picture?.urlString,
+            bio = bio
+        )
+
+}
