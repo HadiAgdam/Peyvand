@@ -8,7 +8,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 open class Api {
 
     companion object {
-        const val BASE_URL = ""
+        const val BASE_URL = "https://hadiagdam0.pythonanywhere.com"
     }
 
 

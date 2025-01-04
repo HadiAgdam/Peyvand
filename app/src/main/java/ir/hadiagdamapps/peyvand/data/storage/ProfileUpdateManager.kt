@@ -1,7 +1,6 @@
 package ir.hadiagdamapps.peyvand.data.storage
 
 import android.content.Context
-import ir.hadiagdamapps.peyvand.data.Error
 import ir.hadiagdamapps.peyvand.data.Key
 import ir.hadiagdamapps.peyvand.data.models.profile.SyncProfile
 import ir.hadiagdamapps.peyvand.data.models.key.KeySet
@@ -55,7 +54,8 @@ class ProfileUpdateManager(private val context: Context) {
     fun sync() {
 
         val login = keyManager.getKeySet()
-        val profile = profileHelper.getProfile() ?: throw Error.NULL_PROFILE_EXCEPTION
+        val profile = profileHelper.getProfile() ?: return // throw Error.NULL_PROFILE_EXCEPTION
+
 
         if (login == null) {
             api.register(

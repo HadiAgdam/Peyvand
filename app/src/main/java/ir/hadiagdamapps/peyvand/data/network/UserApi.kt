@@ -18,9 +18,9 @@ import org.json.JSONArray
 class UserApi(private val queue: RequestQueue) : Api() {
 
 
-    private fun JSONObject.put(key: Key, value: Any?) = put(key.name, value)
+    private fun JSONObject.put(key: Key, value: Any?) = put(key.toString(), value)
 
-    private fun JSONObject.getString(key: Key): String = getString(key.name)
+    private fun JSONObject.getString(key: Key): String = getString(key.toString())
 
 
     companion object {
