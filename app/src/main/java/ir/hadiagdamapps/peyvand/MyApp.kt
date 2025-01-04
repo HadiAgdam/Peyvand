@@ -1,17 +1,17 @@
 package ir.hadiagdamapps.peyvand
 
 import android.app.Application
-import android.content.Intent
 import android.content.res.Configuration
-import android.os.Build
 import ir.hadiagdamapps.peyvand.data.services.ProfileUpdateService
 import ir.hadiagdamapps.peyvand.data.ProfileHelper
 import java.io.File
+import java.io.FileOutputStream
 import java.util.Locale
 
 class MyApp : Application() {
 
     private val cacheDirs = listOf("user")
+    private val profileUpdateService by lazy { ProfileUpdateService(this) }
 
     private fun setLocale() {
         val locale = Locale(getDeviceLanguage())
@@ -26,14 +26,14 @@ class MyApp : Application() {
     }
 
     private fun loadPlaceHolder() {
-//        val f = File(cacheDir, "user/picture.png")
-//        if (!f.exists())
-//        {
-//            val input = assets.open("picture_placeholder.png")
-//            val output = FileOutputStream(f)
-//
-//            output.write(input.readBytes())
-//        }
+        val f = File(cacheDir, "user/picture.png")
+        if (!f.exists())
+        {
+            val input = assets.open("picture_placeholder.png")
+            val output = FileOutputStream(f)
+
+            output.write(input.readBytes())
+        }
     }
 
     private fun makCacheDirs() {
@@ -41,22 +41,13 @@ class MyApp : Application() {
             File(cacheDir, dir).mkdir()
     }
 
-    private fun startProfileUpdateService() {
-        val intent = Intent(this, ProfileUpdateService::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent)
-        } else {
-            startService(intent)
-        }
-    }
-
     override fun onCreate() {
         super.onCreate()
         makCacheDirs()
-        loadPlaceHolder()
+//        loadPlaceHolder()
         ProfileHelper(this).resumeUploading()
         setLocale()
-//        startProfileUpdateService() TODO need fixing
+        profileUpdateService.start()
     }
 
 }

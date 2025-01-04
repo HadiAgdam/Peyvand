@@ -1,38 +1,37 @@
 package ir.hadiagdamapps.peyvand.data.services
 
-import android.app.Service
-import android.content.Intent
-import android.os.IBinder
-import android.util.Log
+import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import ir.hadiagdamapps.peyvand.data.storage.ProfileUpdateManager
 
-class ProfileUpdateService : Service() {
+class ProfileUpdateService(context: Context) {
 
-    private var looping = false
-    private val updateManager by lazy { ProfileUpdateManager(baseContext) }
+    companion object {
+        private const val DELAY = 3000L
+    }
+
+    private val updateManager = ProfileUpdateManager(context)
+    private val handler = Handler(Looper.getMainLooper())
+    private var runnable: Runnable? = null
 
     private fun tick() {
         updateManager.sync()
     }
 
-    private fun loop() {
-        looping = true
-        Thread {
-            while (looping) {
-                try {
-                    tick()
-                } catch (ex: Exception) {
-                    Log.e("error", ex.toString())
-                }
-                Thread.sleep(3000)
+    fun start() {
+        runnable = object : Runnable {
+            override fun run() {
+                tick()
+                handler.postDelayed(this, DELAY)
             }
-        }.start()
+        }
+
+        handler.post(runnable!!)
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        loop()
-        return START_STICKY
+    fun stop() {
+        runnable?.let { handler.removeCallbacks(it) }
     }
 
-    override fun onBind(intent: Intent): IBinder? = null
 }
