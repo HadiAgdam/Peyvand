@@ -68,7 +68,8 @@ class UserApi(private val queue: RequestQueue) : Api() {
         pictureUrl: String? = null,
         bio: Bio? = null,
         failed: (ApiError?) -> Unit = {},
-        success: () -> Unit
+        success: () -> Unit,
+        finally: () -> Unit = {}
     ) {
         queue.add(
             JsonObjectRequest(Method.PUT, "$BASE_URL/${login.public}", JSONObject().apply {
@@ -81,7 +82,8 @@ class UserApi(private val queue: RequestQueue) : Api() {
 
             }, {
                 success()
-            }, { failed(it.toApiError()) })
+                finally()
+            }, { failed(it.toApiError()); finally() })
         )
     }
 
@@ -128,8 +130,7 @@ class UserApi(private val queue: RequestQueue) : Api() {
                 put(PUBLIC_KEY, login.public.toString())
                 put(PRIVATE_KEY, login.private.toString())
                 put("contacts", JSONArray().apply {
-                    for (c in contacts)
-                        this.put(c.toString())
+                    for (c in contacts) this.put(c.toString())
                 })
             }, {
                 try {
@@ -137,8 +138,8 @@ class UserApi(private val queue: RequestQueue) : Api() {
                     val fetchedContacts = it.getJSONArray("contacts")
                     success(ArrayList<ContactUpdate>().apply {
 
-                        for (i in 0 until fetchedContacts.length())
-                            fetchedContacts.getJSONObject(i).apply {
+                        for (i in 0 until fetchedContacts.length()) fetchedContacts.getJSONObject(i)
+                            .apply {
                                 add(
                                     ContactUpdate(
                                         publicKey = PublicKey.parse(it.getString(PUBLIC_KEY))!!,

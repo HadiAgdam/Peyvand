@@ -23,6 +23,7 @@ class ProfileUpdateManager(private val context: Context) {
     }
 
     private var registerInProgress = false
+    private var updateInProgress = false
 
     private fun put(profile: SyncProfile) {
         sharedPreferences.edit().apply {
@@ -62,6 +63,7 @@ class ProfileUpdateManager(private val context: Context) {
     }
 
     private fun push(login: KeySet, profile: SyncProfile) {
+        updateInProgress = true
         api.update(
             login = login,
             name = profile.name,
@@ -78,6 +80,8 @@ class ProfileUpdateManager(private val context: Context) {
 
                     else -> {}
                 }
+            }, finally = {
+                updateInProgress = false
             }
         )
     }
@@ -92,6 +96,8 @@ class ProfileUpdateManager(private val context: Context) {
             register(profile.toSyncProfile())
             return
         }
+
+        if (updateInProgress) return
 
         val syncProfile = getSyncProfile()
 
