@@ -3,6 +3,7 @@ package ir.hadiagdamapps.peyvand.data
 import android.content.Context
 import android.graphics.Bitmap
 import com.google.firebase.storage.FirebaseStorage
+import ir.hadiagdamapps.peyvand.data.Constants.Companion.TARGET_URL
 import ir.hadiagdamapps.peyvand.data.models.profile.Profile
 import ir.hadiagdamapps.peyvand.data.network.Api
 import ir.hadiagdamapps.peyvand.data.storage.KeyManager
@@ -16,10 +17,6 @@ import java.net.URLEncoder
 import kotlin.random.Random
 
 class ProfileHelper(context: Context) {
-
-    companion object {
-        const val TARGET_URL = ""
-    }
 
     private val profilePictureFile = File(context.cacheDir, "user/picture.png")
     private val preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
