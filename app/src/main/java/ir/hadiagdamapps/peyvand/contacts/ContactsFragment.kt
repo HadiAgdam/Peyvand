@@ -34,7 +34,7 @@ class ContactsFragment : MyFragment(R.layout.fragment_contacts) {
         ScanOptions().apply {
             setDesiredBarcodeFormats(ScanOptions.QR_CODE)
             setPrompt(getString(R.string.scan_qr_code))
-            setCameraId(1)
+            setCameraId(0)
             setBeepEnabled(false)
             setOrientationLocked(false)
             setBarcodeImageEnabled(true)
