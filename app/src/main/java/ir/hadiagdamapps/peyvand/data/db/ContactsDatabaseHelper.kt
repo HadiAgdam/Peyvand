@@ -10,18 +10,20 @@ import ir.hadiagdamapps.peyvand.tools.Bio
 import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.tools.Tel
+import ir.hadiagdamapps.peyvand.data.Constants.Database.Contacts.Columns
+import ir.hadiagdamapps.peyvand.data.models.contact.ContactUpdate
 
 class ContactsDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, Constants.Database.NAME, null, Constants.Database.VERSION) {
 
     private val createTableQuery =
         "CREATE TABLE ${Constants.Database.Contacts.NAME} (" +
-                "${Constants.Database.Contacts.Columns.ID} INTEGER PRIMARY KEY autoincrement," +
-                "${Constants.Database.Contacts.Columns.NAME} TEXT," +
-                "${Constants.Database.Contacts.Columns.PICTURE} TEXT," +
-                "${Constants.Database.Contacts.Columns.TEL} TEXT," +
-                "${Constants.Database.Contacts.Columns.BIO} TEXT," +
-                "${Constants.Database.Contacts.Columns.PUBLIC_KEY} TEXT)"
+                "${Columns.ID} INTEGER PRIMARY KEY autoincrement," +
+                "${Columns.NAME} TEXT," +
+                "${Columns.PICTURE} TEXT," +
+                "${Columns.TEL} TEXT," +
+                "${Columns.BIO} TEXT," +
+                "${Columns.PUBLIC_KEY} TEXT)"
     private val deleteTableQuery =
         "DROP TABLE IF exists ${Constants.Database.Contacts.NAME}"
 
@@ -40,30 +42,37 @@ class ContactsDatabaseHelper(context: Context) :
 
     fun delete(contact: Contact) {
         writableDatabase.apply {
-            delete(Constants.Database.Contacts.NAME, "${Constants.Database.Contacts.Columns.ID} = ?", arrayOf(contact.id.toString()))
+            delete(
+                Constants.Database.Contacts.NAME,
+                "${Columns.ID} = ?",
+                arrayOf(contact.id.toString())
+            )
             close()
         }
     }
 
     fun insert(contact: Contact): Int {
-        return writableDatabase.insert(Constants.Database.Contacts.NAME, null, ContentValues().apply {
-            put(Constants.Database.Contacts.Columns.NAME, contact.name.toString())
-            put(Constants.Database.Contacts.Columns.TEL, contact.tel.toString())
-            put(Constants.Database.Contacts.Columns.PICTURE, contact.picture.toString())
-            put(Constants.Database.Contacts.Columns.BIO, contact.bio.toString())
-            contact.publicKey?.apply { put(Constants.Database.Contacts.Columns.PUBLIC_KEY, this) }
-        }).toInt()
+        return writableDatabase.insert(
+            Constants.Database.Contacts.NAME,
+            null,
+            ContentValues().apply {
+                put(Columns.NAME, contact.name.toString())
+                put(Columns.TEL, contact.tel.toString())
+                put(Columns.PICTURE, contact.picture.toString())
+                put(Columns.BIO, contact.bio.toString())
+                contact.publicKey?.let { put(Columns.PUBLIC_KEY, it) }
+            }).toInt()
     }
 
     fun getAll(): List<Contact> {
         val cursor = readableDatabase.rawQuery(
             "select " +
-                    "${Constants.Database.Contacts.Columns.ID}," +
-                    "${Constants.Database.Contacts.Columns.NAME}," +
-                    "${Constants.Database.Contacts.Columns.PICTURE}," +
-                    "${Constants.Database.Contacts.Columns.TEL}," +
-                    "${Constants.Database.Contacts.Columns.BIO}," +
-                    " ${Constants.Database.Contacts.Columns.PUBLIC_KEY}" +
+                    "${Columns.ID}," +
+                    "${Columns.NAME}," +
+                    "${Columns.PICTURE}," +
+                    "${Columns.TEL}," +
+                    "${Columns.BIO}," +
+                    " ${Columns.PUBLIC_KEY}" +
                     " from ${Constants.Database.Contacts.NAME}",
             null
         )
@@ -89,6 +98,22 @@ class ContactsDatabaseHelper(context: Context) :
         }
 
 
+    }
 
+    fun update(contact: Contact) {
+        writableDatabase.update(Constants.Database.NAME, ContentValues().apply {
+            put(Columns.NAME, contact.name.toString())
+            put(Columns.TEL, contact.tel.toString())
+            put(Columns.PICTURE, contact.picture.toString())
+            put(Columns.BIO, contact.bio.toString())
+        }, "{=${Columns.ID} = ?", arrayOf(contact.id.toString()))
+    }
+
+    fun update(contact: ContactUpdate) {
+        writableDatabase.update(Constants.Database.NAME, ContentValues().apply {
+            put(Columns.NAME, contact.name.toString())
+            put(Columns.PICTURE, contact.pictureUrl)
+            put(Columns.BIO, contact.bio.toString())
+        }, "{=${Columns.PUBLIC_KEY} = ?", arrayOf(contact.publicKey.toString()))
     }
 }

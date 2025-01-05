@@ -6,19 +6,17 @@ import com.android.volley.toolbox.JsonObjectRequest
 import ir.hadiagdamapps.peyvand.data.Key.BIO
 import ir.hadiagdamapps.peyvand.data.Key.NAME
 import ir.hadiagdamapps.peyvand.data.Key.PICTURE
-import ir.hadiagdamapps.peyvand.data.Key.PRIVATE_KEY
 import ir.hadiagdamapps.peyvand.data.Key.PUBLIC_KEY
 import ir.hadiagdamapps.peyvand.data.getString
 import ir.hadiagdamapps.peyvand.data.models.contact.ContactUpdate
 import ir.hadiagdamapps.peyvand.data.models.key.KeySet
 import ir.hadiagdamapps.peyvand.data.models.key.PublicKey
-import ir.hadiagdamapps.peyvand.data.put
 import ir.hadiagdamapps.peyvand.tools.Bio
 import ir.hadiagdamapps.peyvand.tools.Name
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ContactApi(private val queue: RequestQueue): Api() {
+class ContactApi(private val queue: RequestQueue) : Api() {
 
     companion object {
         private const val BASE_URL = "${Api.BASE_URL}/users"
@@ -32,11 +30,7 @@ class ContactApi(private val queue: RequestQueue): Api() {
         failed: (ApiError?) -> Unit
     ) {
         queue.add(
-            JsonObjectRequest(Method.GET, "$BASE_URL/users", JSONObject().apply {
-                login?.let {
-                    put(PUBLIC_KEY, it.public.toString())
-                    put(PRIVATE_KEY, it.private.toString())
-                }
+            JsonObjectRequest(Method.GET, BASE_URL, JSONObject().apply {
                 put("contacts", JSONArray().apply {
                     for (c in contacts) this.put(c.toString())
                 })

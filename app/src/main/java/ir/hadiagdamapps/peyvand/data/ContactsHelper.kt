@@ -8,12 +8,18 @@ class ContactsHelper(private val context: Context) {
 
     private val database = ContactsDatabaseHelper(context)
 
+
     fun getAll() = database.getAll()
 
     fun delete(contact: Contact) = database.delete(contact)
 
     fun newContact(contact: Contact) = database.insert(contact)
 
+    fun updateContacts(contacts: List<Contact>) {
+        contacts.forEach {
+            database.update(it)
+        }
+    }
 }
 
 

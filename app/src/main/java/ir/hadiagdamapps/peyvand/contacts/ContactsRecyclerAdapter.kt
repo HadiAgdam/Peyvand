@@ -13,14 +13,23 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.squareup.picasso.Picasso
 import ir.hadiagdamapps.peyvand.R
+import ir.hadiagdamapps.peyvand.data.ContactUpdateManager
 import ir.hadiagdamapps.peyvand.data.models.contact.Contact
 import ir.hadiagdamapps.peyvand.data.ContactsHelper
+import ir.hadiagdamapps.peyvand.data.models.contact.ContactUpdate
 
 class ContactsRecyclerAdapter(private val context: Context) :
     RecyclerView.Adapter<ContactsRecyclerAdapter.Holder>() {
 
     private val helper = ContactsHelper(context)
     private val list: ArrayList<Contact> = helper.getAll() as ArrayList
+    private val updateManager = object : ContactUpdateManager(context) {
+        override fun updateSuccess(contacts: List<ContactUpdate>) {
+            contacts.forEach { contact ->
+                notifyItemChanged(list.indexOfFirst { it.publicKey == contact.publicKey.toString() })
+            }
+        }
+    }
 
     fun addItem(contact: Contact) {
         list.add(contact)
@@ -32,6 +41,7 @@ class ContactsRecyclerAdapter(private val context: Context) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+        updateManager.sync()
         return Holder(
             LayoutInflater.from(context).inflate(R.layout.profile_card_layout, parent, false)
         )
