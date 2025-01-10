@@ -17,6 +17,7 @@ import ir.hadiagdamapps.peyvand.data.ContactUpdateManager
 import ir.hadiagdamapps.peyvand.data.models.contact.Contact
 import ir.hadiagdamapps.peyvand.data.ContactsHelper
 import ir.hadiagdamapps.peyvand.data.models.contact.ContactUpdate
+import ir.hadiagdamapps.peyvand.tools.Picture
 
 class ContactsRecyclerAdapter(private val context: Context) :
     RecyclerView.Adapter<ContactsRecyclerAdapter.Holder>() {
@@ -26,9 +27,19 @@ class ContactsRecyclerAdapter(private val context: Context) :
     private val updateManager = object : ContactUpdateManager(context) {
         override fun updateSuccess(contacts: List<ContactUpdate>) {
             contacts.forEach { contact ->
-                notifyItemChanged(list.indexOfFirst { it.publicKey == contact.publicKey.toString() })
+                list.indexOfFirst { it.publicKey == contact.publicKey.toString() }
+                    .takeIf { it != -1 }?.let {
+                        list[it].name = contact.name
+                        contact.pictureUrl?.let { url -> list[it].picture = Picture.parse(url) }
+                        list[it].bio = contact.bio
+                    notifyItemRemoved(it)
+                }
             }
         }
+    }
+
+    init {
+        updateManager.sync()
     }
 
     fun addItem(contact: Contact) {
@@ -41,7 +52,6 @@ class ContactsRecyclerAdapter(private val context: Context) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        updateManager.sync()
         return Holder(
             LayoutInflater.from(context).inflate(R.layout.profile_card_layout, parent, false)
         )
@@ -77,7 +87,7 @@ class ContactsRecyclerAdapter(private val context: Context) :
         holder.tel.text = contact.tel.toString()
 
         if (contact.picture == null || contact.picture?.toBitmap() == null) {
-            if (contact.picture!!.urlString != null) {
+            if (contact.picture?.urlString != null) {
                 Log.e("image loaded picasso", contact.picture!!.urlString ?: "null")
                 Picasso.get().load(contact.picture!!.urlString).into(holder.image)
             }

@@ -27,29 +27,27 @@ class ContactApi(queue: RequestQueue) : Api(queue) {
         success: (List<ContactUpdate>) -> Unit,
         failed: (ApiError?) -> Unit
     ) {
-
-
         newRequest(
-            url = BASE_URL,
-            method = Method.GET,
+            url = "$BASE_URL/get",
+            method = Method.POST,
             json = JSONObject().apply {
                 put("contacts", JSONArray().apply {
                     for (c in contacts) this.put(c.toString())
                 })
             },
-            onSuccess = {
+            onSuccess = { response ->
                 try {
-                    val fetchedContacts = it.getJSONArray("contacts")
+                    val fetchedContacts = response.getJSONArray("contacts")
                     success(ArrayList<ContactUpdate>().apply {
 
                         for (i in 0 until fetchedContacts.length()) fetchedContacts.getJSONObject(i)
                             .apply {
                                 add(
                                     ContactUpdate(
-                                        publicKey = PublicKey.parse(it.getString(PUBLIC_KEY))!!,
-                                        name = Name.parse(it.getString(NAME))!!,
-                                        pictureUrl = it.getString(PICTURE),
-                                        bio = Bio.parse(it.getString(BIO))!!
+                                        publicKey = PublicKey.parse(getString(PUBLIC_KEY))!!,
+                                        name = Name.parse(getString(NAME))!!,
+                                        pictureUrl = getString(PICTURE).takeIf { it != "null" },
+                                        bio = Bio.parse(getString(BIO))!!
                                     )
                                 )
                             }
@@ -59,8 +57,7 @@ class ContactApi(queue: RequestQueue) : Api(queue) {
                     failed(ApiError.JSON_CONVERT_ERROR)
                 }
             },
-            onFailed = failed
+            onFailed = failed,
         )
-
     }
 }

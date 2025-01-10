@@ -8,6 +8,6 @@ import ir.hadiagdamapps.peyvand.tools.Name
 data class ContactUpdate(
     val publicKey: PublicKey,
     val name: Name,
-    val pictureUrl: String,
+    val pictureUrl: String?,
     val bio: Bio
 )

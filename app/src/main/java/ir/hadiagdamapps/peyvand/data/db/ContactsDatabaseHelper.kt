@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import androidx.core.database.getStringOrNull
 import ir.hadiagdamapps.peyvand.data.Constants
 import ir.hadiagdamapps.peyvand.data.models.contact.Contact
 import ir.hadiagdamapps.peyvand.tools.Bio
@@ -85,7 +86,7 @@ class ContactsDatabaseHelper(context: Context) :
                         Contact(
                             id = getInt(0),
                             name = Name.parse(getString(1)) ?: continue,
-                            picture = Picture.parse(getString(2)),
+                            picture = getStringOrNull(2)?.let { Picture.parse(it) },
                             tel = Tel.parse(getString(3)) ?: continue,
                             bio = Bio.parse(getString(4)) ?: continue,
                             publicKey = getString(5),
@@ -101,7 +102,7 @@ class ContactsDatabaseHelper(context: Context) :
     }
 
     fun update(contact: Contact) {
-        writableDatabase.update(Constants.Database.NAME, ContentValues().apply {
+        writableDatabase.update(Constants.Database.Contacts.NAME, ContentValues().apply {
             put(Columns.NAME, contact.name.toString())
             put(Columns.TEL, contact.tel.toString())
             put(Columns.PICTURE, contact.picture.toString())
@@ -110,10 +111,10 @@ class ContactsDatabaseHelper(context: Context) :
     }
 
     fun update(contact: ContactUpdate) {
-        writableDatabase.update(Constants.Database.NAME, ContentValues().apply {
+        writableDatabase.update(Constants.Database.Contacts.NAME, ContentValues().apply {
             put(Columns.NAME, contact.name.toString())
             put(Columns.PICTURE, contact.pictureUrl)
             put(Columns.BIO, contact.bio.toString())
-        }, "{=${Columns.PUBLIC_KEY} = ?", arrayOf(contact.publicKey.toString()))
+        }, "${Columns.PUBLIC_KEY} = ?", arrayOf(contact.publicKey.toString()))
     }
 }
