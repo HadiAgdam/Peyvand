@@ -5,12 +5,14 @@ import android.graphics.Bitmap
 import com.google.firebase.storage.FirebaseStorage
 import ir.hadiagdamapps.peyvand.data.Constants.Companion.TARGET_URL
 import ir.hadiagdamapps.peyvand.data.models.profile.Profile
-import ir.hadiagdamapps.peyvand.data.network.Api
+import ir.hadiagdamapps.peyvand.data.models.social_media.LinkedSocialMedias
 import ir.hadiagdamapps.peyvand.data.storage.KeyManager
+import ir.hadiagdamapps.peyvand.data.storage.getString
 import ir.hadiagdamapps.peyvand.tools.Bio
 import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.tools.Tel
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URLEncoder
@@ -37,15 +39,27 @@ class ProfileHelper(context: Context) {
     }
 
     fun getProfile(): Profile? {
-        val name = Name.parse(preferences.getString("name", null) ?: return null)
+        val name = Name.parse(preferences.getString(Key.NAME) ?: return null)
         val picture = Picture.parse(profilePictureFile)
-        val tel = Tel.parse(preferences.getString("tell", null) ?: return null)
-        val bio = Bio.parse(preferences.getString("bio", null) ?: return null)
+        val tel = Tel.parse(preferences.getString(Key.TEL) ?: return null)
+        val bio = Bio.parse(preferences.getString(Key.BIO) ?: return null)
+        val socialMedias = preferences.getString(Key.SOCIAL_MEDIA)?.let {
+            LinkedSocialMedias.fromJson(
+                JSONObject(it)
+            )
+        }
+
 
         if (name == null || tel == null || bio == null)
             return null
 
-        return Profile(name, picture, tel, bio)
+        return Profile(
+            name = name,
+            picture = picture,
+            tel = tel,
+            bio = bio,
+            linkedSocialMedias = socialMedias
+        )
     }
 
     fun setName(name: Name) {
@@ -136,10 +150,12 @@ class ProfileHelper(context: Context) {
             val pictureEncoded = URLEncoder.encode(this@ProfileHelper.getPictureUrl(), "UTF-8")
             val telEncoded = URLEncoder.encode(tel.toString(), "UTF-8")
             val bioEncoded = URLEncoder.encode(bio.toString(), "UTF-8")
+            val socialMedia: String? =
+                linkedSocialMedias?.toJson().toString().let { URLEncoder.encode(it, "UTF-8") }
 
             return "${TARGET_URL}?${Key.NAME}=$nameEncoded&${Key.PICTURE}=$pictureEncoded&${Key.TEL}=$telEncoded&${Key.BIO}=$bioEncoded${
                 keyManager.getPublicKey()?.let { "&${Key.PUBLIC_KEY}=$it" } ?: ""
-            }"
+            }${socialMedia?.let { "&${Key.SOCIAL_MEDIA}=$socialMedia" }}"
         }
     }
 

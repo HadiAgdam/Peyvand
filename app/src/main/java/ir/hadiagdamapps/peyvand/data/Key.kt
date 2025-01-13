@@ -9,6 +9,7 @@ enum class Key {
     PICTURE,
     BIO,
     TEL,
+    SOCIAL_MEDIA
     ;
 
     override fun toString() = this.name.lowercase()
