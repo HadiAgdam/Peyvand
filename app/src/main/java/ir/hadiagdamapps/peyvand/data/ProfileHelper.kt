@@ -8,6 +8,7 @@ import ir.hadiagdamapps.peyvand.data.models.profile.Profile
 import ir.hadiagdamapps.peyvand.data.models.social_media.LinkedSocialMedias
 import ir.hadiagdamapps.peyvand.data.storage.KeyManager
 import ir.hadiagdamapps.peyvand.data.storage.getString
+import ir.hadiagdamapps.peyvand.data.storage.putString
 import ir.hadiagdamapps.peyvand.tools.Bio
 import ir.hadiagdamapps.peyvand.tools.Name
 import ir.hadiagdamapps.peyvand.tools.Picture
@@ -64,21 +65,21 @@ class ProfileHelper(context: Context) {
 
     fun setName(name: Name) {
         preferences.edit().apply {
-            putString("name", name.toString())
+            putString(Key.TEL, name.toString())
             apply()
         }
     }
 
     fun setTel(tel: Tel) {
         preferences.edit().apply {
-            putString("tell", tel.toString())
+            putString(Key.TEL, tel.toString())
             apply()
         }
     }
 
     fun setBio(bio: Bio) {
         preferences.edit().apply {
-            putString("bio", bio.toString())
+            putString(Key.BIO, bio.toString())
             apply()
         }
     }

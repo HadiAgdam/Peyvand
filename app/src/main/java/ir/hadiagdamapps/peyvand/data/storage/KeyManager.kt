@@ -76,3 +76,5 @@ fun Editor.putString(key: Key, value: String?) {
 }
 
 fun SharedPreferences.getString(key: Key) = this.getString(key.toString(), null)
+
+fun SharedPreferences.Editor.putString(key: Key, value: String): Editor? = this.putString(key.toString(), value)
