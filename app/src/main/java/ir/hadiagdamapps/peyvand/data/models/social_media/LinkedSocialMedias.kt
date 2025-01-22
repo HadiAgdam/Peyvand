@@ -17,7 +17,6 @@ data class LinkedSocialMedias(
             return LinkedSocialMedias(
                 instagram = json.getStringOrNull(SocialMedia.INSTAGRAM.toString()),
                 telegram = json.getStringOrNull(SocialMedia.TELEGRAM.toString()),
-                twitter = json.getStringOrNull(SocialMedia.TWITTER.toString()),
                 whatsapp = json.getStringOrNull(SocialMedia.WHATSAPP.toString())
             )
         }
@@ -28,7 +27,6 @@ data class LinkedSocialMedias(
         return JSONObject().apply {
             instagram?.let { put(SocialMedia.INSTAGRAM.toString(), it) }
             telegram?.let { put(SocialMedia.TELEGRAM.toString(), it) }
-            twitter?.let { put(SocialMedia.TWITTER.toString(), it) }
             whatsapp?.let { put(SocialMedia.WHATSAPP.toString(), it) }
         }
     }
