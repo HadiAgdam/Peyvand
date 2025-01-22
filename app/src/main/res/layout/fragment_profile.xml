@@ -42,10 +42,10 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:background="@drawable/picture_placeholder"
                         android:id="@+id/image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@drawable/picture_placeholder"
                         android:scaleType="centerCrop" />
 
                 </androidx.cardview.widget.CardView>
@@ -66,6 +66,80 @@
                         android:scaleType="fitXY"
                         android:src="@drawable/camera_white_icon" />
                 </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginTop="48dp"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/telegramButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="4dp"
+                    android:background="@drawable/button_telegram_outlined"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/baseline_add_24"
+                    android:focusable="true"
+                    android:foreground="?selectableItemBackground"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="@string/telegram"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold"
+                    app:drawableTint="@color/primary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/instagramButton"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/instagramButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="4dp"
+                    android:background="@drawable/button_instagram_outlined"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?selectableItemBackground"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="@string/instagram"
+                    android:textColor="@color/instagram"
+                    android:textStyle="bold"
+                    app:drawableEndCompat="@drawable/baseline_add_24"
+                    app:drawableTint="@color/instagram"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/telegramButton"
+                    app:layout_constraintRight_toLeftOf="@id/whatsappButton"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/whatsappButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/whatsapp"
+                    android:textStyle="bold"
+                    android:padding="8dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:background="@drawable/button_whatsapp_outlined"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?selectableItemBackground"
+                    android:gravity="center"
+                    android:text="@string/whatsapp"
+                    app:drawableEndCompat="@drawable/baseline_add_24"
+                    app:drawableTint="@color/whatsapp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/instagramButton"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -107,7 +181,6 @@
                         style="@style/Text.Large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Aria"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="@id/staticNameTitle"
                         app:layout_constraintTop_toBottomOf="@id/staticNameTitle" />
@@ -171,7 +244,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="left"
-                        android:text="Hey there! Its my Bio."
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="@id/staticBioTitle"
                         app:layout_constraintRight_toRightOf="parent"
@@ -225,7 +297,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="left"
-                        android:text="+98 123 456 7890"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="@id/staticTelTitle"
                         app:layout_constraintRight_toRightOf="parent"

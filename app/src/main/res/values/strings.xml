@@ -66,4 +66,8 @@
     <string name="save_qr_code">Save QrCode</string>
     <string name="save_qr_code_failed">Failed to save Qr Code !</string>
     <string name="saved">Saved !</string>
+    <string name="telegram">Telegram</string>
+    <string name="instagram">Instagram</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="twitter">Twitter</string>
 </resources>

@@ -6,4 +6,7 @@
     <color name="gray_transparent">#6A707070</color>
     <color name="light_gray">#EAEAEA</color>
     <color name="error_red">#FF2B1B</color>
+    <color name="telegram">#23A0DC</color>
+    <color name="instagram">#E1306C</color>
+    <color name="whatsapp">#128c7e</color>
 </resources>
