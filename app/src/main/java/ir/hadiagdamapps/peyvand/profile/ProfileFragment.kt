@@ -11,12 +11,14 @@ import android.widget.TextView
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.register.ChoosePictureDialogFragment
 import ir.hadiagdamapps.peyvand.data.MyFragment
 import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.data.models.profile.Profile
 import ir.hadiagdamapps.peyvand.data.ProfileHelper
+import ir.hadiagdamapps.peyvand.data.models.social_media.SocialMedia
 
 
 class ProfileFragment : MyFragment(R.layout.fragment_profile) {
@@ -122,6 +124,91 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     private lateinit var telText: TextView
     private lateinit var telContainer: View
 
+    private lateinit var telegramButton: TextView
+    private lateinit var instagramButton: TextView
+    private lateinit var whatsappButton: TextView
+
+    private fun clearTelegramButton() {
+     telegramButton.apply {
+         this.text = getString(R.string.telegram)
+         setBackgroundResource(R.drawable.button_telegram_outlined)
+         setTextColor(resources.getColor(R.color.white))
+         val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
+         drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
+         telegramButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+     }
+    }
+
+    private fun fillTelegramButton(text: String) {
+        telegramButton.apply {
+            this.text = text
+            setBackgroundResource(R.drawable.button_telegram_filled)
+            setTextColor(resources.getColor(R.color.white))
+            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.telegram_icon)
+            drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.white))
+            telegramButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+
+        }
+    }
+
+    private fun clearWhatsappButton() {
+        whatsappButton.apply {
+            this.text = getString(R.string.whatsapp)
+            setBackgroundResource(R.drawable.button_whatsapp_outlined)
+            setTextColor(resources.getColor(R.color.white))
+            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
+            drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
+            whatsappButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+        }
+    }
+
+    private fun fillWhatsappButton(text: String) {
+        whatsappButton.apply {
+            this.text = text
+            setBackgroundResource(R.drawable.button_whatsapp_filled)
+            setTextColor(resources.getColor(R.color.white))
+            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.whatsapp_icon)
+            drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.white))
+            whatsappButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+        }
+    }
+
+    private fun clearInstagramButton() {
+        instagramButton.apply {
+            this.text = getString(R.string.instagram)
+            setBackgroundResource(R.drawable.button_instagram_outlined)
+            setTextColor(resources.getColor(R.color.white))
+            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
+            drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
+            instagramButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+        }
+    }
+
+    private fun fillInstagramButton(text: String) {
+        instagramButton.apply {
+            this.text = text
+            setBackgroundResource(R.drawable.button_instagram_filled)
+            setTextColor(resources.getColor(R.color.white))
+            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.instagram_icon)
+            drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.white))
+            instagramButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+        }
+    }
+
+    private fun loadSocialMedias() {
+        profile.linkedSocialMedias?.apply {
+            telegram?.let {
+                fillTelegramButton(it)
+            }
+            whatsapp?.let {
+                fillWhatsappButton(it)
+            }
+            instagram?.let {
+                fillInstagramButton(it)
+            }
+        }
+    }
+
     private fun editName() {
         nameDialog.show(requireActivity().supportFragmentManager, null)
     }
@@ -132,6 +219,18 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
 
     private fun editTel() {
         telDialog.show(requireActivity().supportFragmentManager, null)
+    }
+
+    private fun socialMediaClick(sm: SocialMedia) {
+        when (sm) {
+            SocialMedia.TELEGRAM -> {
+                TODO("open dialog")
+                TODO("fill it with content")
+                TODO("set save action -> save content, update button state")
+            }
+            SocialMedia.WHATSAPP -> {}
+            SocialMedia.INSTAGRAM -> {}
+        }
     }
 
     override fun initViews(view: View) {
@@ -151,6 +250,10 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
         nameContainer.setOnClickListener { editName() }
         bioContainer.setOnClickListener { editBio() }
         telContainer.setOnClickListener { editTel() }
+
+        telegramButton = view.findViewById(R.id.telegramButton)
+        instagramButton = view.findViewById(R.id.instagramButton)
+        whatsappButton = view.findViewById(R.id.whatsappButton)
     }
 
     override fun main() {
@@ -168,5 +271,6 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
 
         image.setOnClickListener { chooseDialog.showDialog(picture != null) }
         smallImageIcon.setOnClickListener { image.performClick() }
+        loadSocialMedias()
     }
 }
