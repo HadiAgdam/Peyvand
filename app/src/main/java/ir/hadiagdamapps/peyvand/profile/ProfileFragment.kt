@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,6 +20,10 @@ import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.data.models.profile.Profile
 import ir.hadiagdamapps.peyvand.data.ProfileHelper
 import ir.hadiagdamapps.peyvand.data.models.social_media.SocialMedia
+import ir.hadiagdamapps.peyvand.profile.dialog.EditBioDialog
+import ir.hadiagdamapps.peyvand.profile.dialog.EditNameDialog
+import ir.hadiagdamapps.peyvand.profile.dialog.EditSocialMediaDialog
+import ir.hadiagdamapps.peyvand.profile.dialog.EditTelDialog
 
 
 class ProfileFragment : MyFragment(R.layout.fragment_profile) {
@@ -26,6 +31,7 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     private var picture: Picture? = null
     private val helper by lazy { ProfileHelper(requireContext()) }
     private lateinit var profile: Profile
+    private var selectedSocialMedia: SocialMedia? = null
 
     private val pickImage = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         if (it == null) return@registerForActivityResult
@@ -104,10 +110,36 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     }
 
     private val bioDialog by lazy {
+        Log.e("position", "bio dialog lazy")
         EditBioDialog(profile.bio) { bio ->
             profile.bio = bio
             helper.setBio(bio)
             bioText.text = bio.toString()
+        }
+    }
+
+    private val editSocialMediaDialog: EditSocialMediaDialog by lazy {
+        EditSocialMediaDialog(requireActivity().supportFragmentManager) {
+
+            when (selectedSocialMedia) {
+                SocialMedia.INSTAGRAM -> {
+                    if (it == "") clearInstagramButton()
+                    else fillInstagramButton(it)
+                }
+                SocialMedia.TELEGRAM -> {
+                    if (it == "") clearTelegramButton()
+                    else fillTelegramButton(it)
+                }
+                SocialMedia.WHATSAPP -> {
+                    if (it == "") clearWhatsappButton()
+                    else fillWhatsappButton(it)
+                }
+
+                else -> {}
+            }
+
+            helper.setSocialMedia(selectedSocialMedia!!, it)
+            profile.linkedSocialMedias = helper.getSocialMedias()
         }
     }
 
@@ -129,14 +161,14 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     private lateinit var whatsappButton: TextView
 
     private fun clearTelegramButton() {
-     telegramButton.apply {
-         this.text = getString(R.string.telegram)
-         setBackgroundResource(R.drawable.button_telegram_outlined)
-         setTextColor(resources.getColor(R.color.white))
-         val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
-         drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
-         telegramButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
-     }
+        telegramButton.apply {
+            this.text = getString(R.string.telegram)
+            setBackgroundResource(R.drawable.button_telegram_outlined)
+            setTextColor(resources.getColor(R.color.white))
+            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
+            drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
+            telegramButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+        }
     }
 
     private fun fillTelegramButton(text: String) {
@@ -221,16 +253,24 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
         telDialog.show(requireActivity().supportFragmentManager, null)
     }
 
-    private fun socialMediaClick(sm: SocialMedia) {
-        when (sm) {
-            SocialMedia.TELEGRAM -> {
-                TODO("open dialog")
-                TODO("fill it with content")
-                TODO("set save action -> save content, update button state")
+    private val socialMediaViewClick = View.OnClickListener { clickedView ->
+        when (clickedView) {
+            telegramButton -> {
+                selectedSocialMedia = SocialMedia.TELEGRAM
+                (profile.linkedSocialMedias?.telegram).let { editSocialMediaDialog.show(it) }
             }
-            SocialMedia.WHATSAPP -> {}
-            SocialMedia.INSTAGRAM -> {}
+
+            instagramButton -> {
+                selectedSocialMedia = SocialMedia.INSTAGRAM
+                (profile.linkedSocialMedias?.instagram).let { editSocialMediaDialog.show(it) }
+            }
+
+            whatsappButton -> {
+                selectedSocialMedia = SocialMedia.WHATSAPP
+                (profile.linkedSocialMedias?.whatsapp).let { editSocialMediaDialog.show(it) }
+            }
         }
+
     }
 
     override fun initViews(view: View) {
@@ -254,12 +294,17 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
         telegramButton = view.findViewById(R.id.telegramButton)
         instagramButton = view.findViewById(R.id.instagramButton)
         whatsappButton = view.findViewById(R.id.whatsappButton)
+
+
+        telegramButton.setOnClickListener(socialMediaViewClick)
+        instagramButton.setOnClickListener(socialMediaViewClick)
+        whatsappButton.setOnClickListener(socialMediaViewClick)
+
     }
 
     override fun main() {
-        val p = helper.getProfile()
-        if (p != null)
-            profile = p
+        Log.e("position", "main")
+        helper.getProfile()?.let { profile = it }
 
         picture = profile.picture
 

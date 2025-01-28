@@ -5,19 +5,20 @@ import org.json.JSONObject
 
 data class LinkedSocialMedias(
 //    val map: Map<SocialMedia, String> = EnumMap(SocialMedia::class.java),
-    val instagram: String? = null,
-    val telegram: String? = null,
-    val twitter: String? = null,
-    val whatsapp: String? = null
+    var instagram: String? = null,
+    var telegram: String? = null,
+    var twitter: String? = null,
+    var whatsapp: String? = null
 ) {
 
 
     companion object {
-        fun fromJson(json: JSONObject): LinkedSocialMedias {
+        fun fromJson(json: JSONObject?): LinkedSocialMedias {
+
             return LinkedSocialMedias(
-                instagram = json.getStringOrNull(SocialMedia.INSTAGRAM.toString()),
-                telegram = json.getStringOrNull(SocialMedia.TELEGRAM.toString()),
-                whatsapp = json.getStringOrNull(SocialMedia.WHATSAPP.toString())
+                instagram = json?.getStringOrNull(SocialMedia.INSTAGRAM.toString()),
+                telegram = json?.getStringOrNull(SocialMedia.TELEGRAM.toString()),
+                whatsapp = json?.getStringOrNull(SocialMedia.WHATSAPP.toString())
             )
         }
     }
@@ -31,6 +32,18 @@ data class LinkedSocialMedias(
         }
     }
 
+
+    fun set(socialMedia: SocialMedia, value: String) {
+        when (socialMedia) {
+
+            SocialMedia.INSTAGRAM -> instagram = value
+            SocialMedia.WHATSAPP -> whatsapp = value
+            SocialMedia.TELEGRAM -> telegram = value
+
+        }
+    }
+
+    override fun toString(): String = toJson().toString()
 }
 
 

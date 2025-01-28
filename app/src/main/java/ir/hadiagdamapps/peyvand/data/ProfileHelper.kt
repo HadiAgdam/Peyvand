@@ -2,10 +2,12 @@ package ir.hadiagdamapps.peyvand.data
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
 import ir.hadiagdamapps.peyvand.data.Constants.Companion.TARGET_URL
 import ir.hadiagdamapps.peyvand.data.models.profile.Profile
 import ir.hadiagdamapps.peyvand.data.models.social_media.LinkedSocialMedias
+import ir.hadiagdamapps.peyvand.data.models.social_media.SocialMedia
 import ir.hadiagdamapps.peyvand.data.storage.KeyManager
 import ir.hadiagdamapps.peyvand.data.storage.getString
 import ir.hadiagdamapps.peyvand.data.storage.putString
@@ -39,16 +41,20 @@ class ProfileHelper(context: Context) {
         return key
     }
 
+    fun getSocialMedias(): LinkedSocialMedias =
+        preferences.getString(Key.SOCIAL_MEDIA).let {
+            LinkedSocialMedias.fromJson(
+                JSONObject(it ?: "{}")
+            )
+        }
+
+
     fun getProfile(): Profile? {
         val name = Name.parse(preferences.getString(Key.NAME) ?: return null)
         val picture = Picture.parse(profilePictureFile)
         val tel = Tel.parse(preferences.getString(Key.TEL) ?: return null)
         val bio = Bio.parse(preferences.getString(Key.BIO) ?: return null)
-        val socialMedias = preferences.getString(Key.SOCIAL_MEDIA)?.let {
-            LinkedSocialMedias.fromJson(
-                JSONObject(it)
-            )
-        }
+        val socialMedias = getSocialMedias()
 
 
         if (name == null || tel == null || bio == null)
@@ -120,6 +126,19 @@ class ProfileHelper(context: Context) {
         }
 
         resumeUploading()
+    }
+
+    fun setSocialMedia(socialMedia: SocialMedia, value: String) {
+        val socialMedias = preferences.getString(Key.SOCIAL_MEDIA)?.let {
+            LinkedSocialMedias.fromJson(JSONObject(it))
+        } ?: return
+
+        socialMedias.set(socialMedia, value)
+
+        preferences.edit().apply {
+            putString(Key.SOCIAL_MEDIA, socialMedias.toString())
+            apply()
+        }
     }
 
     fun deletePicture() {

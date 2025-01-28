@@ -1,4 +1,4 @@
-package ir.hadiagdamapps.peyvand.profile
+package ir.hadiagdamapps.peyvand.profile.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
