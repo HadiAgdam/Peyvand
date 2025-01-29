@@ -34,12 +34,14 @@ data class LinkedSocialMedias(
 
 
     fun set(socialMedia: SocialMedia, value: String) {
-        when (socialMedia) {
+        value.takeIf { it != "" }.let {
+            when (socialMedia) {
 
-            SocialMedia.INSTAGRAM -> instagram = value
-            SocialMedia.WHATSAPP -> whatsapp = value
-            SocialMedia.TELEGRAM -> telegram = value
+                SocialMedia.INSTAGRAM -> instagram = it
+                SocialMedia.WHATSAPP -> whatsapp = it
+                SocialMedia.TELEGRAM -> telegram = it
 
+            }
         }
     }
 

@@ -1,6 +1,8 @@
 package ir.hadiagdamapps.peyvand.profile.dialog
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -33,11 +35,12 @@ class EditSocialMediaDialog(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View =inflater.inflate(R.layout.social_media_dialog, container, false)!!.apply {
+    ): View? = inflater.inflate(R.layout.social_media_dialog, container, false).apply {
             textInput = findViewById(R.id.textInput)
             saveButton = findViewById<View>(R.id.saveButton).apply {
                 setOnClickListener {
                     save(textInput.text.toString())
+                    dismiss()
                 }
             }
             cancelButton =
@@ -52,6 +55,8 @@ class EditSocialMediaDialog(
 
     fun show(text: String?) {
         super.show(manager, null)
-        textInput.setText(text ?: "")
+        Handler(Looper.myLooper()!!).postDelayed({
+            textInput.setText(text ?: "")
+        }, 10)
     }
 }

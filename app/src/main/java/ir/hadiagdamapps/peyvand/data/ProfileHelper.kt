@@ -131,7 +131,7 @@ class ProfileHelper(context: Context) {
     fun setSocialMedia(socialMedia: SocialMedia, value: String) {
         val socialMedias = preferences.getString(Key.SOCIAL_MEDIA)?.let {
             LinkedSocialMedias.fromJson(JSONObject(it))
-        } ?: return
+        } ?: LinkedSocialMedias()
 
         socialMedias.set(socialMedia, value)
 
