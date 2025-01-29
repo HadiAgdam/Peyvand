@@ -164,7 +164,7 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
         telegramButton.apply {
             this.text = getString(R.string.telegram)
             setBackgroundResource(R.drawable.button_telegram_outlined)
-            setTextColor(resources.getColor(R.color.white))
+            setTextColor(resources.getColor(R.color.telegram))
             val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
             drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
             telegramButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
@@ -187,7 +187,7 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
         whatsappButton.apply {
             this.text = getString(R.string.whatsapp)
             setBackgroundResource(R.drawable.button_whatsapp_outlined)
-            setTextColor(resources.getColor(R.color.white))
+            setTextColor(resources.getColor(R.color.telegram))
             val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
             drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
             whatsappButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
@@ -209,7 +209,7 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
         instagramButton.apply {
             this.text = getString(R.string.instagram)
             setBackgroundResource(R.drawable.button_instagram_outlined)
-            setTextColor(resources.getColor(R.color.white))
+            setTextColor(resources.getColor(R.color.instagram))
             val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
             drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
             instagramButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
@@ -303,7 +303,6 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     }
 
     override fun main() {
-        Log.e("position", "main")
         helper.getProfile()?.let { profile = it }
 
         picture = profile.picture
