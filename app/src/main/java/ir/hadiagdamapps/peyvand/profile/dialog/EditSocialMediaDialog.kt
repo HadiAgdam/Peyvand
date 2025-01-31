@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ir.hadiagdamapps.peyvand.R
+import ir.hadiagdamapps.peyvand.data.TextValidator
 
 class EditSocialMediaDialog(
     private val manager: FragmentManager,
@@ -20,8 +21,6 @@ class EditSocialMediaDialog(
 ) : BottomSheetDialogFragment(R.layout.social_media_dialog) {
 
     private lateinit var textInput: EditText
-    private lateinit var saveButton: View
-    private lateinit var cancelButton: View
     private lateinit var errorText: TextView
 
     private fun cancelClick() = dismiss()
@@ -31,22 +30,27 @@ class EditSocialMediaDialog(
         Log.e("position", "onCreate")
     }
 
+    private fun saveAction() {
+        save(textInput.text.toString())
+    }
+
+    fun setError(error: String) {
+        errorText.text = error
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.social_media_dialog, container, false).apply {
-            textInput = findViewById(R.id.textInput)
-            saveButton = findViewById<View>(R.id.saveButton).apply {
-                setOnClickListener {
-                    save(textInput.text.toString())
-                    dismiss()
-                }
+        textInput = findViewById<EditText?>(R.id.textInput).apply {
+            setOnEditorActionListener { v, actionId, event ->
+                saveAction()
+                true
             }
-            cancelButton =
-                findViewById<View>(R.id.cancelButton).apply { setOnClickListener { cancelClick() } }
-            errorText = findViewById(R.id.errorText)
         }
+        errorText = findViewById(R.id.errorText)
+    }
 
     override fun onStart() {
         super.onStart()
@@ -55,6 +59,7 @@ class EditSocialMediaDialog(
 
     fun show(text: String?) {
         super.show(manager, null)
+        errorText.text = ""
         Handler(Looper.myLooper()!!).postDelayed({
             textInput.setText(text ?: "")
         }, 10)

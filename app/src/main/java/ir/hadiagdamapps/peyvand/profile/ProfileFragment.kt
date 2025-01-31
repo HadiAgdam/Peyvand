@@ -19,6 +19,7 @@ import ir.hadiagdamapps.peyvand.data.MyFragment
 import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.data.models.profile.Profile
 import ir.hadiagdamapps.peyvand.data.ProfileHelper
+import ir.hadiagdamapps.peyvand.data.TextValidator
 import ir.hadiagdamapps.peyvand.data.models.social_media.SocialMedia
 import ir.hadiagdamapps.peyvand.profile.dialog.EditBioDialog
 import ir.hadiagdamapps.peyvand.profile.dialog.EditNameDialog
@@ -121,25 +122,43 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
     private val editSocialMediaDialog: EditSocialMediaDialog by lazy {
         EditSocialMediaDialog(requireActivity().supportFragmentManager) {
 
-            when (selectedSocialMedia) {
+            when (selectedSocialMedia!!) {
+
                 SocialMedia.INSTAGRAM -> {
                     if (it == "") clearInstagramButton()
-                    else fillInstagramButton(it)
-                }
-                SocialMedia.TELEGRAM -> {
-                    if (it == "") clearTelegramButton()
-                    else fillTelegramButton(it)
-                }
-                SocialMedia.WHATSAPP -> {
-                    if (it == "") clearWhatsappButton()
-                    else fillWhatsappButton(it)
+                    else if (TextValidator.isValidSocialMedia(selectedSocialMedia!!, it))
+                        fillInstagramButton(it)
+                    else {
+                        editSocialMediaDialog.setError(getString(R.string.invalid_social_media))
+                        return@EditSocialMediaDialog
+                    }
                 }
 
-                else -> {}
+                SocialMedia.TELEGRAM -> {
+                    if (it == "") clearTelegramButton()
+                    else if (TextValidator.isValidSocialMedia(selectedSocialMedia!!, it))
+                        fillTelegramButton(it)
+                    else {
+                        editSocialMediaDialog.setError(getString(R.string.invalid_social_media))
+                        return@EditSocialMediaDialog
+                    }
+                }
+
+                SocialMedia.WHATSAPP -> {
+                    if (it == "") clearWhatsappButton()
+                    else if (TextValidator.isValidSocialMedia(selectedSocialMedia!!, it))
+                        fillWhatsappButton(it)
+                    else {
+                        editSocialMediaDialog.setError(getString(R.string.invalid_social_media))
+                        return@EditSocialMediaDialog
+                    }
+                }
+
             }
 
             helper.setSocialMedia(selectedSocialMedia!!, it)
             profile.linkedSocialMedias = helper.getSocialMedias()
+            editSocialMediaDialog.dismiss()
         }
     }
 

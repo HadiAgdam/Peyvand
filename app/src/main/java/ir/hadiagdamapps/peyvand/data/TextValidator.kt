@@ -1,6 +1,7 @@
 package ir.hadiagdamapps.peyvand.data
 
 import ir.hadiagdamapps.peyvand.data.Key.*
+import ir.hadiagdamapps.peyvand.data.models.social_media.SocialMedia
 
 object TextValidator {
 
@@ -45,5 +46,21 @@ object TextValidator {
         return headers.size == 0
     }
 
-    }
+    fun isValidSocialMedia(socialMedia: SocialMedia, text: String): Boolean =
+        when (socialMedia) {
+
+            SocialMedia.INSTAGRAM ->
+                Regex("^[a-zA-Z0-9._]{1,30}\$").matches(text)
+
+
+            SocialMedia.WHATSAPP ->
+                Regex("^[a-zA-Z0-9._]{5,20}\$").matches(text)
+
+
+            SocialMedia.TELEGRAM ->
+                Regex("^[a-zA-Z][a-zA-Z0-9_]{4,31}\$").matches(text)
+
+        }
+
+
 }

@@ -71,4 +71,5 @@
     <string name="whatsapp">Whatsapp</string>
     <string name="twitter">Twitter</string>
     <string name="social_media">Social Media\n</string>
+    <string name="invalid_social_media">Invalid social meddia username!</string>
 </resources>
