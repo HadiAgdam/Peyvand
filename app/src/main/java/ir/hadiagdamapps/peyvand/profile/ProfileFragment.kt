@@ -206,7 +206,7 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
         whatsappButton.apply {
             this.text = getString(R.string.whatsapp)
             setBackgroundResource(R.drawable.button_whatsapp_outlined)
-            setTextColor(resources.getColor(R.color.telegram))
+            setTextColor(resources.getColor(R.color.whatsapp))
             val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
             drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
             whatsappButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
