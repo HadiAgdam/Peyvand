@@ -11,7 +11,7 @@ data class LinkedSocialMedias(
     var instagram: String? = null,
     var telegram: String? = null,
     var twitter: String? = null,
-    var whatsapp: String? = null
+    var x: String? = null
 ) : Parcelable{
 
 
@@ -21,7 +21,7 @@ data class LinkedSocialMedias(
             return LinkedSocialMedias(
                 instagram = json?.getStringOrNull(SocialMedia.INSTAGRAM.toString()),
                 telegram = json?.getStringOrNull(SocialMedia.TELEGRAM.toString()),
-                whatsapp = json?.getStringOrNull(SocialMedia.WHATSAPP.toString())
+                x = json?.getStringOrNull(SocialMedia.X.toString())
             )
         }
     }
@@ -31,7 +31,7 @@ data class LinkedSocialMedias(
         return JSONObject().apply {
             instagram?.let { put(SocialMedia.INSTAGRAM.toString(), it) }
             telegram?.let { put(SocialMedia.TELEGRAM.toString(), it) }
-            whatsapp?.let { put(SocialMedia.WHATSAPP.toString(), it) }
+            x?.let { put(SocialMedia.X.toString(), it) }
         }
     }
 
@@ -41,7 +41,7 @@ data class LinkedSocialMedias(
             when (socialMedia) {
 
                 SocialMedia.INSTAGRAM -> instagram = it
-                SocialMedia.WHATSAPP -> whatsapp = it
+                SocialMedia.X -> x = it
                 SocialMedia.TELEGRAM -> telegram = it
 
             }

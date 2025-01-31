@@ -144,10 +144,10 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
                     }
                 }
 
-                SocialMedia.WHATSAPP -> {
-                    if (it == "") clearWhatsappButton()
+                SocialMedia.X -> {
+                    if (it == "") clearXButton()
                     else if (TextValidator.isValidSocialMedia(selectedSocialMedia!!, it))
-                        fillWhatsappButton(it)
+                        fillXButton(it)
                     else {
                         editSocialMediaDialog.setError(getString(R.string.invalid_social_media))
                         return@EditSocialMediaDialog
@@ -177,7 +177,7 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
 
     private lateinit var telegramButton: TextView
     private lateinit var instagramButton: TextView
-    private lateinit var whatsappButton: TextView
+    private lateinit var xButton: TextView
 
     private fun clearTelegramButton() {
         telegramButton.apply {
@@ -202,25 +202,25 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
         }
     }
 
-    private fun clearWhatsappButton() {
-        whatsappButton.apply {
-            this.text = getString(R.string.whatsapp)
-            setBackgroundResource(R.drawable.button_whatsapp_outlined)
-            setTextColor(resources.getColor(R.color.whatsapp))
+    private fun clearXButton() {
+        xButton.apply {
+            this.text = getString(R.string.x)
+            setBackgroundResource(R.drawable.button_x_outlined)
+            setTextColor(resources.getColor(R.color.x))
             val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
             drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
-            whatsappButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+            xButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
         }
     }
 
-    private fun fillWhatsappButton(text: String) {
-        whatsappButton.apply {
+    private fun fillXButton(text: String) {
+        xButton.apply {
             this.text = text
-            setBackgroundResource(R.drawable.button_whatsapp_filled)
+            setBackgroundResource(R.drawable.button_x_filled)
             setTextColor(resources.getColor(R.color.white))
-            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.whatsapp_icon)
+            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.x_icon)
             drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.white))
-            whatsappButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+            xButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
         }
     }
 
@@ -251,8 +251,8 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
             telegram?.let {
                 fillTelegramButton(it)
             }
-            whatsapp?.let {
-                fillWhatsappButton(it)
+            x?.let {
+                fillXButton(it)
             }
             instagram?.let {
                 fillInstagramButton(it)
@@ -284,9 +284,9 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
                 (profile.linkedSocialMedias?.instagram).let { editSocialMediaDialog.show(it) }
             }
 
-            whatsappButton -> {
-                selectedSocialMedia = SocialMedia.WHATSAPP
-                (profile.linkedSocialMedias?.whatsapp).let { editSocialMediaDialog.show(it) }
+            xButton -> {
+                selectedSocialMedia = SocialMedia.X
+                (profile.linkedSocialMedias?.x).let { editSocialMediaDialog.show(it) }
             }
         }
 
@@ -312,12 +312,12 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
 
         telegramButton = view.findViewById(R.id.telegramButton)
         instagramButton = view.findViewById(R.id.instagramButton)
-        whatsappButton = view.findViewById(R.id.whatsappButton)
+        xButton = view.findViewById(R.id.xButton)
 
 
         telegramButton.setOnClickListener(socialMediaViewClick)
         instagramButton.setOnClickListener(socialMediaViewClick)
-        whatsappButton.setOnClickListener(socialMediaViewClick)
+        xButton.setOnClickListener(socialMediaViewClick)
 
     }
 

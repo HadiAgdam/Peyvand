@@ -68,10 +68,10 @@
     <string name="saved">Saved !</string>
     <string name="telegram">Telegram</string>
     <string name="instagram">Instagram</string>
-    <string name="whatsapp">Whatsapp</string>
+    <string name="x">X</string>
     <string name="twitter">Twitter</string>
     <string name="social_media">Social Media\n</string>
     <string name="invalid_social_media">Invalid social meddia username!</string>
-    <string name="whatsapp_not_installed">WhatsApp is not installed!</string>
+    <string name="x_not_installed">X is not installed!</string>
     <string name="telegra_not_installed">Telegram is not installed!</string>
 </resources>

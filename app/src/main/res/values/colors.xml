@@ -8,5 +8,5 @@
     <color name="error_red">#FF2B1B</color>
     <color name="telegram">#23A0DC</color>
     <color name="instagram">#E1306C</color>
-    <color name="whatsapp">#128c7e</color>
+    <color name="x">@color/black</color>
 </resources>

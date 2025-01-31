@@ -2,7 +2,6 @@ package ir.hadiagdamapps.peyvand.data
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
 import ir.hadiagdamapps.peyvand.data.Constants.Companion.TARGET_URL
 import ir.hadiagdamapps.peyvand.data.models.profile.Profile

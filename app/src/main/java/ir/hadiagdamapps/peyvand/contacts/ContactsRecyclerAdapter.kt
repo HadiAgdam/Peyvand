@@ -99,16 +99,16 @@ class ContactsRecyclerAdapter(private val context: Context) :
 
 
         Log.e("telegram", contact.socialMedias.telegram ?: "bosh")
-        Log.e("whatsapp", contact.socialMedias.whatsapp ?: "bosh")
+        Log.e("whatsapp", contact.socialMedias.x ?: "bosh")
         Log.e("instagram", contact.socialMedias.instagram ?: "bosh")
 
         contact.socialMedias.telegram?.let {
             holder.telegramIcon.visibility = View.VISIBLE
-        }
+        }   
         contact.socialMedias.instagram?.let {
             holder.instagramIcon.visibility = View.VISIBLE
         }
-        contact.socialMedias.whatsapp?.let {
+        contact.socialMedias.x?.let {
             holder.whatsappIcon.visibility = View.VISIBLE
         }
     }

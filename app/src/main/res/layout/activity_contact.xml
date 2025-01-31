@@ -251,12 +251,12 @@
 
 
             <RelativeLayout
-                android:id="@+id/whatsappContainer"
+                android:id="@+id/xContainer"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginVertical="8dp"
-                android:background="@color/whatsapp"
+                android:background="@color/x"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?selectableItemBackground"
@@ -267,16 +267,16 @@
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_alignParentLeft="true"
-                    android:src="@drawable/whatsapp_icon"
+                    android:src="@drawable/x_icon"
                     app:tint="@color/white" />
 
                 <TextView
-                    android:id="@+id/whatsappText"
+                    android:id="@+id/xText"
                     style="@style/Text.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="WHATSAPP_PLACEHOLDER"
+                    android:text="X_PLACEHOLDER"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
             </RelativeLayout>

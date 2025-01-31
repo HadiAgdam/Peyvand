@@ -53,8 +53,8 @@ object TextValidator {
                 Regex("^[a-zA-Z0-9._]{1,30}\$").matches(text)
 
 
-            SocialMedia.WHATSAPP ->
-                Regex("^[a-zA-Z0-9._]{5,20}\$").matches(text)
+            SocialMedia.X ->
+                Regex("^[A-Za-z0-9_]{4,15}$").matches(text)
 
 
             SocialMedia.TELEGRAM ->

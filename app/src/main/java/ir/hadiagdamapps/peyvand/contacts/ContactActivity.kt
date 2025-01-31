@@ -25,8 +25,8 @@ class ContactActivity : Activity(R.layout.activity_contact) {
     private lateinit var telegramText: TextView
     private lateinit var instagramContainer: View
     private lateinit var instagramText: TextView
-    private lateinit var whatsappContainer: View
-    private lateinit var whatsappText: TextView
+    private lateinit var xContainer: View
+    private lateinit var xText: TextView
 
     private lateinit var contact: Contact
 
@@ -41,17 +41,17 @@ class ContactActivity : Activity(R.layout.activity_contact) {
     }
 
     private fun initSocialMedias() {
-        contact.socialMedias.whatsapp?.let {
-            whatsappContainer.visibility = View.VISIBLE
-            whatsappText.text = it
+        contact.socialMedias.x?.let {
+            xContainer.visibility = View.VISIBLE
+            xText.text = it
 
-            val uri = Uri.parse("https://api.whatsapp.com/send?phone=$it")
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            whatsappContainer.setOnClickListener {
+            xContainer.setOnClickListener { _ ->
+                val uri = Uri.parse("https://x.com/$it")
+                val intent = Intent(Intent.ACTION_VIEW, uri)
                 try {
                     startActivity(intent)
                 } catch (ex: Exception) {
-                    Toast.makeText(this, R.string.whatsapp_not_installed, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.x, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -59,9 +59,9 @@ class ContactActivity : Activity(R.layout.activity_contact) {
             telegramContainer.visibility = View.VISIBLE
             telegramText.text = it
 
-            val uri = Uri.parse("tg://resolve?domain=$it")
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            telegramContainer.setOnClickListener {
+            telegramContainer.setOnClickListener { _ ->
+                val uri = Uri.parse("tg://resolve?domain=$it")
+                val intent = Intent(Intent.ACTION_VIEW, uri)
                 try {
                     startActivity(intent)
                 } catch (ex: Exception) {
@@ -73,10 +73,11 @@ class ContactActivity : Activity(R.layout.activity_contact) {
             instagramContainer.visibility = View.VISIBLE
             instagramText.text = it
 
-            val uri = Uri.parse("http://instagram.com/_u/$it")
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            intent.setPackage("com.instagram.android")
-            instagramContainer.setOnClickListener {
+
+            instagramContainer.setOnClickListener { _ ->
+                val uri = Uri.parse("http://instagram.com/_u/$it")
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                intent.setPackage("com.instagram.android")
                 try {
                     startActivity(intent)
                 } catch (ex: Exception) {
@@ -106,8 +107,8 @@ class ContactActivity : Activity(R.layout.activity_contact) {
         instagramText = findViewById(R.id.instagramText)
         telegramContainer = findViewById(R.id.telegramContainer)
         telegramText = findViewById(R.id.telegramText)
-        whatsappContainer = findViewById(R.id.whatsappContainer)
-        whatsappText = findViewById(R.id.whatsappText)
+        xContainer = findViewById(R.id.xContainer)
+        xText = findViewById(R.id.xText)
     }
 
     override fun main() {
