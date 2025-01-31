@@ -22,15 +22,14 @@ class EditSocialMediaDialog(
 
     private lateinit var textInput: EditText
     private lateinit var errorText: TextView
-
-    private fun cancelClick() = dismiss()
+    private lateinit var saveButton: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.e("position", "onCreate")
     }
 
-    private fun saveAction() {
+    private fun save() {
         save(textInput.text.toString())
     }
 
@@ -45,11 +44,13 @@ class EditSocialMediaDialog(
     ): View? = inflater.inflate(R.layout.social_media_dialog, container, false).apply {
         textInput = findViewById<EditText?>(R.id.textInput).apply {
             setOnEditorActionListener { v, actionId, event ->
-                saveAction()
+                save()
                 true
             }
         }
         errorText = findViewById(R.id.errorText)
+        saveButton = findViewById(R.id.saveButton)
+        saveButton.setOnClickListener { save() }
     }
 
     override fun onStart() {
@@ -59,8 +60,8 @@ class EditSocialMediaDialog(
 
     fun show(text: String?) {
         super.show(manager, null)
-        errorText.text = ""
         Handler(Looper.myLooper()!!).postDelayed({
+            errorText.text = ""
             textInput.setText(text ?: "")
         }, 10)
     }
