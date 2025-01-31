@@ -24,10 +24,10 @@
 
             <ImageView
                 android:id="@+id/image"
-                android:scaleType="fitXY"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/picture_placeholder" />
+                android:background="@drawable/picture_placeholder"
+                android:scaleType="fitXY" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -38,10 +38,48 @@
             android:layout_marginHorizontal="24dp"
             android:gravity="start"
             android:text="Placeholder"
-
             app:layout_constraintLeft_toRightOf="@id/imageContainer"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/imageContainer" />
+
+        <LinearLayout
+            android:id="@+id/socialMediaContainer"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/imageContainer">
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/telegramIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="4dp"
+                android:src="@drawable/telegram_icon"
+                app:tint="@color/telegram" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/instagramIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="4dp"
+                android:src="@drawable/instagram_icon"
+                app:tint="@color/instagram" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/whatsappIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="4dp"
+                android:src="@drawable/whatsapp_icon"
+                app:tint="@color/whatsapp" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tel"
@@ -52,7 +90,7 @@
             android:text="09123456789"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/imageContainer"
+            app:layout_constraintLeft_toRightOf="@id/socialMediaContainer"
             app:layout_constraintRight_toRightOf="parent" />
 
 

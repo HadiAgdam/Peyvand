@@ -24,3 +24,5 @@ enum class Key {
 fun JSONObject.put(key: Key, value: Any?): JSONObject = put(key.toString(), value)
 
 fun JSONObject.getString(key: Key): String = getString(key.toString())
+
+fun JSONObject.getStringOrNull(key: Key): String? = getStringOrNull(key.toString())

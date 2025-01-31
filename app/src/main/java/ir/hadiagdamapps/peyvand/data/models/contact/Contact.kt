@@ -11,6 +11,8 @@ import java.net.URI
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 import ir.hadiagdamapps.peyvand.data.Key.*
+import ir.hadiagdamapps.peyvand.data.models.social_media.LinkedSocialMedias
+import org.json.JSONObject
 
 
 @Parcelize
@@ -20,7 +22,8 @@ class Contact(
     var picture: Picture?,
     var tel: Tel,
     var bio: Bio,
-    val publicKey: String? = null
+    val publicKey: String? = null,
+    val socialMedias: LinkedSocialMedias
 ) : Parcelable {
 
 
@@ -33,7 +36,8 @@ class Contact(
                 picture = Picture.parse(map[PICTURE] ?: ""),
                 tel = Tel.parse(map[TEL]) ?: return null,
                 bio = Bio.parse(map[BIO]) ?: return null,
-                publicKey = map[PUBLIC_KEY]
+                publicKey = map[PUBLIC_KEY],
+                socialMedias = LinkedSocialMedias.fromJson(map[SOCIAL_MEDIA]?.let { JSONObject(it) })
             )
         }
 

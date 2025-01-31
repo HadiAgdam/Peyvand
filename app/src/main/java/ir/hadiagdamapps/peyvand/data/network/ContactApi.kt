@@ -1,14 +1,13 @@
 package ir.hadiagdamapps.peyvand.data.network
 
 import com.android.volley.RequestQueue
-import ir.hadiagdamapps.peyvand.data.Key.BIO
-import ir.hadiagdamapps.peyvand.data.Key.NAME
-import ir.hadiagdamapps.peyvand.data.Key.PICTURE
-import ir.hadiagdamapps.peyvand.data.Key.PUBLIC_KEY
+import ir.hadiagdamapps.peyvand.data.Key.*
 import ir.hadiagdamapps.peyvand.data.getString
+import ir.hadiagdamapps.peyvand.data.getStringOrNull
 import ir.hadiagdamapps.peyvand.data.models.contact.ContactUpdate
 import ir.hadiagdamapps.peyvand.data.models.key.KeySet
 import ir.hadiagdamapps.peyvand.data.models.key.PublicKey
+import ir.hadiagdamapps.peyvand.data.models.social_media.LinkedSocialMedias
 import ir.hadiagdamapps.peyvand.tools.Bio
 import ir.hadiagdamapps.peyvand.tools.Name
 import org.json.JSONArray
@@ -47,7 +46,8 @@ class ContactApi(queue: RequestQueue) : Api(queue) {
                                         publicKey = PublicKey.parse(getString(PUBLIC_KEY))!!,
                                         name = Name.parse(getString(NAME))!!,
                                         pictureUrl = getString(PICTURE).takeIf { it != "null" },
-                                        bio = Bio.parse(getString(BIO))!!
+                                        bio = Bio.parse(getString(BIO))!!,
+                                        socialMedias = LinkedSocialMedias.fromJson(getStringOrNull(SOCIAL_MEDIA)?.let { JSONObject(it) })
                                     )
                                 )
                             }

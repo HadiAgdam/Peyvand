@@ -13,6 +13,8 @@ import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.tools.Tel
 import ir.hadiagdamapps.peyvand.data.Constants.Database.Contacts.Columns
 import ir.hadiagdamapps.peyvand.data.models.contact.ContactUpdate
+import ir.hadiagdamapps.peyvand.data.models.social_media.LinkedSocialMedias
+import org.json.JSONObject
 
 class ContactsDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, Constants.Database.NAME, null, Constants.Database.VERSION) {
@@ -24,7 +26,8 @@ class ContactsDatabaseHelper(context: Context) :
                 "${Columns.PICTURE} TEXT," +
                 "${Columns.TEL} TEXT," +
                 "${Columns.BIO} TEXT," +
-                "${Columns.PUBLIC_KEY} TEXT)"
+                "${Columns.PUBLIC_KEY} TEXT," +
+                "${Columns.SOCIAL_MEDIAS} TEXT)"
     private val deleteTableQuery =
         "DROP TABLE IF exists ${Constants.Database.Contacts.NAME}"
 
@@ -62,6 +65,7 @@ class ContactsDatabaseHelper(context: Context) :
                 put(Columns.PICTURE, contact.picture.toString())
                 put(Columns.BIO, contact.bio.toString())
                 contact.publicKey?.let { put(Columns.PUBLIC_KEY, it) }
+                put(Columns.SOCIAL_MEDIAS, contact.socialMedias.toString())
             }).toInt()
     }
 
@@ -73,7 +77,8 @@ class ContactsDatabaseHelper(context: Context) :
                     "${Columns.PICTURE}," +
                     "${Columns.TEL}," +
                     "${Columns.BIO}," +
-                    " ${Columns.PUBLIC_KEY}" +
+                    "${Columns.PUBLIC_KEY}," +
+                    Columns.SOCIAL_MEDIAS +
                     " from ${Constants.Database.Contacts.NAME}",
             null
         )
@@ -90,6 +95,11 @@ class ContactsDatabaseHelper(context: Context) :
                             tel = Tel.parse(getString(3)) ?: continue,
                             bio = Bio.parse(getString(4)) ?: continue,
                             publicKey = getString(5),
+                            socialMedias = LinkedSocialMedias.fromJson(getStringOrNull(6)?.let {
+                                JSONObject(
+                                    it
+                                )
+                            })
                         )
                     )
                 while (moveToNext())
@@ -107,6 +117,7 @@ class ContactsDatabaseHelper(context: Context) :
             put(Columns.TEL, contact.tel.toString())
             put(Columns.PICTURE, contact.picture.toString())
             put(Columns.BIO, contact.bio.toString())
+            put(Columns.SOCIAL_MEDIAS, contact.socialMedias.toString())
         }, "{=${Columns.ID} = ?", arrayOf(contact.id.toString()))
     }
 
@@ -115,6 +126,7 @@ class ContactsDatabaseHelper(context: Context) :
             put(Columns.NAME, contact.name.toString())
             put(Columns.PICTURE, contact.pictureUrl)
             put(Columns.BIO, contact.bio.toString())
+            put(Columns.SOCIAL_MEDIAS, contact.socialMedias.toString())
         }, "${Columns.PUBLIC_KEY} = ?", arrayOf(contact.publicKey.toString()))
     }
 }

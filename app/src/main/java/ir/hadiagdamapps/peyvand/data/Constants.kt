@@ -9,7 +9,7 @@ class Constants {
     class Database {
         companion object {
             // should increment the version if there was a change in schema
-            const val VERSION = 1
+            const val VERSION = 2
             const val NAME = "peyvand_database"
         }
 
@@ -22,6 +22,7 @@ class Constants {
                     const val TEL = "tel"
                     const val BIO = "bio"
                     const val PUBLIC_KEY = "public_key"
+                    const val SOCIAL_MEDIAS = "social_medias"
                 }
 
             }

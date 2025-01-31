@@ -32,7 +32,7 @@ object TextValidator {
 
         val args = text.removeRange(0, Constants.TARGET_URL.length + 1).split("&")
 
-        val headers = arrayListOf(NAME, PICTURE, TEL, BIO, PUBLIC_KEY)
+        val headers = arrayListOf(NAME, PICTURE, TEL, BIO, PUBLIC_KEY, SOCIAL_MEDIA)
 
         args.forEach { arg ->
             arg.split("=")[0].let { Key.fromString(it) }?.apply {

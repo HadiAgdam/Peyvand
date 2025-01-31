@@ -32,8 +32,8 @@ class ContactsRecyclerAdapter(private val context: Context) :
                         list[it].name = contact.name
                         contact.pictureUrl?.let { url -> list[it].picture = Picture.parse(url) }
                         list[it].bio = contact.bio
-                    notifyItemRemoved(it)
-                }
+                        notifyItemRemoved(it)
+                    }
             }
         }
     }
@@ -96,6 +96,21 @@ class ContactsRecyclerAdapter(private val context: Context) :
         } else
             holder.image.setImageBitmap(contact.picture!!.toBitmap())
         // TODO instead of picasso I'll just download/cache it and convert to bitmap
+
+
+        Log.e("telegram", contact.socialMedias.telegram ?: "bosh")
+        Log.e("whatsapp", contact.socialMedias.whatsapp ?: "bosh")
+        Log.e("instagram", contact.socialMedias.instagram ?: "bosh")
+
+        contact.socialMedias.telegram?.let {
+            holder.telegramIcon.visibility = View.VISIBLE
+        }
+        contact.socialMedias.instagram?.let {
+            holder.instagramIcon.visibility = View.VISIBLE
+        }
+        contact.socialMedias.whatsapp?.let {
+            holder.whatsappIcon.visibility = View.VISIBLE
+        }
     }
 
 
@@ -104,5 +119,9 @@ class ContactsRecyclerAdapter(private val context: Context) :
         val image: ImageView = view.findViewById(R.id.image)
         val name: TextView = view.findViewById(R.id.name)
         val tel: TextView = view.findViewById(R.id.tel)
+
+        val telegramIcon: View = view.findViewById(R.id.telegramIcon)
+        val instagramIcon: View = view.findViewById(R.id.instagramIcon)
+        val whatsappIcon: View = view.findViewById(R.id.whatsappIcon)
     }
 }

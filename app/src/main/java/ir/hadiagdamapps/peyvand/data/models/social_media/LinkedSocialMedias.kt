@@ -1,15 +1,18 @@
 package ir.hadiagdamapps.peyvand.data.models.social_media
 
+import android.os.Parcelable
 import ir.hadiagdamapps.peyvand.data.getStringOrNull
+import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 
+@Parcelize
 data class LinkedSocialMedias(
 //    val map: Map<SocialMedia, String> = EnumMap(SocialMedia::class.java),
     var instagram: String? = null,
     var telegram: String? = null,
     var twitter: String? = null,
     var whatsapp: String? = null
-) {
+) : Parcelable{
 
 
     companion object {

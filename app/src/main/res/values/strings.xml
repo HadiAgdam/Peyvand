@@ -72,4 +72,6 @@
     <string name="twitter">Twitter</string>
     <string name="social_media">Social Media\n</string>
     <string name="invalid_social_media">Invalid social meddia username!</string>
+    <string name="whatsapp_not_installed">WhatsApp is not installed!</string>
+    <string name="telegra_not_installed">Telegram is not installed!</string>
 </resources>
