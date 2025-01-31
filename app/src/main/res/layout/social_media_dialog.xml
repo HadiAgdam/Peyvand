@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:imeOptions="actionDone"
         android:id="@+id/textInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
