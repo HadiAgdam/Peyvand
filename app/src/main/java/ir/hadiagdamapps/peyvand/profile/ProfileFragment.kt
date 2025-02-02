@@ -3,19 +3,23 @@ package ir.hadiagdamapps.peyvand.profile
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.register.ChoosePictureDialogFragment
-import ir.hadiagdamapps.peyvand.data.MyFragment
 import ir.hadiagdamapps.peyvand.tools.Picture
 import ir.hadiagdamapps.peyvand.data.models.profile.Profile
 import ir.hadiagdamapps.peyvand.data.ProfileHelper
@@ -25,9 +29,23 @@ import ir.hadiagdamapps.peyvand.profile.dialog.EditBioDialog
 import ir.hadiagdamapps.peyvand.profile.dialog.EditNameDialog
 import ir.hadiagdamapps.peyvand.profile.dialog.EditSocialMediaDialog
 import ir.hadiagdamapps.peyvand.profile.dialog.EditTelDialog
+import ir.hadiagdamapps.peyvand.profile.view.ProfileScreen
 
 
-class ProfileFragment : MyFragment(R.layout.fragment_profile) {
+class ProfileFragment : Fragment() {
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                ProfileScreen()
+            }
+        }
+    }
 
     private var picture: Picture? = null
     private val helper by lazy { ProfileHelper(requireContext()) }
@@ -292,48 +310,48 @@ class ProfileFragment : MyFragment(R.layout.fragment_profile) {
 
     }
 
-    override fun initViews(view: View) {
-        image = view.findViewById(R.id.image)
-        imageContainer = view.findViewById(R.id.imageContainer)
-        smallImageIcon = view.findViewById(R.id.smallImageIcon)
-
-        nameText = view.findViewById(R.id.nameText)
-        nameContainer = view.findViewById(R.id.nameContainer)
-
-        bioText = view.findViewById(R.id.bioText)
-        bioContainer = view.findViewById(R.id.bioContainer)
-
-        telText = view.findViewById(R.id.telText)
-        telContainer = view.findViewById(R.id.telContainer)
-
-        nameContainer.setOnClickListener { editName() }
-        bioContainer.setOnClickListener { editBio() }
-        telContainer.setOnClickListener { editTel() }
-
-        telegramButton = view.findViewById(R.id.telegramButton)
-        instagramButton = view.findViewById(R.id.instagramButton)
-        xButton = view.findViewById(R.id.xButton)
-
-
-        telegramButton.setOnClickListener(socialMediaViewClick)
-        instagramButton.setOnClickListener(socialMediaViewClick)
-        xButton.setOnClickListener(socialMediaViewClick)
-
-    }
-
-    override fun main() {
-        helper.getProfile()?.let { profile = it }
-
-        picture = profile.picture
-
-        if (picture != null)
-            image.setImageBitmap(picture!!.toBitmap())
-        nameText.text = profile.name.toString()
-        bioText.text = profile.bio.toString()
-        telText.text = profile.tel.toString()
-
-        image.setOnClickListener { chooseDialog.showDialog(picture != null) }
-        smallImageIcon.setOnClickListener { image.performClick() }
-        loadSocialMedias()
-    }
+//    override fun initViews(view: View) {
+//        image = view.findViewById(R.id.image)
+//        imageContainer = view.findViewById(R.id.imageContainer)
+//        smallImageIcon = view.findViewById(R.id.smallImageIcon)
+//
+//        nameText = view.findViewById(R.id.nameText)
+//        nameContainer = view.findViewById(R.id.nameContainer)
+//
+//        bioText = view.findViewById(R.id.bioText)
+//        bioContainer = view.findViewById(R.id.bioContainer)
+//
+//        telText = view.findViewById(R.id.telText)
+//        telContainer = view.findViewById(R.id.telContainer)
+//
+//        nameContainer.setOnClickListener { editName() }
+//        bioContainer.setOnClickListener { editBio() }
+//        telContainer.setOnClickListener { editTel() }
+//
+//        telegramButton = view.findViewById(R.id.telegramButton)
+//        instagramButton = view.findViewById(R.id.instagramButton)
+//        xButton = view.findViewById(R.id.xButton)
+//
+//
+//        telegramButton.setOnClickListener(socialMediaViewClick)
+//        instagramButton.setOnClickListener(socialMediaViewClick)
+//        xButton.setOnClickListener(socialMediaViewClick)
+//
+//    }
+//
+//    override fun main() {
+//        helper.getProfile()?.let { profile = it }
+//
+//        picture = profile.picture
+//
+//        if (picture != null)
+//            image.setImageBitmap(picture!!.toBitmap())
+//        nameText.text = profile.name.toString()
+//        bioText.text = profile.bio.toString()
+//        telText.text = profile.tel.toString()
+//
+//        image.setOnClickListener { chooseDialog.showDialog(picture != null) }
+//        smallImageIcon.setOnClickListener { image.performClick() }
+//        loadSocialMedias()
+//    }
 }
