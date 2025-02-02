@@ -70,7 +70,7 @@ class ProfileHelper(context: Context) {
 
     fun setName(name: Name) {
         preferences.edit().apply {
-            putString(Key.TEL, name.toString())
+            putString(Key.NAME, name.toString())
             apply()
         }
     }
