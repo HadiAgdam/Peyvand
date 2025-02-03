@@ -3,7 +3,7 @@ package ir.hadiagdamapps.peyvand.data.network
 import com.android.volley.RequestQueue
 import ir.hadiagdamapps.peyvand.data.Key.*
 import ir.hadiagdamapps.peyvand.data.getString
-import ir.hadiagdamapps.peyvand.data.getStringOrNull
+import ir.hadiagdamapps.peyvand.data.getNullString
 import ir.hadiagdamapps.peyvand.data.models.contact.ContactUpdate
 import ir.hadiagdamapps.peyvand.data.models.key.KeySet
 import ir.hadiagdamapps.peyvand.data.models.key.PublicKey
@@ -47,7 +47,7 @@ class ContactApi(queue: RequestQueue) : Api(queue) {
                                         name = Name.parse(getString(NAME))!!,
                                         pictureUrl = getString(PICTURE).takeIf { it != "null" },
                                         bio = Bio.parse(getString(BIO))!!,
-                                        socialMedias = LinkedSocialMedias.fromJson(getStringOrNull(SOCIAL_MEDIA)?.let { JSONObject(it) })
+                                        socialMedias = LinkedSocialMedias.fromJson(getNullString(SOCIAL_MEDIA)?.let { JSONObject(it) })
                                     )
                                 )
                             }

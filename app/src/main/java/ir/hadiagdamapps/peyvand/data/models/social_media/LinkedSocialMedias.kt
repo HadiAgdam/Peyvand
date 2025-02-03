@@ -1,7 +1,7 @@
 package ir.hadiagdamapps.peyvand.data.models.social_media
 
 import android.os.Parcelable
-import ir.hadiagdamapps.peyvand.data.getStringOrNull
+import ir.hadiagdamapps.peyvand.data.getNullString
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 
@@ -19,9 +19,9 @@ data class LinkedSocialMedias(
         fun fromJson(json: JSONObject?): LinkedSocialMedias {
 
             return LinkedSocialMedias(
-                instagram = json?.getStringOrNull(SocialMedia.INSTAGRAM.toString()),
-                telegram = json?.getStringOrNull(SocialMedia.TELEGRAM.toString()),
-                x = json?.getStringOrNull(SocialMedia.X.toString())
+                instagram = json?.getNullString(SocialMedia.INSTAGRAM.toString()),
+                telegram = json?.getNullString(SocialMedia.TELEGRAM.toString()),
+                x = json?.getNullString(SocialMedia.X.toString())
             )
         }
     }
