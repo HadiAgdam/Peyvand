@@ -1,280 +1,173 @@
 package ir.hadiagdamapps.peyvand.profile
 
+import android.Manifest
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.core.content.ContextCompat
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import ir.hadiagdamapps.peyvand.R
 import ir.hadiagdamapps.peyvand.register.ChoosePictureDialogFragment
-import ir.hadiagdamapps.peyvand.tools.Picture
-import ir.hadiagdamapps.peyvand.data.models.profile.Profile
-import ir.hadiagdamapps.peyvand.data.ProfileHelper
 import ir.hadiagdamapps.peyvand.data.TextValidator
 import ir.hadiagdamapps.peyvand.data.models.social_media.SocialMedia
 import ir.hadiagdamapps.peyvand.profile.dialog.EditBioDialog
 import ir.hadiagdamapps.peyvand.profile.dialog.EditNameDialog
 import ir.hadiagdamapps.peyvand.profile.dialog.EditSocialMediaDialog
 import ir.hadiagdamapps.peyvand.profile.dialog.EditTelDialog
-import ir.hadiagdamapps.peyvand.profile.view.ProfileScreen
-
+import ir.hadiagdamapps.peyvand.profile.view.components.EditProfileView
+import ir.hadiagdamapps.peyvand.profile.view.components.ProfilePictureContainer
+import ir.hadiagdamapps.peyvand.profile.view.components.SocialMediaButton
+import ir.hadiagdamapps.peyvand.profile.viewmodel.ProfileScreenViewModel
+import ir.hadiagdamapps.peyvand.profile.viewmodel.ProfileScreenViewModelFactory
+import ir.hadiagdamapps.peyvand.view.components.Title
 
 class ProfileFragment : Fragment() {
 
+    private var selectedSocialMedia: SocialMedia? = null
+    private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+    private val viewmodel: ProfileScreenViewModel by viewModels {
+        ProfileScreenViewModelFactory(requireActivity().application) // What ?
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return ComposeView(requireContext()).apply {
-            setContent {
-                ProfileScreen()
-            }
+    private val nameDialog by lazy {
+        EditNameDialog(viewmodel.name!!) { name ->
+            viewmodel.putName(name)
         }
     }
 
-    private var picture: Picture? = null
-    private val helper by lazy { ProfileHelper(requireContext()) }
-    private lateinit var profile: Profile
-    private var selectedSocialMedia: SocialMedia? = null
-
-    private val pickImage = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
-        if (it == null) return@registerForActivityResult
-        val picture =
-            Picture.parse(requireContext().contentResolver, it) ?: return@registerForActivityResult
-        helper.setPicture(picture)
-        image.setImageBitmap(picture.toBitmap())
-        profile.picture = picture
+    private val telDialog by lazy {
+        EditTelDialog(viewmodel.tel!!) { tel ->
+            viewmodel.putTel(tel)
+        }
     }
 
-    private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+    private val bioDialog by lazy {
+        EditBioDialog(viewmodel.bio!!) { bio ->
+            viewmodel.putBio(bio)
+        }
+    }
+
+    private val permissionDeniedDialog by lazy {
+        AlertDialog.Builder(requireContext()).apply {
+            setTitle(R.string.permission_dialog_title)
+            setMessage(R.string.permission_dialog_text_camera)
+
+            setNeutralButton(R.string.dismiss, null)
+
+            setPositiveButton(R.string.ok) { _, _ ->
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                val uri: Uri = Uri.fromParts("package", requireContext().packageName, null)
+                intent.data = uri
+                startActivityForResult(intent, 1)
+            }
+
+        }
+    }
+
+    private fun socialMediaViewClick(socialMedia: SocialMedia) {
+        selectedSocialMedia = socialMedia
+
+        editSocialMediaDialog.show(
+            when (socialMedia) {
+
+                SocialMedia.TELEGRAM -> viewmodel.telegramHandle
+
+                SocialMedia.INSTAGRAM -> viewmodel.instagramHandle
+
+                SocialMedia.X -> viewmodel.xHandle
+
+            }
+        )
+
+    }
+
+    private val pickImage = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
+        viewmodel.pickImageResult(it)
+    }
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted: Boolean ->
-            if (granted) {
-                startActivityForResult(cameraIntent, 0)
-            } else {
-                AlertDialog.Builder(requireContext()).apply {
-                    setTitle(R.string.permission_dialog_title)
-                    setMessage(R.string.permission_dialog_text_camera)
-
-                    setNeutralButton(R.string.dismiss, null)
-
-                    setPositiveButton(R.string.ok) { _, _ ->
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        val uri: Uri = Uri.fromParts("package", requireContext().packageName, null)
-                        intent.data = uri
-                        startActivityForResult(intent, 1)
-                    }
-
-                }.show()
-            }
+            viewmodel.requestPermissionResult(granted)
         }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 0 && data != null) {
-            picture = Picture.parse(data.extras?.get("data") as Bitmap)
-
-            helper.setPicture(picture!!)
-            image.setImageBitmap(picture!!.toBitmap())
-            profile.picture = picture
-
-        }
+        if (requestCode == 0) viewmodel.cameraResult(data)
     }
 
     private val chooseDialog: ChoosePictureDialogFragment by lazy {
         ChoosePictureDialogFragment(requireActivity().supportFragmentManager,
             { // camera
-                requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+                requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             },
             { // gallery
                 pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             },
             { // unSelect
-                picture = null
-                image.setImageURI(Uri.parse(""))
-                helper.deletePicture()
+                viewmodel.unSelectPicture()
             })
-    }
-
-    private val nameDialog by lazy {
-        EditNameDialog(profile.name) { name ->
-            profile.name = name
-            helper.setName(name)
-            nameText.text = name.toString()
-        }
-    }
-
-    private val telDialog by lazy {
-        EditTelDialog(profile.tel) { tel ->
-            profile.tel = tel
-            helper.setTel(tel)
-            telText.text = tel.toString()
-        }
-    }
-
-    private val bioDialog by lazy {
-        Log.e("position", "bio dialog lazy")
-        EditBioDialog(profile.bio) { bio ->
-            profile.bio = bio
-            helper.setBio(bio)
-            bioText.text = bio.toString()
-        }
     }
 
     private val editSocialMediaDialog: EditSocialMediaDialog by lazy {
         EditSocialMediaDialog(requireActivity().supportFragmentManager) {
-
             when (selectedSocialMedia!!) {
 
                 SocialMedia.INSTAGRAM -> {
-                    if (it == "") clearInstagramButton()
-                    else if (TextValidator.isValidSocialMedia(selectedSocialMedia!!, it))
-                        fillInstagramButton(it)
-                    else {
+                    if (it != "" && !TextValidator.isValidSocialMedia(selectedSocialMedia!!, it)) {
                         editSocialMediaDialog.setError(getString(R.string.invalid_social_media))
                         return@EditSocialMediaDialog
                     }
                 }
 
                 SocialMedia.TELEGRAM -> {
-                    if (it == "") clearTelegramButton()
-                    else if (TextValidator.isValidSocialMedia(selectedSocialMedia!!, it))
-                        fillTelegramButton(it)
-                    else {
+
+                    if (it != "" && !TextValidator.isValidSocialMedia(selectedSocialMedia!!, it)) {
                         editSocialMediaDialog.setError(getString(R.string.invalid_social_media))
                         return@EditSocialMediaDialog
                     }
                 }
 
                 SocialMedia.X -> {
-                    if (it == "") clearXButton()
-                    else if (TextValidator.isValidSocialMedia(selectedSocialMedia!!, it))
-                        fillXButton(it)
-                    else {
+                    if (it != "" && !TextValidator.isValidSocialMedia(selectedSocialMedia!!, it)) {
                         editSocialMediaDialog.setError(getString(R.string.invalid_social_media))
                         return@EditSocialMediaDialog
                     }
                 }
 
             }
-
-            helper.setSocialMedia(selectedSocialMedia!!, it)
-            profile.linkedSocialMedias = helper.getSocialMedias()
+            viewmodel.setSocialMedia(selectedSocialMedia!!, it)
             editSocialMediaDialog.dismiss()
-        }
-    }
-
-    private lateinit var image: ImageView
-    private lateinit var imageContainer: View
-    private lateinit var smallImageIcon: View
-
-    private lateinit var nameText: TextView
-    private lateinit var nameContainer: View
-
-    private lateinit var bioText: TextView
-    private lateinit var bioContainer: View
-
-    private lateinit var telText: TextView
-    private lateinit var telContainer: View
-
-    private lateinit var telegramButton: TextView
-    private lateinit var instagramButton: TextView
-    private lateinit var xButton: TextView
-
-    private fun clearTelegramButton() {
-        telegramButton.apply {
-            this.text = getString(R.string.telegram)
-            setBackgroundResource(R.drawable.button_telegram_outlined)
-            setTextColor(resources.getColor(R.color.telegram))
-            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
-            drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
-            telegramButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
-        }
-    }
-
-    private fun fillTelegramButton(text: String) {
-        telegramButton.apply {
-            this.text = text
-            setBackgroundResource(R.drawable.button_telegram_filled)
-            setTextColor(resources.getColor(R.color.white))
-            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.telegram_icon)
-            drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.white))
-            telegramButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
-
-        }
-    }
-
-    private fun clearXButton() {
-        xButton.apply {
-            this.text = getString(R.string.x)
-            setBackgroundResource(R.drawable.button_x_outlined)
-            setTextColor(resources.getColor(R.color.x))
-            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
-            drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
-            xButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
-        }
-    }
-
-    private fun fillXButton(text: String) {
-        xButton.apply {
-            this.text = text
-            setBackgroundResource(R.drawable.button_x_filled)
-            setTextColor(resources.getColor(R.color.white))
-            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.x_icon)
-            drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.white))
-            xButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
-        }
-    }
-
-    private fun clearInstagramButton() {
-        instagramButton.apply {
-            this.text = getString(R.string.instagram)
-            setBackgroundResource(R.drawable.button_instagram_outlined)
-            setTextColor(resources.getColor(R.color.instagram))
-            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24)
-            drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.primary))
-            instagramButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
-        }
-    }
-
-    private fun fillInstagramButton(text: String) {
-        instagramButton.apply {
-            this.text = text
-            setBackgroundResource(R.drawable.button_instagram_filled)
-            setTextColor(resources.getColor(R.color.white))
-            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.instagram_icon)
-            drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.white))
-            instagramButton.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
-        }
-    }
-
-    private fun loadSocialMedias() {
-        profile.linkedSocialMedias?.apply {
-            telegram?.let {
-                fillTelegramButton(it)
-            }
-            x?.let {
-                fillXButton(it)
-            }
-            instagram?.let {
-                fillInstagramButton(it)
-            }
         }
     }
 
@@ -290,68 +183,156 @@ class ProfileFragment : Fragment() {
         telDialog.show(requireActivity().supportFragmentManager, null)
     }
 
-    private val socialMediaViewClick = View.OnClickListener { clickedView ->
-        when (clickedView) {
-            telegramButton -> {
-                selectedSocialMedia = SocialMedia.TELEGRAM
-                (profile.linkedSocialMedias?.telegram).let { editSocialMediaDialog.show(it) }
-            }
 
-            instagramButton -> {
-                selectedSocialMedia = SocialMedia.INSTAGRAM
-                (profile.linkedSocialMedias?.instagram).let { editSocialMediaDialog.show(it) }
-            }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
 
-            xButton -> {
-                selectedSocialMedia = SocialMedia.X
-                (profile.linkedSocialMedias?.x).let { editSocialMediaDialog.show(it) }
+                LaunchedEffect(Unit) { // permission dialog
+                    viewmodel.triggerPermissionLauncher.collect {
+                        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+                    }
+                }
+
+                LaunchedEffect(Unit) { // pick image
+                    viewmodel.triggerPickImageLauncher.collect {
+                        pickImage.launch(
+                            PickVisualMediaRequest(
+                                ActivityResultContracts.PickVisualMedia.ImageOnly
+                            )
+                        )
+
+                    }
+                }
+
+                LaunchedEffect(Unit) { // camera
+                    viewmodel.triggerLunchCamera.collect {
+                        startActivityForResult(cameraIntent, 0)
+                    }
+                }
+
+                LaunchedEffect(Unit) { // settings
+                    viewmodel.triggerSettingsLauncher.collect {
+                        permissionDeniedDialog.show()
+                    }
+                }
+
+                Surface {
+                    Column(
+                        Modifier
+                            .fillMaxSize()
+                            .padding(vertical = 24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Title("Profile")
+
+                        Spacer(Modifier.height(48.dp))
+
+                        ProfilePictureContainer({
+                            chooseDialog.showDialog(viewmodel.picture != null) // TODO recheck
+                        }, viewmodel.picture)
+
+                        Spacer(Modifier.height(48.dp))
+
+                        Row(
+                            Modifier
+                                .height(64.dp)
+                                .fillMaxWidth()
+                                .padding(4.dp)
+                                .padding(vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            SocialMediaButton(
+                                modifier = Modifier.weight(1f),
+                                text = viewmodel.telegramHandle,
+                                defaultText = stringResource(R.string.telegram),
+                                icon = painterResource(R.drawable.telegram_icon),
+                                color = colorResource(R.color.telegram),
+                                click = { socialMediaViewClick(SocialMedia.TELEGRAM) }
+                            )
+
+                            Spacer(modifier = Modifier.width(4.dp))
+
+                            SocialMediaButton(
+                                modifier = Modifier.weight(1f),
+                                text = viewmodel.instagramHandle,
+                                defaultText = stringResource(R.string.instagram),
+                                icon = painterResource(R.drawable.instagram_icon),
+                                color = colorResource(R.color.instagram),
+                                click = { socialMediaViewClick(SocialMedia.INSTAGRAM) }
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+
+                            SocialMediaButton(
+                                modifier = Modifier.weight(1f),
+                                text = viewmodel.xHandle,
+                                defaultText = "X(Twitter)",
+                                icon = painterResource(R.drawable.x_icon),
+                                color = colorResource(R.color.x),
+                                click = { socialMediaViewClick(SocialMedia.X) }
+                            )
+                        }
+
+
+                        Spacer(Modifier.height(48.dp))
+
+                        EditProfileView(
+                            title = stringResource(R.string.edit_name_title),
+                            icon = painterResource(R.drawable.account_icon),
+                            onClick = { editName() }
+                        ) {
+                            Text(
+                                viewmodel.name.toString(),
+                                style = MaterialTheme.typography.h6,
+                                fontWeight = FontWeight.Bold,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                stringResource(R.string.edit_name_description),
+                                style = MaterialTheme.typography.caption
+                            )
+                        }
+
+                        Divider(Modifier.fillMaxWidth())
+
+                        EditProfileView(
+                            title = stringResource(R.string.bio_title),
+                            icon = painterResource(R.drawable.baseline_info_outline_24),
+                            onClick = { editBio() }
+                        ) {
+                            Text(
+                                viewmodel.bio.toString(),
+                                fontWeight = FontWeight.Bold,
+                                style = MaterialTheme.typography.body1
+                            )
+                        }
+
+                        Divider(Modifier.fillMaxWidth())
+
+                        EditProfileView(
+                            title = stringResource(R.string.tel_title),
+                            icon = painterResource(R.drawable.call_icon),
+                            onClick = { editTel() }
+                        ) {
+                            Text(
+                                viewmodel.tel.toString(),
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold,
+                                style = MaterialTheme.typography.body1
+                            )
+                        }
+
+                    }
+                }
             }
         }
-
     }
 
-//    override fun initViews(view: View) {
-//        image = view.findViewById(R.id.image)
-//        imageContainer = view.findViewById(R.id.imageContainer)
-//        smallImageIcon = view.findViewById(R.id.smallImageIcon)
-//
-//        nameText = view.findViewById(R.id.nameText)
-//        nameContainer = view.findViewById(R.id.nameContainer)
-//
-//        bioText = view.findViewById(R.id.bioText)
-//        bioContainer = view.findViewById(R.id.bioContainer)
-//
-//        telText = view.findViewById(R.id.telText)
-//        telContainer = view.findViewById(R.id.telContainer)
-//
-//        nameContainer.setOnClickListener { editName() }
-//        bioContainer.setOnClickListener { editBio() }
-//        telContainer.setOnClickListener { editTel() }
-//
-//        telegramButton = view.findViewById(R.id.telegramButton)
-//        instagramButton = view.findViewById(R.id.instagramButton)
-//        xButton = view.findViewById(R.id.xButton)
-//
-//
-//        telegramButton.setOnClickListener(socialMediaViewClick)
-//        instagramButton.setOnClickListener(socialMediaViewClick)
-//        xButton.setOnClickListener(socialMediaViewClick)
-//
-//    }
-//
-//    override fun main() {
-//        helper.getProfile()?.let { profile = it }
-//
-//        picture = profile.picture
-//
-//        if (picture != null)
-//            image.setImageBitmap(picture!!.toBitmap())
-//        nameText.text = profile.name.toString()
-//        bioText.text = profile.bio.toString()
-//        telText.text = profile.tel.toString()
-//
-//        image.setOnClickListener { chooseDialog.showDialog(picture != null) }
-//        smallImageIcon.setOnClickListener { image.performClick() }
-//        loadSocialMedias()
-//    }
 }

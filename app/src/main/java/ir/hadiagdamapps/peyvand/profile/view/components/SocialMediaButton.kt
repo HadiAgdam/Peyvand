@@ -33,15 +33,15 @@ fun SocialMediaButton(
     color: Color,
     click: () -> Unit
 ) {
-
+    val t = text.takeIf { it != "" }
     Button(
         onClick = click ,
         modifier = modifier
             .fillMaxHeight(),
         colors = ButtonDefaults.outlinedButtonColors(
-            backgroundColor = text?.run { color }
+            backgroundColor = t?.run { color }
                 ?: Color.Transparent,
-            contentColor = text?.run { Color.White } ?: color
+            contentColor = t?.run { Color.White } ?: color
         ),
         border = BorderStroke(3.dp, color),
     ) {
@@ -50,7 +50,7 @@ fun SocialMediaButton(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            text?.let {
+            t?.let {
                 Icon(
                     painter = icon,
                     contentDescription = null,
@@ -59,13 +59,13 @@ fun SocialMediaButton(
             }
             Spacer(modifier = Modifier.width(4.dp))
             Text(
-                text ?: defaultText,
+                t ?: defaultText,
                 modifier = Modifier.weight(1f),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 fontSize = 12.sp
             )
-            if (text == null) Icon(painter = painterResource(R.drawable.baseline_add_24), contentDescription = null,
+            if (t == null) Icon(painter = painterResource(R.drawable.baseline_add_24), contentDescription = null,
                 modifier = Modifier.weight(.3f))
         }
     }
